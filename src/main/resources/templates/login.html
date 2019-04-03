@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<font th:text="${msg}" style="color:red"></font>
+<form method="post" action="login">
+	<div><label>用户名</label> <input name="userName"></div>
+	<div><label style="margin-left:16px">密码</label> <input name="password" type="password"></div>
+	<input style="margin-left:80px;margin-top:20px" type="submit">
+</form>
+</body>
+</html>
