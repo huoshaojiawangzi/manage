@@ -1,15 +1,22 @@
 package com.lizc.sports.pc.demo.controller;
 
+import com.lizc.sports.sys.entity.Menu;
+import com.lizc.sports.sys.entity.Permission;
+import com.lizc.sports.sys.sevice.MenuService;
+import com.lizc.sports.sys.sevice.PermissionService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
 *   访问的公共资源
@@ -20,18 +27,39 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("public")
 public class PublicController
 {
+
+    @Autowired
+    private PermissionService permissionService;
+
+    @Autowired
+    private MenuService menuService;
+
     @RequestMapping("index")
     public String index()
     {
         return "index";
     }
 
+
     @ResponseBody
-    @GetMapping("test")
-    public String test(String id)
+    @GetMapping("find-permissions-menus")
+    public List<Menu> getPermissionsMenus()
     {
-        System.out.println(id);
-        return "test111";
+        return permissionService.findMenusByPermission("402881ef69e6e0340169e6e053f30000");
+    }
+
+    @ResponseBody
+    @GetMapping("find-permissions")
+    public List<Permission> getPermissions()
+    {
+        return permissionService.findAll();
+    }
+
+    @ResponseBody
+    @GetMapping("find-menus")
+    public List<Menu> getMenus()
+    {
+        return menuService.findAll();
     }
 
     @RequestMapping("loginView")

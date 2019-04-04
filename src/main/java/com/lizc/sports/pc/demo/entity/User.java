@@ -1,6 +1,6 @@
 package com.lizc.sports.pc.demo.entity;
 
-import com.lizc.sports.common.utils.id.IdEntity;
+import com.lizc.sports.common.utils.id.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name="t_user")
 @Entity
 @Data
-public class User extends IdEntity
+public class User extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 

@@ -23,8 +23,6 @@ public class Role extends BaseEntity{
 	@Column(nullable = false)
 	private String name;
 
-	private String description;
-
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "role_id")
 	private List<Permission> permissions = new ArrayList<Permission>();
