@@ -1,9 +1,12 @@
 package com.lizc.sports.common.service;
 
+import com.lizc.sports.common.entity.BaseEntity;
 import com.lizc.sports.common.repository.BaseRepository;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 
+import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,9 +17,9 @@ import java.util.List;
  * @author   lizc@sdhuijin.cn
  * @date     2019/04/10
 */
-public abstract class BaseService<T,ID extends Serializable,R extends BaseRepository<T,ID>>{
+public abstract class BaseService<T extends BaseEntity,ID extends Serializable,R extends BaseRepository<T,ID>>{
 
-    @Autowired
+    @Autowired(required = false)
     private R repostitory;
 
     /**

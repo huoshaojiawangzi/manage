@@ -1,7 +1,9 @@
 package com.lizc.sports;
 
+import com.lizc.sports.sys.entity.CommonUser;
 import com.lizc.sports.sys.entity.Menu;
 import com.lizc.sports.sys.entity.Permission;
+import com.lizc.sports.sys.sevice.CommonUserService;
 import com.lizc.sports.sys.sevice.MenuService;
 import com.lizc.sports.sys.sevice.PermissionService;
 import org.junit.Test;
@@ -23,16 +25,24 @@ public class ShiroDemoApplicationTests {
 	@Autowired
 	private PermissionService permissionService;
 
-	/**
-	 * 测试没有任何注释的menu以及permission保存
-	 */
+	@Autowired
+	private CommonUserService commonUserService;
+
+
 	@Test
-	public void testExposeSave() {
-		Permission permission = permissionService.findAll().get(0);
+	public void testSaveCommuser() {
+		CommonUser commonUser = new CommonUser();
+		commonUser.setName("梨花");
+		commonUser.setPassword("654321");
+		commonUser.setUserName("lihua");
+		commonUserService.saveAndFlush(commonUser);
+	}
+
+	@Test
+	public void testSaveMenu() {
 		Menu menu = new Menu();
-		menu.setName("档案管理查询");
+		menu.setName("贷款管理查询");
 		menu.setPath("archiveList");
-		permissionService.save(permission);
 		menuService.save(menu);
 	}
 
