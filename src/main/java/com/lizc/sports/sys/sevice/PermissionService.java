@@ -1,5 +1,6 @@
 package com.lizc.sports.sys.sevice;
 
+import com.lizc.sports.common.service.BaseService;
 import com.lizc.sports.sys.entity.Menu;
 import com.lizc.sports.sys.entity.Permission;
 import com.lizc.sports.sys.repository.PermissionRepository;
@@ -14,35 +15,10 @@ import java.util.List;
  * @date: 2019-03-06 15:14
  **/
 @Service
-public class PermissionService {
+public class PermissionService extends BaseService<Permission,String,PermissionRepository> {
 
     @Autowired
     private PermissionRepository permissionRepository;
-
-    public Permission get(String id)
-    {
-        return permissionRepository.findById(id).get();
-    }
-
-    public void save(Permission permission)
-    {
-        permissionRepository.save(permission);
-    }
-
-    public void saveAndFlush(Permission permission)
-    {
-        permissionRepository.saveAndFlush(permission);
-    }
-
-    public void delete(Permission permission)
-    {
-        permissionRepository.delete(permission);
-    }
-
-    public List<Permission> findAll()
-    {
-        return permissionRepository.findAll();
-    }
 
     @Transactional
     public List<Menu> findMenusByPermission(String id)

@@ -1,6 +1,6 @@
 package com.lizc.sports.config;
 
-import com.lizc.sports.sys.security.UserRealm;
+import com.lizc.sports.sys.security.SystemAuthorizingRealm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,23 +34,23 @@ public class ShiroConfig
     }
     
     /**配置DefaultWebSecurityManager
-     * @param userRealm
+     * @param systemAuthorizingRealm
      * @return
      */
     @Bean("defaultWebSecurityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("userRealm") UserRealm userRealm)
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(@Qualifier("systemAuthorizingRealm") SystemAuthorizingRealm systemAuthorizingRealm)
     {
         DefaultWebSecurityManager defaultWebSecurityManager =new DefaultWebSecurityManager();
-        defaultWebSecurityManager.setRealm(userRealm);
+        defaultWebSecurityManager.setRealm(systemAuthorizingRealm);
         return defaultWebSecurityManager;
     }
     /**
      * 配置Realm
      */
-    @Bean("userRealm")
-    public UserRealm getRealm()
+    @Bean("systemAuthorizingRealm")
+    public SystemAuthorizingRealm getRealm()
     {
-        return new UserRealm();
+        return new SystemAuthorizingRealm();
     }
 
 }

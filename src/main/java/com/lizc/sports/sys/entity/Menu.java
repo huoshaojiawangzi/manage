@@ -1,7 +1,7 @@
 package com.lizc.sports.sys.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.lizc.sports.common.utils.id.BaseEntity;
+import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,7 +23,7 @@ public class Menu extends BaseEntity {
 	private String name;
 
 	/**
-	 * url地址
+	 * 前端路由地址
 	 */
 	@Column(nullable = false)
 	private String path;
@@ -49,8 +49,6 @@ public class Menu extends BaseEntity {
 	 */
 	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "parent", fetch = FetchType.EAGER)
 	@OrderBy("createDate DESC")
-	private List<Menu> children = new ArrayList<Menu>();
+	private List<Menu> children = new ArrayList<>();
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Permission permission;
 }

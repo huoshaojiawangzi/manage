@@ -1,4 +1,4 @@
-package com.lizc.sports.common.utils.id;
+package com.lizc.sports.common.entity;
 
 import com.lizc.sports.sys.entity.CommonUser;
 import lombok.Data;
@@ -26,6 +26,6 @@ public abstract class BaseEntity implements Serializable
     protected Date createDate;// 创建日期
     protected CommonUser updateBy; // 更新者
     protected Date updateDate;// 更新日期
-    protected String delFlag; // 删除标记（0：正常；1：删除；2：审核）
+    protected String delFlag = "0"; // 删除标记（0：正常；1：删除；2：审核）
 
 }

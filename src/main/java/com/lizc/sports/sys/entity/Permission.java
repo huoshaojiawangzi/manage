@@ -1,10 +1,11 @@
 package com.lizc.sports.sys.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.lizc.sports.common.utils.id.BaseEntity;
+import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,16 +22,21 @@ public class Permission extends BaseEntity {
 	@Column(nullable = false)
 	private String name;
 
-	@OneToMany(cascade = { CascadeType.ALL },mappedBy = "permission",fetch = FetchType.LAZY)
-	private List<Menu> menus;
+	/**
+	 * url地址
+	 */
+	private String url;
 
-	public void addMenu(Menu menu)
-	{
-		if(menu.getPermission()==null)
-		{
-			menu.setPermission(this);
-		}
-		this.menus.add(menu);
-	}
+	/**
+	 * 父节点
+	 */
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Permission parent;
+
+	/**
+	 * 子节点
+	 */
+	@OneToMany(cascade = { CascadeType.ALL }, mappedBy = "parent", fetch = FetchType.EAGER)
+	private List<Permission> children = new ArrayList<>();
 
 }

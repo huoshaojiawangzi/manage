@@ -1,10 +1,9 @@
 package com.lizc.sports.sys.entity;
 
-import com.lizc.sports.common.utils.id.BaseEntity;
+import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
 * 字典

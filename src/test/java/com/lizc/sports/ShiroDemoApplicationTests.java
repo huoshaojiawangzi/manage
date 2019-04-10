@@ -30,8 +30,8 @@ public class ShiroDemoApplicationTests {
 	public void testExposeSave() {
 		Permission permission = permissionService.findAll().get(0);
 		Menu menu = new Menu();
-		menu.setName("用户查询");
-		menu.setPath("userList");
+		menu.setName("档案管理查询");
+		menu.setPath("archiveList");
 		menu.setPermission(permission);
 		permissionService.save(permission);
 		menuService.save(menu);

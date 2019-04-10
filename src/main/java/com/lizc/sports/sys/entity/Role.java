@@ -3,7 +3,7 @@
  */
 package com.lizc.sports.sys.entity;
 
-import com.lizc.sports.common.utils.id.BaseEntity;
+import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,6 +25,6 @@ public class Role extends BaseEntity{
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "role_id")
-	private List<Permission> permissions = new ArrayList<Permission>();
+	private List<Permission> permissions = new ArrayList<>();
 
 }

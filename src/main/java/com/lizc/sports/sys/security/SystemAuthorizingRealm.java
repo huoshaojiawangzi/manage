@@ -11,7 +11,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 
 
-public class UserRealm extends AuthorizingRealm
+public class SystemAuthorizingRealm extends AuthorizingRealm
 {
 
     /* 执行授权逻辑

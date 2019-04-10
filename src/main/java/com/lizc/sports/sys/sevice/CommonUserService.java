@@ -1,5 +1,6 @@
 package com.lizc.sports.sys.sevice;
 
+import com.lizc.sports.common.service.BaseService;
 import com.lizc.sports.sys.entity.CommonUser;
 import com.lizc.sports.sys.repository.CommonUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Service;
  * @date: 2019-03-06 14:53
  **/
 @Service
-public class CommonUserService {
+public class CommonUserService extends BaseService<CommonUser,String,CommonUserRepository>
+{
 
     @Autowired
     private CommonUserRepository commonUserRepository;
