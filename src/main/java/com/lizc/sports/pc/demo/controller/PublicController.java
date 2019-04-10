@@ -43,13 +43,6 @@ public class PublicController extends BaseController
 
 
     @ResponseBody
-    @GetMapping("find-permissions-menus")
-    public List<Menu> getPermissionsMenus()
-    {
-        return permissionService.findMenusByPermission("402881ef69e6e0340169e6e053f30000");
-    }
-
-    @ResponseBody
     @GetMapping("find-permissions")
     public List<Permission> getPermissions()
     {

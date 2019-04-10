@@ -32,7 +32,6 @@ public class ShiroDemoApplicationTests {
 		Menu menu = new Menu();
 		menu.setName("档案管理查询");
 		menu.setPath("archiveList");
-		menu.setPermission(permission);
 		permissionService.save(permission);
 		menuService.save(menu);
 	}
@@ -45,8 +44,6 @@ public class ShiroDemoApplicationTests {
 	{
 		List<Menu> menus = menuService.findAll();
 		List<Permission> permissions = permissionService.findAll();
-		System.out.println(menus.get(0).getPermission().getName());
-		System.out.println(permissions.get(0).getMenus().get(0).getName());
 	}
 
 	/**
@@ -60,7 +57,6 @@ public class ShiroDemoApplicationTests {
 		Menu menu = new Menu();
 		menu.setPath("sunList");
 		menu.setName("开心查询");
-		permission.addMenu(menu);
 		permissionService.saveAndFlush(permission);
 	}
 
