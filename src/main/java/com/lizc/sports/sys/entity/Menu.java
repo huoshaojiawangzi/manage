@@ -1,8 +1,8 @@
 package com.lizc.sports.sys.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ import java.util.List;
 * @author   lizc@sdhuijin.cn
 * @date     2019/03/06
 */
+@EqualsAndHashCode(callSuper=true)
 @Data
-@JsonIgnoreProperties(value = {"permission"})
 @Entity
 @Table(name = "c_menu")
 public class Menu extends BaseEntity {
@@ -25,7 +25,7 @@ public class Menu extends BaseEntity {
 	/**
 	 * 前端路由地址
 	 */
-	@Column(nullable = false)
+	@Column(unique = true)
 	private String path;
 
 	/**

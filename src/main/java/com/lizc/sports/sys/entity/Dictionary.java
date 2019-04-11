@@ -2,14 +2,18 @@ package com.lizc.sports.sys.entity;
 
 import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
 * 字典
 * @author   lizc@sdhuijin.cn
 * @date     2019/03/06
 */
+@EqualsAndHashCode(callSuper=true)
 @Data
 @Entity
 @Table(name = "c_dictionary")

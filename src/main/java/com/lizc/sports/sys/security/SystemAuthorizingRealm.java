@@ -24,7 +24,6 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
         //得到的其实是认证逻辑返回的SimpleAuthenticationInfo(user,password,"")中的user
         User user = (User)subject.getPrincipal();
         //给当前用户赋予权限
-        authorizationInfo.addStringPermission(user.getAuthority());
         return authorizationInfo;
     }
 
@@ -38,9 +37,6 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
         String password = "123456";
         UsernamePasswordToken userToken = (UsernamePasswordToken)token;
         User user = new User();
-        user.setUserName(userName);
-        user.setPassword(password);
-        user.setAuthority("user:add");
         //账号验证
         if(!userName.equals(userToken.getUsername()))
         {

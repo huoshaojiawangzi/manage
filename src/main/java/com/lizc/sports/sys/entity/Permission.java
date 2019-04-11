@@ -1,6 +1,5 @@
 package com.lizc.sports.sys.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
 
@@ -14,7 +13,6 @@ import java.util.List;
 * @date     2019/03/06
 */
 @Data
-@JsonIgnoreProperties(value = {"menus"})
 @Entity
 @Table(name = "c_permission")
 public class Permission extends BaseEntity {
@@ -25,6 +23,7 @@ public class Permission extends BaseEntity {
 	/**
 	 * url地址
 	 */
+	@Column(nullable = false,unique = true)
 	private String url;
 
 	/**

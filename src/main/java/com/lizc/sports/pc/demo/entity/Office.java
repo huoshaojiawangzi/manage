@@ -7,15 +7,17 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+/**
+ * @author: lizc@sdhuijin.cn
+ * @date: 2019-04-11 14:46
+ **/
 @EqualsAndHashCode(callSuper=true)
-@Data
-@Table(name="t_address")
+@Table(name="t_office")
 @Entity
-public class Address extends BaseEntity
+@Data
+public class Office extends BaseEntity
 {
-    private static final long serialVersionUID = 1L;
-
     private String name;
-    
-    private String phone;
+
+    private String address;
 }

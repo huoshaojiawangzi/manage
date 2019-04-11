@@ -17,7 +17,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ShiroDemoApplicationTests {
+public class ManyToOneTests {
 
 	@Autowired
 	private MenuService menuService;
@@ -28,14 +28,29 @@ public class ShiroDemoApplicationTests {
 	@Autowired
 	private CommonUserService commonUserService;
 
-
 	@Test
 	public void testSaveCommuser() {
 		CommonUser commonUser = new CommonUser();
-		commonUser.setName("梨花");
-		commonUser.setPassword("654321");
+		commonUser.setName("雪见");
+		commonUser.setPassword("55555");
+		commonUser.setUserName("xuejian");
+		commonUserService.saveAndFlush(commonUser);
+	}
+
+	@Test
+	public void testUpdateCommuser() {
+		CommonUser commonUser = new CommonUser();
+		commonUser.setId("402881ef6a0a0c17016a0a0c2a110000");
+		commonUser.setName("古手梨花");
+		commonUser.setPassword("666666");
 		commonUser.setUserName("lihua");
 		commonUserService.saveAndFlush(commonUser);
+	}
+	@Test
+	public void testGetCommuser() {
+		CommonUser commonUser = commonUserService.get("402881ef6a0a0c17016a0a0c2a110000");
+		System.out.println("*******************************************");
+		System.out.println(commonUser.getUpdateDate());
 	}
 
 	@Test

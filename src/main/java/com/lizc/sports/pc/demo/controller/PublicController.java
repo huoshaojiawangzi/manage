@@ -80,7 +80,8 @@ public class PublicController extends BaseController
             model.addAttribute("msg", "用户名不存在");
             return "login";
         }
-        catch (IncorrectCredentialsException e) {
+        catch (IncorrectCredentialsException e)
+        {
             model.addAttribute("msg", "密码错误");
             return "login";
         }

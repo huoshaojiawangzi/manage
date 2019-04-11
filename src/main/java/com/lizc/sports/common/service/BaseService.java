@@ -1,12 +1,9 @@
 package com.lizc.sports.common.service;
 
-import com.lizc.sports.common.entity.BaseEntity;
 import com.lizc.sports.common.repository.BaseRepository;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,7 +14,7 @@ import java.util.List;
  * @author   lizc@sdhuijin.cn
  * @date     2019/04/10
 */
-public abstract class BaseService<T extends BaseEntity,ID extends Serializable,R extends BaseRepository<T,ID>>{
+public abstract class BaseService<T,ID extends Serializable,R extends BaseRepository<T,ID>>{
 
     @Autowired(required = false)
     private R repostitory;
@@ -56,7 +53,6 @@ public abstract class BaseService<T extends BaseEntity,ID extends Serializable,R
 
     /**
      * 找到所有实体
-     * @return
      */
     public List<T> findAll()
     {
@@ -65,8 +61,6 @@ public abstract class BaseService<T extends BaseEntity,ID extends Serializable,R
 
     /**
      * 根据example找到所有实体
-     * @param example
-     * @return
      */
     public List<T> findAll(Example<T> example) {
         return repostitory.findAll(example);
@@ -74,8 +68,6 @@ public abstract class BaseService<T extends BaseEntity,ID extends Serializable,R
 
     /**
      * 如果该id实体存在，返回true，否则返回false
-     * @param id
-     * @return
      */
     public boolean exists(ID id)
     {

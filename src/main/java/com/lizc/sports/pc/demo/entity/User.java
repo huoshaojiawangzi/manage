@@ -1,12 +1,14 @@
 package com.lizc.sports.pc.demo.entity;
 
 import com.lizc.sports.common.entity.BaseEntity;
+import com.lizc.sports.sys.entity.CommonUser;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.Date;
 
 @EqualsAndHashCode(callSuper=true)
 @Table(name="t_user")
@@ -14,14 +16,11 @@ import java.util.Date;
 @Data
 public class User extends BaseEntity
 {
-    private static final long serialVersionUID = 1L;
+    @OneToOne
+    private CommonUser commonUser;
 
-    private String password;
-    
-    private String authority;
-    
-    private String userName;
+    @ManyToOne
+    private Office office;
 
-    private Date date;
-
+    private String phone;
 }

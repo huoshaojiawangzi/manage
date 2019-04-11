@@ -20,9 +20,9 @@ public class ShiroConfig
         shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager);
         Map<String,String> filterMap = new LinkedHashMap<>();
         //将public路径下的访问放行，注意必须放在代码行数最前面
-        filterMap.put("/public/*", "anon");
+        filterMap.put("/home/*", "anon");
         //设置访问权限
-        filterMap.put("/user/userAdd","perms[user:add]");
+        filterMap.put("/home/user/userAdd","perms[user:add]");
         //将所有的路径进行认证权限过滤
         filterMap.put("/**", "authc");
         //登录认证失败跳转页面
