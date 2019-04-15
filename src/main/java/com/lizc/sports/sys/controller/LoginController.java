@@ -1,4 +1,4 @@
-package com.lizc.sports.pc.demo.controller;
+package com.lizc.sports.sys.controller;
 
 import com.lizc.sports.common.controller.BaseController;
 import com.lizc.sports.sys.entity.Menu;
@@ -25,8 +25,8 @@ import java.util.List;
 * @date     2019/03/06
 */
 @Controller
-@RequestMapping("public")
-public class PublicController extends BaseController
+@RequestMapping("home")
+public class LoginController extends BaseController
 {
 
     @Autowired

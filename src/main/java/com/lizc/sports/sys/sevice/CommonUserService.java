@@ -15,24 +15,32 @@ import org.springframework.stereotype.Service;
 public class CommonUserService extends BaseService<CommonUser,String,CommonUserRepository>
 {
 
+    private final CommonUserRepository commonUserRepository;
+
     @Autowired
-    private CommonUserRepository commonUserRepository;
+    public CommonUserService(CommonUserRepository commonUserRepository) {
+        this.commonUserRepository = commonUserRepository;
+    }
+
+    public CommonUser findByUserNameAndPassword(String userName, String password)
+    {
+        CommonUser commonUser = findByUserName(userName);
+        if(commonUser == null||!password.equals(commonUser.getPassword()))
+        {
+            return null;
+        }
+        else
+        {
+            return commonUser;
+        }
+    }
 
     public CommonUser findByUserName(String userName)
     {
         CommonUser commonUser = new CommonUser();
         commonUser.setUserName(userName);
         Example<CommonUser> example = Example.of(commonUser);
-        return commonUserRepository.findOne(example).get();
-    }
-
-    /**
-     * 逻辑删除
-     * @param commonUser
-     */
-    public void delete(CommonUser commonUser)
-    {
-        commonUser.setDelFlag("1");
+        return commonUserRepository.findOne(example).orElse(null);
     }
 
     /**

@@ -45,6 +45,16 @@ public abstract class BaseEntity implements Serializable
     protected Date createDate;// 创建日期
     @LastModifiedDate
     protected Date updateDate;// 更新日期
-    protected String delFlag = "0"; // 删除标记（0：正常；1：删除；2：审核）
+
+    protected String delFlag = "0"; // 删除标记（0：正常；1：删除）
+
+    /**
+     * 删除标记:正常
+     */
+    public static final String DEL_FLAG_NORMAL = "0";
+    /**
+     * 删除标记:删除
+     */
+    public static final String DEL_FLAG_DELETE = "1";
 
 }
