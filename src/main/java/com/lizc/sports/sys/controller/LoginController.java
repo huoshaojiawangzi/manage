@@ -1,6 +1,8 @@
 package com.lizc.sports.sys.controller;
 
 import com.lizc.sports.common.controller.BaseController;
+import com.lizc.sports.common.dto.JsonResult;
+import com.lizc.sports.common.enums.SysResultCode;
 import com.lizc.sports.sys.entity.Menu;
 import com.lizc.sports.sys.entity.Permission;
 import com.lizc.sports.sys.sevice.MenuService;
@@ -11,11 +13,9 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -24,16 +24,20 @@ import java.util.List;
 * @author   lizc@sdhuijin.cn
 * @date     2019/03/06
 */
-@Controller
+@RestController
 @RequestMapping("home")
 public class LoginController extends BaseController
 {
 
-    @Autowired
-    private PermissionService permissionService;
+    private final PermissionService permissionService;
+
+    private final MenuService menuService;
 
     @Autowired
-    private MenuService menuService;
+    public LoginController(PermissionService permissionService, MenuService menuService) {
+        this.permissionService = permissionService;
+        this.menuService = menuService;
+    }
 
     @RequestMapping("index")
     public String index()
@@ -42,30 +46,30 @@ public class LoginController extends BaseController
     }
 
 
-    @ResponseBody
     @GetMapping("find-permissions")
     public List<Permission> getPermissions()
     {
         return permissionService.findAll();
     }
 
-    @ResponseBody
     @GetMapping("find-menus")
     public List<Menu> getMenus()
     {
         return menuService.findAll();
     }
 
-    @RequestMapping("loginView")
+    @RequestMapping("unAuth")
     public String loginView()
     {
-        return "login";
+        return "亲，您没有访问权限哦!";
     }
+
     /**登录
      */
     @RequestMapping("login")
-    public String login(String userName,String password,Model model)
+    public JsonResult<String> login(String userName,String password)
     {
+        JsonResult<String> jsonResult = new JsonResult<>();
         //得到subject
         Subject subject = SecurityUtils.getSubject();
         //封装用户数据
@@ -73,22 +77,19 @@ public class LoginController extends BaseController
         try
         {
             subject.login(token);
-            return "index";
+            jsonResult.setResultCode(SysResultCode.SUCCESS);
+            jsonResult.setResult("登录成功！");
         }
         catch (UnknownAccountException e)
         {
-            model.addAttribute("msg", "用户名不存在");
-            return "login";
+            jsonResult.setResultCode(SysResultCode.FAILURE);
+            jsonResult.setResult("账号不存在！");
         }
         catch (IncorrectCredentialsException e)
         {
-            model.addAttribute("msg", "密码错误");
-            return "login";
+            jsonResult.setResultCode(SysResultCode.FAILURE);
+            jsonResult.setResult("密码错误！");
         }
-    }
-    @RequestMapping("unAuth")
-    public String unAuth()
-    {
-        return "unAuth";
+        return jsonResult;
     }
 }

@@ -1,5 +1,6 @@
 package com.lizc.sports.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lizc.sports.sys.entity.CommonUser;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -15,6 +16,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@JsonIgnoreProperties(value = {"createBy","updateBy"})
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 @Data

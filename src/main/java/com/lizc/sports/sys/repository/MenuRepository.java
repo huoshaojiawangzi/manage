@@ -13,6 +13,6 @@ import java.util.List;
  **/
 @Repository
 public interface MenuRepository extends BaseRepository<Menu, String> {
-    @Query("select o from Menu o where parent.id is null")
+    @Query("select m from Menu m where m.parent is null")
     List<Menu> findRoots();
 }

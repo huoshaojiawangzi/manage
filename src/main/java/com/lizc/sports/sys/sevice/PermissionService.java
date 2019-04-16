@@ -6,6 +6,8 @@ import com.lizc.sports.sys.repository.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**权限控制业务逻辑
  * @author: lizc@sdhuijin.cn
  * @date: 2019-03-06 15:14
@@ -15,5 +17,10 @@ public class PermissionService extends BaseService<Permission,String,PermissionR
 
     @Autowired
     private PermissionRepository permissionRepository;
+
+    public List<Permission> findRoots()
+    {
+        return  permissionRepository.findRoots();
+    }
 
 }

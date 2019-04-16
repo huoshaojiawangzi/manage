@@ -1,18 +1,23 @@
 package com.lizc.sports.sys.security;
 
 
-import com.lizc.sports.pc.demo.entity.User;
-import org.apache.shiro.SecurityUtils;
+import com.lizc.sports.sys.entity.CommonUser;
+import com.lizc.sports.sys.entity.Permission;
+import com.lizc.sports.sys.sevice.CommonUserService;
+import com.lizc.sports.sys.utils.UserUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class SystemAuthorizingRealm extends AuthorizingRealm
 {
+
+    @Autowired
+    private CommonUserService commonUserService;
 
     /* 执行授权逻辑
      */
@@ -20,9 +25,11 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals)
     {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        Subject subject = SecurityUtils.getSubject();
-        //得到的其实是认证逻辑返回的SimpleAuthenticationInfo(user,password,"")中的user
-        User user = (User)subject.getPrincipal();
+        CommonUser currUser = UserUtils.getCurrentUser();
+        for(Permission permission:UserUtils.getCurrentRole().getPermissions())
+        {
+            authorizationInfo.addStringPermission(permission.getName());
+        }
         //给当前用户赋予权限
         return authorizationInfo;
     }
@@ -33,18 +40,16 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
         throws AuthenticationException
     {
-        String userName = "admin";
-        String password = "123456";
         UsernamePasswordToken userToken = (UsernamePasswordToken)token;
-        User user = new User();
+        CommonUser commonUser = commonUserService.findByUserName(userToken.getUsername());
         //账号验证
-        if(!userName.equals(userToken.getUsername()))
+        if(commonUser == null)
         {
           //底层抛出UnknownAccountException
             return null;
         }
         //使密码对比password，成功返回SimpleAuthenticationInfo失败抛出IncorrectCredentialsException
-        return new SimpleAuthenticationInfo(user,password,"");
+        return new SimpleAuthenticationInfo(commonUser,commonUser.getPassword(),"");
     }
 
 }

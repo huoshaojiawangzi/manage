@@ -1,7 +1,9 @@
 package com.lizc.sports.sys.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
 * @author   lizc@sdhuijin.cn
 * @date     2019/03/06
 */
+@EqualsAndHashCode(callSuper=true)
 @Data
 @Entity
 @Table(name = "c_permission")
@@ -23,12 +26,13 @@ public class Permission extends BaseEntity {
 	/**
 	 * url地址
 	 */
-	@Column(nullable = false,unique = true)
+	@Column(unique = true)
 	private String url;
 
 	/**
 	 * 父节点
 	 */
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Permission parent;
 

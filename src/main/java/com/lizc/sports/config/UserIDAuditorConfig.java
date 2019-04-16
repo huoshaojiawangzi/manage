@@ -1,8 +1,7 @@
 package com.lizc.sports.config;
 
+import com.lizc.sports.sys.utils.UserUtils;
 import com.lizc.sports.sys.entity.CommonUser;
-import com.lizc.sports.sys.sevice.CommonUserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 
@@ -15,12 +14,8 @@ import java.util.Optional;
 @Configuration
 public class UserIDAuditorConfig implements AuditorAware<CommonUser> {
 
-    @Autowired
-    private CommonUserService userService;
-
     @Override
     public Optional<CommonUser> getCurrentAuditor() {
-        CommonUser commonUser = userService.get("1");
-        return Optional.of(commonUser);
+        return Optional.ofNullable(UserUtils.getCurrentUser());
     }
 }
