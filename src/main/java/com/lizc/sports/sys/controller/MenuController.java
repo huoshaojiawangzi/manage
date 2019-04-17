@@ -36,33 +36,19 @@ public class MenuController extends BaseController
     public JsonResult save(Menu menu)
     {
         JsonResult jsonResult = new JsonResult();
-        try
-        {
-            menuService.save(menu);
-            jsonResult.setResultCode(SysResultCode.SUCCESS);
-        }
-        catch (Exception e)
-        {
-            jsonResult.setResultCode(SysResultCode.FAILURE);
-            logger.debug(e.getMessage());
-        }
+        menuService.save(menu);
+        jsonResult.setResultCode(SysResultCode.SUCCESS);
         return jsonResult;
     }
 
+    @SuppressWarnings("Duplicates")
     @RequestMapping("/find-roots")
     public JsonResult<List<Menu>> findRoots()
     {
         JsonResult<List<Menu>> jsonResult = new JsonResult<>();
-        try
-        {
-            List<Menu> roots = menuService.findRoots();
-            jsonResult.setResultCode(SysResultCode.SUCCESS);
-            jsonResult.setResult(roots);
-        }
-        catch (Exception e)
-        {
-            jsonResult.setResultCode(SysResultCode.FAILURE);
-        }
+        List<Menu> roots = menuService.findRoots();
+        jsonResult.setResultCode(SysResultCode.SUCCESS);
+        jsonResult.setResult(roots);
         return jsonResult;
     }
 }

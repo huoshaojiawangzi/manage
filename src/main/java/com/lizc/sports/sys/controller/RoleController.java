@@ -31,16 +31,8 @@ public class RoleController extends BaseController
     public JsonResult save(Role role)
     {
         JsonResult jsonResult = new JsonResult();
-        try
-        {
-            roleService.save(role);
-            jsonResult.setResultCode(SysResultCode.SUCCESS);
-        }
-        catch (Exception e)
-        {
-            jsonResult.setResultCode(SysResultCode.FAILURE);
-            logger.debug(e.getMessage());
-        }
+        roleService.save(role);
+        jsonResult.setResultCode(SysResultCode.SUCCESS);
         return jsonResult;
     }
 }

@@ -15,7 +15,6 @@ import java.util.List;
 
 /**
  * 权限控制
- * 
  * @author: lizc@sdhuijin.cn
  * @date: 2019-04-16 10:30
  **/
@@ -36,33 +35,19 @@ public class PermissionController extends BaseController
     public JsonResult save(Permission permission)
     {
         JsonResult jsonResult = new JsonResult();
-        try
-        {
-            permissionService.save(permission);
-            jsonResult.setResultCode(SysResultCode.SUCCESS);
-        }
-        catch (Exception e)
-        {
-            jsonResult.setResultCode(SysResultCode.FAILURE);
-            logger.debug(e.getMessage());
-        }
+        permissionService.save(permission);
+        jsonResult.setResultCode(SysResultCode.SUCCESS);
         return jsonResult;
     }
 
+    @SuppressWarnings("Duplicates")
     @RequestMapping("/find-roots")
     public JsonResult<List<Permission>> findRoots()
     {
         JsonResult<List<Permission>> jsonResult = new JsonResult<>();
-        try
-        {
-            List<Permission> roots = permissionService.findRoots();
-            jsonResult.setResultCode(SysResultCode.SUCCESS);
-            jsonResult.setResult(roots);
-        }
-        catch (Exception e)
-        {
-            jsonResult.setResultCode(SysResultCode.FAILURE);
-        }
+        List<Permission> roots = permissionService.findRoots();
+        jsonResult.setResultCode(SysResultCode.SUCCESS);
+        jsonResult.setResult(roots);
         return jsonResult;
     }
 }

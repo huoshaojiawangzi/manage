@@ -26,16 +26,8 @@ public class UserController extends BaseController
     public JsonResult save(User user)
     {
         JsonResult jsonResult = new JsonResult();
-        try
-        {
-            userService.save(user);
-            jsonResult.setResultCode(SysResultCode.SUCCESS);
-        }
-        catch (Exception e)
-        {
-            jsonResult.setResultCode(SysResultCode.FAILURE);
-            logger.debug(e.getMessage());
-        }
+        userService.save(user);
+        jsonResult.setResultCode(SysResultCode.SUCCESS);
         return jsonResult;
     }
 }
