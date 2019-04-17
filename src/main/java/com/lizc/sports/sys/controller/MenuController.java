@@ -4,8 +4,8 @@ package com.lizc.sports.sys.controller;
 import com.lizc.sports.common.controller.BaseController;
 import com.lizc.sports.common.dto.JsonResult;
 import com.lizc.sports.common.enums.SysResultCode;
-import com.lizc.sports.sys.entity.Permission;
-import com.lizc.sports.sys.sevice.PermissionService;
+import com.lizc.sports.sys.entity.Menu;
+import com.lizc.sports.sys.sevice.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,31 +14,31 @@ import java.util.List;
 
 
 /**
- * 权限控制
+ * 菜单
  * 
  * @author: lizc@sdhuijin.cn
  * @date: 2019-04-16 10:30
  **/
 @RestController
-@RequestMapping("home/permission")
-public class PermissionController extends BaseController
+@RequestMapping("home/menu")
+public class MenuController extends BaseController
 {
 
-    private final PermissionService permissionService;
+    private final MenuService menuService;
 
     @Autowired
-    public PermissionController(PermissionService permissionService)
+    public MenuController(MenuService menuService)
     {
-        this.permissionService = permissionService;
+        this.menuService = menuService;
     }
 
     @RequestMapping("/save")
-    public JsonResult save(Permission permission)
+    public JsonResult save(Menu menu)
     {
         JsonResult jsonResult = new JsonResult();
         try
         {
-            permissionService.save(permission);
+            menuService.save(menu);
             jsonResult.setResultCode(SysResultCode.SUCCESS);
         }
         catch (Exception e)
@@ -50,12 +50,12 @@ public class PermissionController extends BaseController
     }
 
     @RequestMapping("/find-roots")
-    public JsonResult<List<Permission>> findRoots()
+    public JsonResult<List<Menu>> findRoots()
     {
-        JsonResult<List<Permission>> jsonResult = new JsonResult<>();
+        JsonResult<List<Menu>> jsonResult = new JsonResult<>();
         try
         {
-            List<Permission> roots = permissionService.findRoots();
+            List<Menu> roots = menuService.findRoots();
             jsonResult.setResultCode(SysResultCode.SUCCESS);
             jsonResult.setResult(roots);
         }

@@ -26,6 +26,12 @@ import java.util.List;
 public class Menu extends BaseEntity
 {
 
+    /**
+     * 每个类型中本标签的排序位置
+     */
+    @Column(nullable = false)
+    private int sort;
+
     @Column(nullable = false)
     private String name;
 
@@ -56,7 +62,7 @@ public class Menu extends BaseEntity
      * 子节点
      */
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "parent", fetch = FetchType.EAGER)
-    @OrderBy("createDate DESC")
+    @OrderBy("sort ASC ")
     private List<Menu> children = new ArrayList<>();
 
 }

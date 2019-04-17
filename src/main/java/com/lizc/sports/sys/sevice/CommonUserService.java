@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @date: 2019-03-06 14:53
  **/
 @Service
-public class CommonUserService extends BaseService<CommonUser, String, CommonUserRepository>
+public class CommonUserService extends BaseService<CommonUser,String,CommonUserRepository>
 {
 
     private final CommonUserRepository commonUserRepository;

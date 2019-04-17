@@ -28,7 +28,7 @@ public class RoleController extends BaseController
     }
 
     @RequestMapping("/save")
-    public JsonResult saveRole(Role role)
+    public JsonResult save(Role role)
     {
         JsonResult jsonResult = new JsonResult();
         try

@@ -26,8 +26,15 @@ import java.util.List;
 public class Permission extends BaseEntity
 {
 
-    @Column(nullable = false)
+    /**
+     * 权限名称
+     */
     private String name;
+    /**
+     * 权限标签
+     */
+    @Column(nullable = false)
+    private String tag;
 
     /**
      * url地址
@@ -46,6 +53,7 @@ public class Permission extends BaseEntity
      * 子节点
      */
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "parent", fetch = FetchType.EAGER)
+    @OrderBy("createDate DESC")
     private List<Permission> children = new ArrayList<>();
 
 }

@@ -24,6 +24,11 @@ public class Dictionary extends BaseEntity
 {
 
     /**
+     * 每个类型中本标签的排序位置
+     */
+    private int sort;
+
+    /**
      * 类型
      */
     @Column(nullable = false)

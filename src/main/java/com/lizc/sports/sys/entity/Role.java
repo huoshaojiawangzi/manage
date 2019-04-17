@@ -38,5 +38,6 @@ public class Role extends BaseEntity
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "role_id")
+    @OrderBy("sort ASC ")
     private List<Menu> menus = new ArrayList<>();
 }

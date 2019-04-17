@@ -1,18 +1,19 @@
 package com.lizc.sports.pc.demo.controller;
 
 
-import com.lizc.sports.sys.utils.UserUtils;
+import com.lizc.sports.common.controller.BaseController;
+import com.lizc.sports.common.dto.JsonResult;
+import com.lizc.sports.common.enums.SysResultCode;
 import com.lizc.sports.pc.demo.entity.User;
 import com.lizc.sports.pc.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 
-@Controller
+@RestController
 @RequestMapping("home/user")
-public class UserController
+public class UserController extends BaseController
 {
     private final UserService userService;
 
@@ -21,21 +22,20 @@ public class UserController
         this.userService = userService;
     }
 
-    @ResponseBody
     @RequestMapping("/save")
-    public String userAdd()
+    public JsonResult save(User user)
     {
-        System.out.println("用户增加");
-        User user = new User();
-        user.setPhone("15662410583");
-        user.setCommonUser(UserUtils.getCurrentUser());
-        userService.save(user);
-        return "success";
-    }
-
-    @RequestMapping("userUpdate")
-    public String userUpdate()
-    {
-        return "user/userUpdate";
+        JsonResult jsonResult = new JsonResult();
+        try
+        {
+            userService.save(user);
+            jsonResult.setResultCode(SysResultCode.SUCCESS);
+        }
+        catch (Exception e)
+        {
+            jsonResult.setResultCode(SysResultCode.FAILURE);
+            logger.debug(e.getMessage());
+        }
+        return jsonResult;
     }
 }

@@ -15,7 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @JsonIgnoreProperties(value = {"createBy", "updateBy"})
@@ -46,10 +46,10 @@ public abstract class BaseEntity implements Serializable
     protected CommonUser updateBy; // 更新者
 
     @CreatedDate
-    protected Date createDate;// 创建日期
+    protected LocalDateTime createDate;// 创建日期
 
     @LastModifiedDate
-    protected Date updateDate;// 更新日期
+    protected LocalDateTime updateDate;// 更新日期
 
     protected String delFlag = "0"; // 删除标记（0：正常；1：删除）
 
