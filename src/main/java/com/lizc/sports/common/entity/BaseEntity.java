@@ -1,5 +1,6 @@
 package com.lizc.sports.common.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lizc.sports.sys.entity.CommonUser;
 import lombok.Data;
@@ -16,14 +17,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@JsonIgnoreProperties(value = {"createBy","updateBy"})
+
+@JsonIgnoreProperties(value = {"createBy", "updateBy"})
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 @Data
 public abstract class BaseEntity implements Serializable
 {
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(generator = "idGenerator")
     @GenericGenerator(name = "idGenerator", strategy = "uuid")
@@ -45,6 +47,7 @@ public abstract class BaseEntity implements Serializable
 
     @CreatedDate
     protected Date createDate;// 创建日期
+
     @LastModifiedDate
     protected Date updateDate;// 更新日期
 
@@ -54,6 +57,7 @@ public abstract class BaseEntity implements Serializable
      * 删除标记:正常
      */
     public static final String DEL_FLAG_NORMAL = "0";
+
     /**
      * 删除标记:删除
      */

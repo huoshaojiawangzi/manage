@@ -1,5 +1,6 @@
 package com.lizc.sports.sys.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
@@ -9,17 +10,19 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * 系统用户
  *
  * @author lizc@sdhuijin.cn
  * @date 2019/03/06
  */
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "c_user")
-public class CommonUser extends BaseEntity {
+public class CommonUser extends BaseEntity
+{
 
     /**
      * 登录名

@@ -19,22 +19,24 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
     @Autowired
     private CommonUserService commonUserService;
 
-    /* 执行授权逻辑
+    /*
+     * 执行授权逻辑
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals)
     {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         CommonUser currUser = UserUtils.getCurrentUser();
-        for(Permission permission:UserUtils.getCurrentRole().getPermissions())
+        for (Permission permission : UserUtils.getCurrentRole().getPermissions())
         {
             authorizationInfo.addStringPermission(permission.getName());
         }
-        //给当前用户赋予权限
+        // 给当前用户赋予权限
         return authorizationInfo;
     }
 
-    /* 执行认证逻辑
+    /*
+     * 执行认证逻辑
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
@@ -42,14 +44,14 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
     {
         UsernamePasswordToken userToken = (UsernamePasswordToken)token;
         CommonUser commonUser = commonUserService.findByUserName(userToken.getUsername());
-        //账号验证
-        if(commonUser == null)
+        // 账号验证
+        if (commonUser == null)
         {
-          //底层抛出UnknownAccountException
+            // 底层抛出UnknownAccountException
             return null;
         }
-        //使密码对比password，成功返回SimpleAuthenticationInfo失败抛出IncorrectCredentialsException
-        return new SimpleAuthenticationInfo(commonUser,commonUser.getPassword(),"");
+        // 使密码对比password，成功返回SimpleAuthenticationInfo失败抛出IncorrectCredentialsException
+        return new SimpleAuthenticationInfo(commonUser, commonUser.getPassword(), "");
     }
 
 }

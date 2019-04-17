@@ -1,5 +1,6 @@
 package com.lizc.sports.sys.controller;
 
+
 import com.lizc.sports.common.controller.BaseController;
 import com.lizc.sports.common.dto.JsonResult;
 import com.lizc.sports.common.enums.SysResultCode;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**权限控制
+
+/**
+ * 权限控制
+ * 
  * @author: lizc@sdhuijin.cn
  * @date: 2019-04-16 10:30
  **/
@@ -23,7 +27,8 @@ public class PermissionController extends BaseController
     private final PermissionService permissionService;
 
     @Autowired
-    public PermissionController(PermissionService permissionService) {
+    public PermissionController(PermissionService permissionService)
+    {
         this.permissionService = permissionService;
     }
 
@@ -43,10 +48,11 @@ public class PermissionController extends BaseController
         }
         return jsonResult;
     }
+
     @RequestMapping("/find-roots")
     public JsonResult<List<Permission>> findRoots()
     {
-        JsonResult<List<Permission>>  jsonResult = new JsonResult<>();
+        JsonResult<List<Permission>> jsonResult = new JsonResult<>();
         try
         {
             List<Permission> roots = permissionService.findRoots();

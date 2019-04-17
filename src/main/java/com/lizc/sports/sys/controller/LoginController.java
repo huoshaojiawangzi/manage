@@ -1,5 +1,6 @@
 package com.lizc.sports.sys.controller;
 
+
 import com.lizc.sports.common.controller.BaseController;
 import com.lizc.sports.common.dto.JsonResult;
 import com.lizc.sports.common.enums.SysResultCode;
@@ -19,11 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
 /**
-*   访问的公共资源
-* @author   lizc@sdhuijin.cn
-* @date     2019/03/06
-*/
+ * 访问的公共资源
+ * 
+ * @author lizc@sdhuijin.cn
+ * @date 2019/03/06
+ */
 @RestController
 @RequestMapping("home")
 public class LoginController extends BaseController
@@ -34,7 +37,8 @@ public class LoginController extends BaseController
     private final MenuService menuService;
 
     @Autowired
-    public LoginController(PermissionService permissionService, MenuService menuService) {
+    public LoginController(PermissionService permissionService, MenuService menuService)
+    {
         this.permissionService = permissionService;
         this.menuService = menuService;
     }
@@ -44,7 +48,6 @@ public class LoginController extends BaseController
     {
         return "index";
     }
-
 
     @GetMapping("find-permissions")
     public List<Permission> getPermissions()
@@ -64,16 +67,17 @@ public class LoginController extends BaseController
         return "亲，您没有访问权限哦!";
     }
 
-    /**登录
+    /**
+     * 登录
      */
     @RequestMapping("login")
-    public JsonResult<String> login(String userName,String password)
+    public JsonResult<String> login(String userName, String password)
     {
         JsonResult<String> jsonResult = new JsonResult<>();
-        //得到subject
+        // 得到subject
         Subject subject = SecurityUtils.getSubject();
-        //封装用户数据
-        UsernamePasswordToken token = new UsernamePasswordToken(userName,password);
+        // 封装用户数据
+        UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
         try
         {
             subject.login(token);

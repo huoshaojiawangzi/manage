@@ -1,5 +1,6 @@
 package com.lizc.sports;
 
+
 import com.lizc.sports.sys.entity.Permission;
 import com.lizc.sports.sys.sevice.PermissionService;
 import org.junit.Test;
@@ -10,13 +11,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+
 /**
  * @author: lizc@sdhuijin.cn
  * @date: 2019-04-16 11:35
  **/
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class PermissionTest {
+public class PermissionTest
+{
     @Autowired
     private PermissionService permissionService;
 

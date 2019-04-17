@@ -5,14 +5,12 @@
 
 package com.lizc.sports.common.enums;
 
-
 public enum SysResultCode implements IResultCode {
 
     /**
      * 返回 code:0，msg:成功;
      */
-    SUCCESS(0, " 操作成功"),
-    FAILURE(1, "操作失败");
+    SUCCESS(0, " 操作成功"), FAILURE(1, "操作失败");
 
     private Integer code;
 

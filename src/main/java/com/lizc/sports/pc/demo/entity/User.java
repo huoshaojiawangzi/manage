@@ -1,5 +1,6 @@
 package com.lizc.sports.pc.demo.entity;
 
+
 import com.lizc.sports.common.entity.BaseEntity;
 import com.lizc.sports.sys.entity.CommonUser;
 import lombok.Data;
@@ -10,8 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@EqualsAndHashCode(callSuper=true)
-@Table(name="t_user")
+
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "t_user")
 @Entity
 @Data
 public class User extends BaseEntity

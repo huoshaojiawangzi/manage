@@ -1,5 +1,6 @@
 package com.lizc.sports.common.service;
 
+
 import com.lizc.sports.common.entity.BaseEntity;
 import com.lizc.sports.common.repository.BaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,14 +9,15 @@ import org.springframework.data.domain.Example;
 import java.io.Serializable;
 import java.util.List;
 
+
 /**
- * T:实体类类型<p>
- * ID:实体类主键的类型<p>
- * R:实现了JpaRepository的实体类Repository<p>
- * @author   lizc@sdhuijin.cn
- * @date     2019/04/10
-*/
-public abstract class BaseService<T extends BaseEntity,ID extends Serializable,R extends BaseRepository<T,ID>>{
+ * T:实体类类型<p> ID:实体类主键的类型<p> R:实现了JpaRepository的实体类Repository<p>
+ * 
+ * @author lizc@sdhuijin.cn
+ * @date 2019/04/10
+ */
+public abstract class BaseService<T extends BaseEntity, ID extends Serializable, R extends BaseRepository<T, ID>>
+{
 
     @Autowired(required = false)
     private R repostitory;
@@ -45,7 +47,9 @@ public abstract class BaseService<T extends BaseEntity,ID extends Serializable,R
 
     /**
      * 逻辑删除
-     * @param t 实体类
+     * 
+     * @param t
+     *            实体类
      */
     public void delete(T t)
     {
@@ -55,7 +59,9 @@ public abstract class BaseService<T extends BaseEntity,ID extends Serializable,R
 
     /**
      * 逻辑删除
-     * @param  id 实体类id
+     * 
+     * @param id
+     *            实体类id
      */
     public void delete(ID id)
     {
@@ -64,10 +70,11 @@ public abstract class BaseService<T extends BaseEntity,ID extends Serializable,R
         save(t);
     }
 
-
     /**
      * 物理删除
-     * @param t 实体类
+     * 
+     * @param t
+     *            实体类
      */
     public void forceDelete(T t)
     {
@@ -85,7 +92,8 @@ public abstract class BaseService<T extends BaseEntity,ID extends Serializable,R
     /**
      * 根据example找到所有实体
      */
-    public List<T> findAll(Example<T> example) {
+    public List<T> findAll(Example<T> example)
+    {
         return repostitory.findAll(example);
     }
 

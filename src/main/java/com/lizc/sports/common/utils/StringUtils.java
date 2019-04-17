@@ -18,25 +18,27 @@ import java.util.regex.Pattern;
 public class StringUtils extends org.apache.commons.lang3.StringUtils
 {
 
-    /**保留任意位数的有效数字
+    /**
+     * 保留任意位数的有效数字
+     * 
      * @return
      */
-    public static String holdValid(String oldS,int valid)
+    public static String holdValid(String oldS, int valid)
     {
-        if(isBlank(oldS)||oldS.length()>=valid)
+        if (isBlank(oldS) || oldS.length() >= valid)
         {
             return oldS;
         }
         int i = 0;
         StringBuffer prefix = new StringBuffer();
-        while(i<valid-oldS.length())
+        while (i < valid - oldS.length())
         {
             prefix.append("0");
-            i++;
+            i++ ;
         }
         return prefix.append(oldS).toString();
     }
-    
+
     public static String lowerFirst(String str)
     {
         if (StringUtils.isBlank(str))

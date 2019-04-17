@@ -28,85 +28,108 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils
     private static String[] parsePatterns = {"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss",
         "yyyy-MM-dd HH:mm", "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyyMMdd",
         "yyyy.MM.dd", "yyyy-MM-dd HH:mm:ss.S"};
-    
-    public static Date parseAverage(Date timeSum, int number) throws ParseException {
-        long avg = (timeSum.getTime() - parseOriginalDate().getTime())/number;
-        long hours = avg/(1000* 60 * 60);
-        long minutes = (avg-hours*(1000* 60 * 60))/(1000* 60);
-        long second = (avg-hours*(1000* 60 * 60)-minutes*(1000*60))/(1000);
-        String avgString = ""+hours+":"+minutes+":"+second;
+
+    public static Date parseAverage(Date timeSum, int number)
+        throws ParseException
+    {
+        long avg = (timeSum.getTime() - parseOriginalDate().getTime()) / number;
+        long hours = avg / (1000 * 60 * 60);
+        long minutes = (avg - hours * (1000 * 60 * 60)) / (1000 * 60);
+        long second = (avg - hours * (1000 * 60 * 60) - minutes * (1000 * 60)) / (1000);
+        String avgString = "" + hours + ":" + minutes + ":" + second;
         return parseDateByHour(avgString);
     }
-    
-    /**获得原始日期
+
+    /**
+     * 获得原始日期
+     * 
      * @return
-     * @throws ParseException 
+     * @throws ParseException
      */
-    public static Date parseOriginalDate() throws ParseException {
+    public static Date parseOriginalDate()
+        throws ParseException
+    {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-       return df.parse("1970-01-01 00:00:00");
+        return df.parse("1970-01-01 00:00:00");
     }
-    
-    public static Date parsefutureDate() throws ParseException {
+
+    public static Date parsefutureDate()
+        throws ParseException
+    {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-       return df.parse("2070-01-01 00:00:00");
+        return df.parse("2070-01-01 00:00:00");
     }
-    
-    /**通过headDate的年月日，和tailDate的时分秒，获得连接的日期
+
+    /**
+     * 通过headDate的年月日，和tailDate的时分秒，获得连接的日期
+     * 
      * @param headDate
      * @param tailDate
      * @return
      * @throws ParseException
      */
-    public static Date parseDateByLink(Date headDate,Date tailDate) throws ParseException {
+    public static Date parseDateByLink(Date headDate, Date tailDate)
+        throws ParseException
+    {
         headDate = parseDateToDate(headDate, "yyyy-MM-dd");
         tailDate = parseDateToDate(tailDate, "HH:mm:ss");
         String headDateString = formatDate(headDate);
         String tailDateString = formatDate(tailDate, "HH:mm:ss");
-        return DateUtils.parseDate(headDateString + " "+tailDateString);
+        return DateUtils.parseDate(headDateString + " " + tailDateString);
     }
-    
-    
-    /**通过两个日期，得到两者之间所有的日期（以天为单位）
+
+    /**
+     * 通过两个日期，得到两者之间所有的日期（以天为单位）
+     * 
      * @param startDate
      * @param endDate
      * @return
      * @throws ParseException
      */
-    public static ArrayList<Date> parseDatesBySlot(Date startDate,Date endDate) throws ParseException{
+    public static ArrayList<Date> parseDatesBySlot(Date startDate, Date endDate)
+        throws ParseException
+    {
         ArrayList<Date> dates = new ArrayList<Date>();
-        if(endDate == null) {
+        if (endDate == null)
+        {
             endDate = startDate;
         }
-        Date startDateFormat =  parseDateToDate(startDate, "yyyy-MM-dd");
+        Date startDateFormat = parseDateToDate(startDate, "yyyy-MM-dd");
         Date endDateFormat = parseDateToDate(endDate, "yyyy-MM-dd");
-        while( startDateFormat.getTime()<=endDateFormat.getTime()) {
+        while (startDateFormat.getTime() <= endDateFormat.getTime())
+        {
             dates.add(startDateFormat);
             startDateFormat = DateUtils.parseDateByChangeDay(startDateFormat, 1);
         }
         return dates;
-        
+
     }
-    
-    /**通过传递date和天数，来得到所加减天数的日期
+
+    /**
+     * 通过传递date和天数，来得到所加减天数的日期
+     * 
      * @param oldDate
      * @param day
      * @return
      */
-    public static Date parseDateByChangeDay(Date oldDate,int day) {
+    public static Date parseDateByChangeDay(Date oldDate, int day)
+    {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(oldDate);
         calendar.add(Calendar.DATE, day);
         return calendar.getTime();
     }
-    
-    /**通过小时，获得格式化的时间
+
+    /**
+     * 通过小时，获得格式化的时间
+     * 
      * @param hour
      * @return
      */
-    public static Date parseDateByHour(String hour) {
+    public static Date parseDateByHour(String hour)
+    {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateFormatString = "1970-01-01 "+hour; 
+        String dateFormatString = "1970-01-01 " + hour;
         Date dateFormat = null;
         try
         {
@@ -118,46 +141,61 @@ public class DateUtils extends org.apache.commons.lang.time.DateUtils
         }
         return dateFormat;
     }
-    /**把日期的格式转换为另一种格式
+
+    /**
+     * 把日期的格式转换为另一种格式
+     * 
      * @param date
      * @param format
      * @return
      * @throws ParseException
      */
-    public static Date parseDateToDate(Date date, String format) throws ParseException {
+    public static Date parseDateToDate(Date date, String format)
+        throws ParseException
+    {
         DateFormat dFormat = new SimpleDateFormat(format);
         String s = dFormat.format(date);
         return dFormat.parse(s);
     }
-    
-    /**日期相减
+
+    /**
+     * 日期相减
+     * 
      * @return
-     * @throws ParseException 
+     * @throws ParseException
      */
-    public static Date subtractDate(Date dateBig,Date dateSmall) throws ParseException {
-        long diff = dateBig.getTime() - dateSmall.getTime();//这样得到的差值是微秒级别
-        long hours = diff/(1000* 60 * 60);
-        long minutes = (diff-hours*(1000* 60 * 60))/(1000* 60);
-        long second = (diff-hours*(1000* 60 * 60)-minutes*(1000*60))/(1000);
-        String difference = ""+hours+":"+minutes+":"+second;
+    public static Date subtractDate(Date dateBig, Date dateSmall)
+        throws ParseException
+    {
+        long diff = dateBig.getTime() - dateSmall.getTime();// 这样得到的差值是微秒级别
+        long hours = diff / (1000 * 60 * 60);
+        long minutes = (diff - hours * (1000 * 60 * 60)) / (1000 * 60);
+        long second = (diff - hours * (1000 * 60 * 60) - minutes * (1000 * 60)) / (1000);
+        String difference = "" + hours + ":" + minutes + ":" + second;
         return parseDateByHour(difference);
     }
-    /**日期相加
+
+    /**
+     * 日期相加
+     * 
      * @param dateBig
      * @param dateSmall
      * @return
      * @throws ParseException
      */
-    public static Date addDate(Date dateBig,Date dateSmall)throws ParseException {
+    public static Date addDate(Date dateBig, Date dateSmall)
+        throws ParseException
+    {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date orga =parseOriginalDate();
-        long addTime = dateBig.getTime()+dateSmall.getTime()-2*orga.getTime();
-        long hours = addTime/(1000* 60 * 60);
-        long minutes = (addTime-hours*(1000* 60 * 60))/(1000* 60);
-        long second = (addTime-hours*(1000* 60 * 60)-minutes*(1000*60))/(1000);
-        String difference = "1970-01-01 "+hours+":"+minutes+":"+second;
+        Date orga = parseOriginalDate();
+        long addTime = dateBig.getTime() + dateSmall.getTime() - 2 * orga.getTime();
+        long hours = addTime / (1000 * 60 * 60);
+        long minutes = (addTime - hours * (1000 * 60 * 60)) / (1000 * 60);
+        long second = (addTime - hours * (1000 * 60 * 60) - minutes * (1000 * 60)) / (1000);
+        String difference = "1970-01-01 " + hours + ":" + minutes + ":" + second;
         return df.parse(difference);
     }
+
     /**
      * 得到当前日期字符串 格式（yyyy-MM-dd）
      */

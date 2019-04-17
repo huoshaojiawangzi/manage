@@ -1,5 +1,6 @@
 package com.lizc.sports;
 
+
 import com.lizc.sports.pc.demo.entity.Office;
 import com.lizc.sports.pc.demo.entity.User;
 import com.lizc.sports.pc.demo.service.OfficeService;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+
 
 /**
  * @author: lizc@sdhuijin.cn
@@ -40,6 +42,7 @@ public class OneToOneTest
         office.setAddress("浙江杭州");
         officeService.save(office);
     }
+
     @Test
     public void testSaveUser()
     {
@@ -53,6 +56,7 @@ public class OneToOneTest
         user.setOffice(officeService.get("402881ef6a0b3f0a016a0b3f2d9c0000"));
         userService.save(user);
     }
+
     @Test
     public void updateUser()
     {

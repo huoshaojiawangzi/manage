@@ -6,5 +6,6 @@ package com.lizc.sports.common.enums;
  **/
 public class Urls
 {
-    private Urls(){}
+    private Urls()
+    {}
 }

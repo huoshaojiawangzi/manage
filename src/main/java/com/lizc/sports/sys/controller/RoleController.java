@@ -1,5 +1,6 @@
 package com.lizc.sports.sys.controller;
 
+
 import com.lizc.sports.common.controller.BaseController;
 import com.lizc.sports.common.dto.JsonResult;
 import com.lizc.sports.common.enums.SysResultCode;
@@ -8,6 +9,7 @@ import com.lizc.sports.sys.sevice.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 /**
  * @author: lizc@sdhuijin.cn
@@ -20,7 +22,8 @@ public class RoleController extends BaseController
     private final RoleService roleService;
 
     @Autowired
-    public RoleController(RoleService roleService) {
+    public RoleController(RoleService roleService)
+    {
         this.roleService = roleService;
     }
 
