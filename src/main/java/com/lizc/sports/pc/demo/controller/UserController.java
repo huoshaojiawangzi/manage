@@ -6,7 +6,9 @@ import com.lizc.sports.common.dto.JsonResult;
 import com.lizc.sports.common.enums.SysResultCode;
 import com.lizc.sports.pc.demo.entity.User;
 import com.lizc.sports.pc.demo.service.UserService;
+import com.lizc.sports.pc.demo.vo.UserSearchModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,4 +32,14 @@ public class UserController extends BaseController
         jsonResult.setResultCode(SysResultCode.SUCCESS);
         return jsonResult;
     }
+    @RequestMapping("/find-all")
+    public JsonResult<Page<User>> findAll(UserSearchModel searchModel)
+    {
+        JsonResult<Page<User>> jsonResult = new JsonResult<>();
+        Page<User> page = userService.findPage(searchModel);
+        jsonResult.setResultCode(SysResultCode.SUCCESS);
+        jsonResult.setResult(page);
+        return jsonResult;
+    }
+
 }

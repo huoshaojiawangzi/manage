@@ -32,12 +32,16 @@ public class Role extends BaseEntity
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
+    @JoinTable(name = "c_role_permission",
+            joinColumns = {@JoinColumn(name = "role_id")},
+            inverseJoinColumns = {@JoinColumn(name = "permission_id")})
     private List<Permission> permissions = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "role_id")
     @OrderBy("sort ASC ")
+    @JoinTable(name = "c_role_menu",
+            joinColumns = {@JoinColumn(name = "role_id")},
+            inverseJoinColumns = {@JoinColumn(name = "menu_id")})
     private List<Menu> menus = new ArrayList<>();
 }

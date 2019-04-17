@@ -1,7 +1,6 @@
 package com.lizc.sports.sys.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -37,8 +36,9 @@ public class CommonUser extends BaseEntity
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
+    @JoinTable(name = "c_user_role",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
     private List<Role> roles = new ArrayList<>();
 
 }

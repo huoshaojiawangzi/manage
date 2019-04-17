@@ -16,9 +16,11 @@ import javax.persistence.*;
 public class User extends BaseEntity
 {
     @OneToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(nullable = false)
     private CommonUser commonUser;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private Office office;
 
     private String phone;
