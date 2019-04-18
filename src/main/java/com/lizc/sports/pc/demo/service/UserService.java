@@ -30,7 +30,7 @@ public class UserService extends BaseService<User, String, UserRepository>
 
     public Page<User> findPage(UserSearchModel searchModel)
     {
-        Pageable pageable = PageRequest.of(searchModel.getPage()-1, searchModel.getLimit());
+        Pageable pageable = PageRequest.of(searchModel.getPage()-1, searchModel.getLimit(),searchModel.getSort());
         Specification<User> specification = getSpec(searchModel);
         return userRepository.findAll(specification,pageable);
     }

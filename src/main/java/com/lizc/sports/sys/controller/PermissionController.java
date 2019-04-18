@@ -20,7 +20,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("home/permission")
-public class PermissionController extends BaseController
+public class PermissionController extends BaseController<Permission,PermissionService>
 {
 
     private final PermissionService permissionService;
@@ -29,15 +29,6 @@ public class PermissionController extends BaseController
     public PermissionController(PermissionService permissionService)
     {
         this.permissionService = permissionService;
-    }
-
-    @RequestMapping("/save")
-    public JsonResult save(Permission permission)
-    {
-        JsonResult jsonResult = new JsonResult();
-        permissionService.save(permission);
-        jsonResult.setResultCode(SysResultCode.SUCCESS);
-        return jsonResult;
     }
 
     @SuppressWarnings("Duplicates")

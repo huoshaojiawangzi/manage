@@ -17,10 +17,10 @@ import java.util.List;
  * @author: lizc@sdhuijin.cn
  * @date: 2019-04-11 14:46
  **/
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "t_office")
 @Entity
-@EqualsAndHashCode(callSuper = true)
-@Data
 public class Office extends BaseEntity
 {
     private String name;

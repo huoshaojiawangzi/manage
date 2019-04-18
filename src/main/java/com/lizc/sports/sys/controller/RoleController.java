@@ -6,7 +6,9 @@ import com.lizc.sports.common.dto.JsonResult;
 import com.lizc.sports.common.enums.SysResultCode;
 import com.lizc.sports.sys.entity.Role;
 import com.lizc.sports.sys.sevice.RoleService;
+import com.lizc.sports.sys.vo.RoleSearchModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("home/role")
-public class RoleController extends BaseController
+public class RoleController extends BaseController<Role,RoleService>
 {
     private final RoleService roleService;
 
@@ -27,12 +29,13 @@ public class RoleController extends BaseController
         this.roleService = roleService;
     }
 
-    @RequestMapping("/save")
-    public JsonResult save(Role role)
+    @RequestMapping("/find-page")
+    public JsonResult<Page<Role>> findPage(RoleSearchModel searchModel)
     {
-        JsonResult jsonResult = new JsonResult();
-        roleService.save(role);
+        JsonResult<Page<Role>> jsonResult = new JsonResult<>();
+        Page<Role> page = roleService.findPage(searchModel);
         jsonResult.setResultCode(SysResultCode.SUCCESS);
+        jsonResult.setResult(page);
         return jsonResult;
     }
 }

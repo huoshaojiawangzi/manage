@@ -18,11 +18,11 @@ import java.util.List;
  * @author lizc@sdhuijin.cn
  * @date 2019/03/06
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(exclude = "parent")
 @Entity
 @Table(name = "c_menu")
-@ToString(exclude = "parent")
 public class Menu extends BaseEntity
 {
 
@@ -32,7 +32,7 @@ public class Menu extends BaseEntity
     @Column(nullable = false)
     private int sort;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String name;
 
     /**

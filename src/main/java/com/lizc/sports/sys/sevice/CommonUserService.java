@@ -3,10 +3,12 @@ package com.lizc.sports.sys.sevice;
 
 import com.lizc.sports.common.service.BaseService;
 import com.lizc.sports.sys.entity.CommonUser;
+import com.lizc.sports.sys.entity.Role;
 import com.lizc.sports.sys.repository.CommonUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 
 /**
@@ -27,34 +29,17 @@ public class CommonUserService extends BaseService<CommonUser,String,CommonUserR
         this.commonUserRepository = commonUserRepository;
     }
 
-    public CommonUser findByUserNameAndPassword(String userName, String password)
-    {
-        CommonUser commonUser = findByUserName(userName);
-        if (commonUser == null || !password.equals(commonUser.getPassword()))
-        {
-            return null;
-        }
-        else
-        {
-            return commonUser;
-        }
-    }
-
+    @Transactional
     public CommonUser findByUserName(String userName)
     {
-        CommonUser commonUser = new CommonUser();
-        commonUser.setUserName(userName);
-        Example<CommonUser> example = Example.of(commonUser);
-        return commonUserRepository.findOne(example).orElse(null);
-    }
-
-    /**
-     * 通过用户名进行逻辑删除
-     * 
-     * @param userName
-     */
-    public void deleteByUserName(String userName)
-    {
-        delete(findByUserName(userName));
+         CommonUser commonUser = commonUserRepository.findByUserName(userName);
+         for(Role role : commonUser.getRoles())
+         {
+             if(role.getPermissions().isEmpty())
+             {
+                 role.setPermissions(null);
+             }
+         }
+         return commonUser;
     }
 }

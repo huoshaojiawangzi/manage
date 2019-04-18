@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface OfficeRepository extends BaseRepository<Office, String>
 {
-    @Query(value = "select o from Office o where o.parent is null order by o.createDate desc")
+    @Query(value = "select o from Office o where o.parent is null and o.delFlag = 0 order by o.createDate desc")
     List<Office> findRoots();
 }

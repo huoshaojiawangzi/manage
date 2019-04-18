@@ -16,8 +16,8 @@ import java.util.List;
  * @author lizc@sdhuijin.cn
  * @date 2019/03/06
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "c_user")
 public class CommonUser extends BaseEntity

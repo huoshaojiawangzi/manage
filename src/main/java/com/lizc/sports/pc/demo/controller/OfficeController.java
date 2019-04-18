@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("home/office")
-public class OfficeController extends BaseController
+public class OfficeController extends BaseController<Office,OfficeService>
 {
     private final OfficeService officeService;
 
@@ -24,17 +24,9 @@ public class OfficeController extends BaseController
         this.officeService = officeService;
     }
 
-    @RequestMapping("/save")
-    public JsonResult save(Office office)
-    {
-        JsonResult jsonResult = new JsonResult();
-        officeService.save(office);
-        jsonResult.setResultCode(SysResultCode.SUCCESS);
-        return jsonResult;
-    }
     @SuppressWarnings("Duplicates")
     @RequestMapping("/find-roots")
-    public JsonResult<List<Office>> findAll()
+    public JsonResult<List<Office>> findRoots()
     {
         JsonResult<List<Office>> jsonResult = new JsonResult<>();
         List<Office> offices = officeService.findRoots();

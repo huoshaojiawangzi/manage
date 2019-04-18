@@ -1,7 +1,7 @@
 package com.lizc.sports.common.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lizc.sports.sys.entity.CommonUser;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -18,10 +18,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
-@JsonIgnoreProperties(value = {"createBy", "updateBy"})
+@Data
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
-@Data
 public abstract class BaseEntity implements Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -33,12 +32,14 @@ public abstract class BaseEntity implements Serializable
 
     protected String remarks; // 备注
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "create_by")
     @NotFound(action = NotFoundAction.IGNORE)
     @CreatedBy
     protected CommonUser createBy; // 创建者
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "update_by")
     @NotFound(action = NotFoundAction.IGNORE)

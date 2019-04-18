@@ -18,22 +18,23 @@ import java.util.List;
  * @author lizc@sdhuijin.cn
  * @date 2019/03/06
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
+@ToString(exclude = "parent")
 @Entity
 @Table(name = "c_permission")
-@ToString(exclude = "parent")
 public class Permission extends BaseEntity
 {
 
     /**
      * 权限名称
      */
+    @Column(nullable = false, unique = true)
     private String name;
     /**
      * 权限标签
      */
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String tag;
 
     /**

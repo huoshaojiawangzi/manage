@@ -1,4 +1,4 @@
-package com.lizc.sports.common.Adivce;
+package com.lizc.sports.common.adivce;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

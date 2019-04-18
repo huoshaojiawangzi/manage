@@ -21,7 +21,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("home/menu")
-public class MenuController extends BaseController
+public class MenuController extends BaseController<Menu,MenuService>
 {
 
     private final MenuService menuService;
@@ -30,15 +30,6 @@ public class MenuController extends BaseController
     public MenuController(MenuService menuService)
     {
         this.menuService = menuService;
-    }
-
-    @RequestMapping("/save")
-    public JsonResult save(Menu menu)
-    {
-        JsonResult jsonResult = new JsonResult();
-        menuService.save(menu);
-        jsonResult.setResultCode(SysResultCode.SUCCESS);
-        return jsonResult;
     }
 
     @SuppressWarnings("Duplicates")

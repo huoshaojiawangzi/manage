@@ -16,6 +16,6 @@ import java.util.List;
 @Repository
 public interface PermissionRepository extends BaseRepository<Permission, String>
 {
-    @Query(value = "select p from Permission p where p.parent is null")
+    @Query(value = "select p from Permission p where p.parent is null and p.delFlag = 0")
     List<Permission> findRoots();
 }

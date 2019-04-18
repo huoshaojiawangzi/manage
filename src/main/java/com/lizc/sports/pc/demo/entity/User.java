@@ -8,11 +8,10 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
-
+@Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "t_user")
 @Entity
-@Data
 public class User extends BaseEntity
 {
     @OneToOne(cascade = {CascadeType.ALL})

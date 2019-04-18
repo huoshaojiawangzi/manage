@@ -16,8 +16,8 @@ import javax.persistence.Table;
  * @author lizc@sdhuijin.cn
  * @date 2019/03/06
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "c_dictionary")
 public class Dictionary extends BaseEntity

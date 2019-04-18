@@ -1,11 +1,16 @@
 package com.lizc.sports.sys.sevice;
 
 
+import com.lizc.sports.sys.vo.RoleSearchModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import com.lizc.sports.common.service.BaseService;
 import com.lizc.sports.sys.entity.Role;
 import com.lizc.sports.sys.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 
 /**
@@ -22,5 +27,11 @@ public class RoleService extends BaseService<Role, String, RoleRepository>
     @Autowired
     public RoleService(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
+    }
+
+    public Page<Role> findPage(RoleSearchModel searchModel)
+    {
+        Pageable pageable = PageRequest.of(searchModel.getPage()-1,searchModel.getLimit());
+        return roleRepository.findAll(pageable);
     }
 }

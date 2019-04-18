@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("home/user")
-public class UserController extends BaseController
+public class UserController extends BaseController<User,UserService>
 {
     private final UserService userService;
 
@@ -24,16 +24,8 @@ public class UserController extends BaseController
         this.userService = userService;
     }
 
-    @RequestMapping("/save")
-    public JsonResult save(User user)
-    {
-        JsonResult jsonResult = new JsonResult();
-        userService.save(user);
-        jsonResult.setResultCode(SysResultCode.SUCCESS);
-        return jsonResult;
-    }
-    @RequestMapping("/find-all")
-    public JsonResult<Page<User>> findAll(UserSearchModel searchModel)
+    @RequestMapping("/find-page")
+    public JsonResult<Page<User>> findPgae(UserSearchModel searchModel)
     {
         JsonResult<Page<User>> jsonResult = new JsonResult<>();
         Page<User> page = userService.findPage(searchModel);
