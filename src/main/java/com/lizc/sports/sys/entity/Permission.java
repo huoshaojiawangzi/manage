@@ -31,6 +31,7 @@ public class Permission extends BaseEntity
      */
     @Column(nullable = false, unique = true)
     private String name;
+
     /**
      * 权限标签
      */

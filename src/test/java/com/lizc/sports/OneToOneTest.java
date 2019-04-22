@@ -11,10 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Example;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 
 /**
@@ -43,7 +40,7 @@ public class OneToOneTest
         officeService.save(office);
     }
 
-    @Test
+ /*   @Test
     public void testSaveUser()
     {
         CommonUser commonUser = new CommonUser();
@@ -55,7 +52,7 @@ public class OneToOneTest
         user.setPhone("15662410583");
         user.setOffice(officeService.get("402881ef6a0b3f0a016a0b3f2d9c0000"));
         userService.save(user);
-    }
+    }*/
 
     @Test
     public void updateUser()

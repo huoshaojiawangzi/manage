@@ -17,5 +17,5 @@ import com.lizc.sports.sys.entity.CommonUser;
 public interface CommonUserRepository extends BaseRepository<CommonUser, String>
 {
     @Query(value = "select u from CommonUser u where u.userName = :userName and u.delFlag = 0")
-    CommonUser findByUserName(@Param("userName")String userName);
+    CommonUser findByUserName(@Param("userName") String userName);
 }

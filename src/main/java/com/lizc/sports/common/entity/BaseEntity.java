@@ -52,7 +52,7 @@ public abstract class BaseEntity implements Serializable
     @LastModifiedDate
     protected LocalDateTime updateDate;// 更新日期
 
-    protected String delFlag = "0"; // 删除标记（0：正常；1：删除）
+    protected String delFlag = DEL_FLAG_NORMAL; // 删除标记（0：正常；1：删除）
 
     /**
      * 删除标记:正常

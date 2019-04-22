@@ -1,5 +1,6 @@
 package com.lizc.sports.common.adivce;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.lizc.sports.common.dto.JsonResult;
 import com.lizc.sports.common.enums.SysResultCode;
 
+
 /**
  * @author: lizc@sdhuijin.cn
  * @date: 2019-04-17 14:06
@@ -15,7 +17,7 @@ import com.lizc.sports.common.enums.SysResultCode;
 @RestControllerAdvice
 public class ExceptionAdvice
 {
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionAdvice.class);
 
     @ExceptionHandler(Exception.class)
     public JsonResult<String> exceptionHandler(Exception e)
@@ -23,7 +25,7 @@ public class ExceptionAdvice
         JsonResult<String> jsonResult = new JsonResult<>();
         jsonResult.setResultCode(SysResultCode.FAILURE);
         jsonResult.setResult("出现未知异常");
-        logger.error("未知异常：",e);
+        logger.error("未知异常", e);
         return jsonResult;
     }
 }

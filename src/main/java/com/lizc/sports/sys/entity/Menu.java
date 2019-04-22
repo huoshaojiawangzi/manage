@@ -32,7 +32,7 @@ public class Menu extends BaseEntity
     @Column(nullable = false)
     private int sort;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String name;
 
     /**

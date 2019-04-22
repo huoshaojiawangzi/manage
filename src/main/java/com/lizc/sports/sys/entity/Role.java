@@ -36,17 +36,15 @@ public class Role extends BaseEntity
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "c_role_permission",
-            joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "permission_id")})
+    @JoinTable(name = "c_role_permission", joinColumns = {
+        @JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "permission_id")})
     private List<Permission> permissions = new ArrayList<>();
 
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     @OrderBy("sort ASC ")
-    @JoinTable(name = "c_role_menu",
-            joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "menu_id")})
+    @JoinTable(name = "c_role_menu", joinColumns = {
+        @JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "menu_id")})
     private List<Menu> menus = new ArrayList<>();
 }

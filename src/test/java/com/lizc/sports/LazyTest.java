@@ -1,5 +1,6 @@
 package com.lizc.sports;
 
+
 import com.lizc.sports.pc.demo.entity.User;
 import com.lizc.sports.pc.demo.service.UserService;
 import org.junit.Test;
@@ -10,13 +11,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+
 /**
  * @author: lizc@sdhuijin.cn
  * @date: 2019-04-18 11:47
  **/
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class LazyTest {
+public class LazyTest
+{
     @Autowired
     private UserService userService;
 

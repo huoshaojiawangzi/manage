@@ -16,10 +16,10 @@ import java.util.List;
  * @date: 2019-04-10 13:30
  **/
 @SuppressWarnings("ALL")
-public abstract class BaseController<T extends BaseEntity,S extends BaseService>
+public abstract class BaseController<T extends BaseEntity, S extends BaseService>
 {
     @Autowired(required = false)
-    private S service;
+    protected S service;
 
     @RequestMapping("/save")
     public JsonResult save(T t)
@@ -30,22 +30,13 @@ public abstract class BaseController<T extends BaseEntity,S extends BaseService>
         return jsonResult;
     }
 
-/*    public JsonResult<Page<T>> findPgae(UserSearchModel searchModel)
-    {
-        JsonResult<Page<T>> jsonResult = new JsonResult<>();
-        Page<T> page = service.findPage(searchModel);
-        jsonResult.setResultCode(SysResultCode.SUCCESS);
-        jsonResult.setResult(page);
-        return jsonResult;
-    }*/
-
     @RequestMapping("/find-all")
     public JsonResult<List<T>> findAll()
     {
         JsonResult<List<T>> jsonResult = new JsonResult<>();
-        List<T> t = service.findAll();
+        List<T> list = service.findAllEnable();
         jsonResult.setResultCode(SysResultCode.SUCCESS);
-        jsonResult.setResult(t);
+        jsonResult.setResult(list);
         return jsonResult;
     }
 

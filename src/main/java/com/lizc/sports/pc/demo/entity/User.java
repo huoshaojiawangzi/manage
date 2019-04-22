@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "t_user")

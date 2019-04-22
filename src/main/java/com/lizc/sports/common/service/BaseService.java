@@ -3,10 +3,13 @@ package com.lizc.sports.common.service;
 
 import com.lizc.sports.common.entity.BaseEntity;
 import com.lizc.sports.common.repository.BaseRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 
@@ -16,11 +19,21 @@ import java.util.List;
  * @author lizc@sdhuijin.cn
  * @date 2019/04/10
  */
+@SuppressWarnings("ALL")
 public abstract class BaseService<T extends BaseEntity, ID extends Serializable, R extends BaseRepository<T, ID>>
 {
+    private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
 
     @Autowired(required = false)
     private R repostitory;
+
+    private Class<T> clazz;
+
+    public BaseService()
+    {
+        this.clazz = (Class<T>)((ParameterizedType)getClass()
+                .getGenericSuperclass()).getActualTypeArguments()[0];
+    }
 
     /**
      * 刷新数据流
@@ -82,11 +95,30 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
     }
 
     /**
-     * 找到所有实体
+     * 找到所有实体(包含已删除的)
      */
     public List<T> findAll()
     {
         return repostitory.findAll();
+    }
+
+    /**
+     * 找到所有实体(不包含已删除的)
+     * @return
+     */
+    public List<T> findAllEnable()
+    {
+        T t = null;
+        try
+        {
+            t = clazz.newInstance();
+        } catch (InstantiationException | IllegalAccessException e)
+        {
+            logger.error("实体类必须含有无参构造方法",e);
+        }
+        t.setDelFlag(BaseEntity.DEL_FLAG_NORMAL);
+        Example example = Example.of(t);
+        return findAll(example);
     }
 
     /**

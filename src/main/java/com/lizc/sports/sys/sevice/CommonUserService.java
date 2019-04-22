@@ -18,7 +18,7 @@ import javax.transaction.Transactional;
  * @date: 2019-03-06 14:53
  **/
 @Service
-public class CommonUserService extends BaseService<CommonUser,String,CommonUserRepository>
+public class CommonUserService extends BaseService<CommonUser, String, CommonUserRepository>
 {
 
     private final CommonUserRepository commonUserRepository;
@@ -32,14 +32,14 @@ public class CommonUserService extends BaseService<CommonUser,String,CommonUserR
     @Transactional
     public CommonUser findByUserName(String userName)
     {
-         CommonUser commonUser = commonUserRepository.findByUserName(userName);
-         for(Role role : commonUser.getRoles())
-         {
-             if(role.getPermissions().isEmpty())
-             {
-                 role.setPermissions(null);
-             }
-         }
-         return commonUser;
+        CommonUser commonUser = commonUserRepository.findByUserName(userName);
+        for (Role role : commonUser.getRoles())
+        {
+            if (role.getPermissions().isEmpty())
+            {
+                role.setPermissions(null);
+            }
+        }
+        return commonUser;
     }
 }
