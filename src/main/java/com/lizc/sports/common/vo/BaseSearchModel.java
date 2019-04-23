@@ -5,6 +5,9 @@ import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
 import org.springframework.data.domain.Sort;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * 页面查询基础模型
@@ -19,25 +22,42 @@ public class BaseSearchModel
 
     private int limit;
 
-    private String sortField;
-
-    private String order;
-
     private String delFlag = BaseEntity.DEL_FLAG_NORMAL;
 
-    private static final String DESC = "desc";
+    private ArrayList<LoalSort> loalSorts;
 
-    private static final String ASC = "asc";
+    @Data
+    private static class LoalSort
+    {
+        public LoalSort() {
+        }
+        private String property;
+
+        private String order;
+
+        private static final String DESC = "desc";
+
+        private static final String ASC = "asc";
+    }
 
     public Sort getSort()
     {
-        if (DESC.equals(order))
+        List<Sort.Order> orders = new ArrayList<>();
+
+        if(loalSorts != null&&!loalSorts.isEmpty())
         {
-            return new Sort(Sort.Direction.DESC, getSortField());
-        }
-        else if (ASC.equals(order))
-        {
-            return new Sort(Sort.Direction.ASC, getSortField());
+            for(LoalSort loalSort:loalSorts)
+            {
+                if(LoalSort.DESC.equals(loalSort.getOrder()))
+                {
+                    orders.add(new Sort.Order(Sort.Direction.DESC, loalSort.getProperty()));
+                }
+                else if (LoalSort.ASC.equals(loalSort.getOrder()))
+                {
+                    orders.add(new Sort.Order(Sort.Direction.ASC, loalSort.getProperty()));
+                }
+            }
+            return Sort.by(orders);
         }
         return new Sort(Sort.Direction.DESC, "updateDate");
     }

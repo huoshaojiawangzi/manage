@@ -23,6 +23,5 @@ public class DictionaryService extends PageableBaseService<Dictionary, String, D
     @Override
     protected void setPredicates(Root<Dictionary> root, CriteriaBuilder cb, List<Predicate> predicates, DictionarySearchModel searchModel)
     {
-
     }
 }

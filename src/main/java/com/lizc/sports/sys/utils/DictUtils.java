@@ -28,7 +28,6 @@ public class DictUtils
 
     public static List<Dictionary> findAll()
     {
-        System.out.println("*********************************");
         return dictUtils.dictionaryService.findAllEnable();
     }
 

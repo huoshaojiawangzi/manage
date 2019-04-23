@@ -7,6 +7,7 @@ import com.lizc.sports.common.enums.SysResultCode;
 import com.lizc.sports.common.service.PageableBaseService;
 import com.lizc.sports.common.vo.BaseSearchModel;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -21,7 +22,7 @@ public class PageableBaseController<T extends BaseEntity, M extends BaseSearchMo
 {
 
     @RequestMapping("/find-page")
-    public JsonResult<Page<T>> findPgae(M searchModel)
+    public JsonResult<Page<T>> findPgae(@RequestBody M searchModel)
     {
         JsonResult<Page<T>> jsonResult = new JsonResult<>();
         Page<T> page = service.findPage(searchModel);
