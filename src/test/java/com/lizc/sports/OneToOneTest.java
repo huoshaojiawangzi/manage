@@ -40,19 +40,14 @@ public class OneToOneTest
         officeService.save(office);
     }
 
- /*   @Test
-    public void testSaveUser()
-    {
-        CommonUser commonUser = new CommonUser();
-        commonUser.setName("龙葵");
-        Example example = Example.of(commonUser);
-        List<CommonUser> commonUsers = commonUserService.findAll(example);
-        User user = new User();
-        user.setCommonUser(commonUsers.get(0));
-        user.setPhone("15662410583");
-        user.setOffice(officeService.get("402881ef6a0b3f0a016a0b3f2d9c0000"));
-        userService.save(user);
-    }*/
+    /*
+     * @Test public void testSaveUser() { CommonUser commonUser = new CommonUser();
+     * commonUser.setName("龙葵"); Example example = Example.of(commonUser); List<CommonUser>
+     * commonUsers = commonUserService.findAll(example); User user = new User();
+     * user.setCommonUser(commonUsers.get(0)); user.setPhone("15662410583");
+     * user.setOffice(officeService.get("402881ef6a0b3f0a016a0b3f2d9c0000"));
+     * userService.save(user); }
+     */
 
     @Test
     public void updateUser()

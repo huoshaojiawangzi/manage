@@ -38,7 +38,7 @@ public class Dictionary extends BaseEntity
      * 名称
      */
     @Column(nullable = false)
-    private String name;// 比如分为表内/表外
+    private String label;// 比如分为表内/表外
 
     /**
      * 实际值

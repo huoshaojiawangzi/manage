@@ -16,7 +16,7 @@ import java.util.List;
  * @date: 2019-04-10 13:30
  **/
 @SuppressWarnings("ALL")
-public abstract class TreeBaseController<T extends BaseEntity, S extends TreeBaseService> extends BaseController<T,S>
+public abstract class TreeBaseController<T extends BaseEntity, S extends TreeBaseService> extends BaseController<T, S>
 {
     @Autowired(required = false)
     protected S service;

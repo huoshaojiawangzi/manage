@@ -17,5 +17,4 @@ import com.lizc.sports.sys.vo.RoleSearchModel;
 @RestController
 @RequestMapping("home/role")
 public class RoleController extends PageableBaseController<Role, RoleSearchModel, RoleService>
-{
-}
+{}

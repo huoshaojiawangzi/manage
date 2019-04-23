@@ -11,6 +11,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("home/user")
-public class UserController extends PageableBaseController<User,UserSearchModel,UserService>
-{
-}
+public class UserController extends PageableBaseController<User, UserSearchModel, UserService>
+{}

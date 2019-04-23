@@ -7,9 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,15 +30,7 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
     private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
 
     @Autowired(required = false)
-    private R repostitory;
-
-    private Class<T> clazz;
-
-    public BaseService()
-    {
-        this.clazz = (Class<T>)((ParameterizedType)getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0];
-    }
+    protected R repostitory;
 
     /**
      * 刷新数据流
@@ -46,6 +43,11 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
     public T get(ID id)
     {
         return repostitory.findById(id).orElse(null);
+    }
+
+    public T get(Example<T> example)
+    {
+        return repostitory.findOne(example).orElse(null);
     }
 
     public void save(T t)
@@ -67,7 +69,7 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
     public void delete(T t)
     {
         t.setDelFlag(BaseEntity.DEL_FLAG_DELETE);
-        save(t);
+        repostitory.saveAndFlush(t);
     }
 
     /**
@@ -79,8 +81,7 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
     public void delete(ID id)
     {
         T t = get(id);
-        t.setDelFlag(BaseEntity.DEL_FLAG_DELETE);
-        save(t);
+        delete(t);
     }
 
     /**
@@ -103,30 +104,38 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
     }
 
     /**
-     * 找到所有实体(不包含已删除的)
-     * @return
-     */
-    public List<T> findAllEnable()
-    {
-        T t = null;
-        try
-        {
-            t = clazz.newInstance();
-        } catch (InstantiationException | IllegalAccessException e)
-        {
-            logger.error("实体类必须含有无参构造方法",e);
-        }
-        t.setDelFlag(BaseEntity.DEL_FLAG_NORMAL);
-        Example example = Example.of(t);
-        return findAll(example);
-    }
-
-    /**
      * 根据example找到所有实体
      */
     public List<T> findAll(Example<T> example)
     {
         return repostitory.findAll(example);
+    }
+
+    /**
+     * 根据specification找到所有实体
+     */
+    public List<T> findAll(Specification<T> specification)
+    {
+        return repostitory.findAll(specification);
+    };
+
+    /**
+     * 找到所有实体(不包含已删除的)
+     * 
+     * @return
+     */
+    public List<T> findAllEnable()
+    {
+        Specification<T> specification = new Specification<T>() {
+            @Override
+            public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicates = new ArrayList<>();
+                predicates.add(cb.equal(root.<String>get("delFlag"),BaseEntity.DEL_FLAG_NORMAL));
+                Predicate[] p = new Predicate[predicates.size()];
+                return cb.and(predicates.toArray(p));
+            }
+        };
+        return repostitory.findAll(specification);
     }
 
     /**

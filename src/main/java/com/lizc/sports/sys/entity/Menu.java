@@ -29,7 +29,6 @@ public class Menu extends BaseEntity
     /**
      * 每个类型中本标签的排序位置
      */
-    @Column(nullable = false)
     private int sort;
 
     @Column(nullable = false, unique = true)

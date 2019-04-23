@@ -17,5 +17,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("home/permission")
 public class PermissionController extends TreeBaseController<Permission, PermissionService>
-{
-}
+{}

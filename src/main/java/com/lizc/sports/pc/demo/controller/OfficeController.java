@@ -12,5 +12,4 @@ import com.lizc.sports.pc.demo.service.OfficeService;
 @RestController
 @RequestMapping("home/office")
 public class OfficeController extends TreeBaseController<Office, OfficeService>
-{
-}
+{}
