@@ -29,8 +29,6 @@ public class BaseSearchModel
     @Data
     private static class LoalSort
     {
-        public LoalSort() {
-        }
         private String property;
 
         private String order;
