@@ -20,6 +20,7 @@ spring:
       pool:
         max-idle: 10
         max-wait: 100000
+        max-active: 200
 
   jpa:
     database: mysql

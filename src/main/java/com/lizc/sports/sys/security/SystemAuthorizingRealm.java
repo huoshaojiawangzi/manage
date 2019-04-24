@@ -3,6 +3,7 @@ package com.lizc.sports.sys.security;
 
 import com.lizc.sports.sys.entity.CommonUser;
 import com.lizc.sports.sys.entity.Permission;
+import com.lizc.sports.sys.entity.Role;
 import com.lizc.sports.sys.sevice.CommonUserService;
 import com.lizc.sports.sys.utils.UserUtils;
 import org.apache.shiro.authc.*;
@@ -26,10 +27,13 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals)
     {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        CommonUser currUser = UserUtils.getCurrentUser();
-        for (Permission permission : UserUtils.getCurrentRole().getPermissions())
+        Role currRole = UserUtils.getCurrentRole();
+        if(currRole != null&&currRole.getPermissions()!=null)
         {
-            authorizationInfo.addStringPermission(permission.getName());
+            for (Permission permission : UserUtils.getCurrentRole().getPermissions())
+            {
+                authorizationInfo.addStringPermission(permission.getName());
+            }
         }
         // 给当前用户赋予权限
         return authorizationInfo;

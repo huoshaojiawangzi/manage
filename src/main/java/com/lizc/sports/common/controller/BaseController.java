@@ -6,6 +6,7 @@ import com.lizc.sports.common.entity.BaseEntity;
 import com.lizc.sports.common.enums.SysResultCode;
 import com.lizc.sports.common.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public abstract class BaseController<T extends BaseEntity, S extends BaseService
     protected S service;
 
     @RequestMapping("/save")
-    public JsonResult save(T t)
+    public JsonResult save(@RequestBody T t)
     {
         JsonResult jsonResult = new JsonResult();
         service.save(t);

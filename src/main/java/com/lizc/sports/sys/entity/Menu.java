@@ -1,7 +1,7 @@
 package com.lizc.sports.sys.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -53,7 +53,7 @@ public class Menu extends BaseEntity
     /**
      * 父节点
      */
-    @JsonIgnore
+    @JSONField(serialize = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Menu parent;
 

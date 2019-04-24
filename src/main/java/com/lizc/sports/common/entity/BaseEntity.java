@@ -2,7 +2,6 @@ package com.lizc.sports.common.entity;
 
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lizc.sports.sys.entity.CommonUser;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
@@ -33,16 +32,14 @@ public abstract class BaseEntity implements Serializable
 
     protected String remarks; // 备注
 
-    @JSONField(serialize=false)
-    @JsonIgnore
+    @JSONField(serialize = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "create_by")
     @NotFound(action = NotFoundAction.IGNORE)
     @CreatedBy
     protected CommonUser createBy; // 创建者
 
-    @JSONField(serialize=false)
-    @JsonIgnore
+    @JSONField(serialize = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "update_by")
     @NotFound(action = NotFoundAction.IGNORE)

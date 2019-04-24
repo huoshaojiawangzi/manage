@@ -5,12 +5,11 @@ import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ListOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,7 +17,7 @@ import java.util.List;
  * redis缓存工具类
  * 
  * @author: lizc@sdhuijin.cn
- * @date: 2019-04-23 16:12
+ * @date: 2009-04-23 06:02
  **/
 @Component
 public class RedisUtils
@@ -26,7 +25,7 @@ public class RedisUtils
     private static final Logger logger = LoggerFactory.getLogger(RedisUtils.class);
 
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private JedisPool jedisPool;
 
     private static RedisUtils jedisUtils;
 
@@ -34,133 +33,183 @@ public class RedisUtils
     public void init()
     {
         jedisUtils = this;
-        jedisUtils.redisTemplate = this.redisTemplate;
+        jedisUtils.jedisPool = this.jedisPool;
+    }
+
+    private static Jedis getJedis()
+    {
+        return jedisUtils.jedisPool.getResource();
     }
 
     /**
-     * 读取缓存
+     * 删除stirng缓存
+     * 
+     * @param key
+     *            缓存标识
+     * @param index
+     *            库标识，输入值范围在0-05
+     * @return 成功返回true；失败返回false
+     */
+    public static boolean del(final String key, int index)
+    {
+        try (Jedis jedis = getJedis())
+        {
+            jedis.select(index);
+            jedis.del(key);
+            return true;
+        }
+        catch (Exception e)
+        {
+            logger.error("删除缓存异常", e);
+        }
+        return false;
+    }
+
+    /**
+     * 删除stirng缓存(默认选择一个库)
+     * 
+     * @param key
+     *            缓存标识
+     * @return 成功返回true；失败返回false
+     */
+    public static boolean del(final String key)
+    {
+        return del(key, 0);
+    }
+
+    /**
+     * 读取stirng缓存
      *
      * @param key
-     * @return
+     *            缓存标识
+     * @return 返回value，如果不存在该key则返回null
+     */
+    public static String getOne(final String key, int index)
+    {
+        try (Jedis jedis = getJedis())
+        {
+            jedis.select(index);
+            return jedis.get(key);
+        }
+        catch (Exception e)
+        {
+            logger.error("查询缓存异常", e);
+        }
+        return null;
+    }
+
+    /**
+     * 读取stirng缓存(默认读取一个库)
+     * 
+     * @param key
+     *            缓存标识
+     * @return 返回value，如果不存在该key则返回null
      */
     public static String getOne(final String key)
     {
-        return jedisUtils.redisTemplate.opsForValue().get(key);
+        return getOne(key, 0);
     }
 
     /**
-     * 写入缓存
+     * 增加缓存
+     * 
+     * @param key
+     *            缓存标识
+     * @param value
+     *            缓存值
+     * @param index
+     *            库标识，输入值范围在0-05
+     * @return 成功返回true；失败返回false
      */
-    public static boolean setOne(final String key, String value)
+    public static boolean setOne(final String key, String value, int index)
     {
-        boolean result = false;
-        try
+        try (Jedis jedis = getJedis())
         {
-            jedisUtils.redisTemplate.opsForValue().set(key, value);
-            result = true;
+            jedis.select(index);
+            jedis.set(key, value);
+            return true;
         }
         catch (Exception e)
         {
             logger.debug("写入缓存异常:", e);
         }
-        return result;
+        return false;
     }
 
     /**
-     * 更新缓存
-     */
-    public static boolean getAndSetOne(final String key, String value)
-    {
-        boolean result = false;
-        try
-        {
-            jedisUtils.redisTemplate.opsForValue().getAndSet(key, value);
-            result = true;
-        }
-        catch (Exception e)
-        {
-            logger.debug("更新缓存异常:", e);
-        }
-        return result;
-    }
-
-    /**
-     * 删除缓存
-     */
-    public static boolean delete(final String key)
-    {
-        boolean result = false;
-        try
-        {
-            jedisUtils.redisTemplate.delete(key);
-            result = true;
-        }
-        catch (Exception e)
-        {
-            logger.debug("删除缓存异常:", e);
-        }
-        return result;
-    }
-
-    /**
-     * 增加一个集合元素
+     * 增加缓存(默认缓存到标识为0的库中)
+     * 
      * @param key
-     * @param object
-     * @return
+     *            缓存标识
+     * @param value
+     *            缓存值
+     * @return 成功返回true；失败返回false
      */
-    public static boolean addList(String key, Object object)
+    public static boolean setOne(final String key, String value)
     {
-        boolean result = false;
-        try
-        {
-            ListOperations<String, String> listRedis = jedisUtils.redisTemplate.opsForList();
-            String objectString = JSON.toJSONString(object);
-            listRedis.leftPush(key, objectString);
-            result = true;
-        }
-        catch (Exception e)
-        {
-            logger.debug("增加缓存集合元素异常:", e);
-        }
-        return result;
+        return setOne(key, value, 0);
     }
 
     /**
-     * 增加一个集合
+     * 增加list集合缓存
+     * 
      * @param key
-     * @param objects
-     * @return
+     *            缓存标识
+     * @param list
+     *            缓存的list
+     * @param index
+     *            库标识，输入值范围在0-05
+     * @return 成功返回true；失败返回false
      */
-    public static boolean saveList(String key, List objects)
+    public static boolean setList(final String key, List list, int index)
     {
-        boolean result = false;
-        try
-        {
-            ListOperations<String, String> listRedis = jedisUtils.redisTemplate.opsForList();
-            for(Object object :objects)
-            {
-                String objectString = JSON.toJSONString(object);
-                listRedis.leftPush(key, objectString);
-            }
-            result = true;
-        }
-        catch (Exception e)
-        {
-            logger.debug("增加缓存集合元素异常:", e);
-        }
-        return result;
+        String listString = JSON.toJSONString(list);
+        return setOne(key, listString, index);
     }
 
-    public static List getList(String key,Class clazz)
+    /**
+     * 增加list集合缓存(默认缓存到标识为0的库中)
+     * 
+     * @param key
+     *            缓存标识
+     * @param list
+     *            缓存的list
+     * @return 成功返回true；失败返回false
+     */
+    public static boolean setList(final String key, List list)
     {
-        ListOperations<String, String> listRedis = jedisUtils.redisTemplate.opsForList();
-        List list = new ArrayList();
-        List<String> stringList = listRedis.range(key, 0, -1);
-        for(String s : stringList)
-        {
-            Object object = JSON.parseObject(s,clazz);
-            list.add(object);
-        }
-        return list;
+        return setList(key, list, 0);
     }
+
+    /**
+     * 获取一个list对象集合
+     * 
+     * @param key
+     *            缓存标识
+     * @param index
+     *            库标识
+     * @param clazz
+     *            返回的集合元素类型
+     * @return list集合
+     */
+    public static List getList(final String key, int index, Class clazz)
+    {
+        String listString = getOne(key);
+        return JSON.parseArray(listString, clazz);
+    }
+
+    /**
+     * 获取一个list对象集合(默认缓存到标识为0的库中)
+     * 
+     * @param key
+     *            缓存标识
+     * @param clazz
+     *            返回的集合元素类型
+     * @return list集合
+     */
+    public static List getList(final String key, Class clazz)
+    {
+        return getList(key, 0, clazz);
+    }
+
 }
