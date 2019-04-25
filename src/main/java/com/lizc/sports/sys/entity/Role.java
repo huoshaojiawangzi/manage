@@ -25,7 +25,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ToString(exclude = "menus")
+@ToString(exclude = {"menus","permissions"})
 @Entity
 @Table(name = "c_role")
 public class Role extends BaseEntity

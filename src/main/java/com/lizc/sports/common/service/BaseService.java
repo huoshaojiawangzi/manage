@@ -6,6 +6,9 @@ import com.lizc.sports.common.repository.BaseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -14,6 +17,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +35,13 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
 
     @Autowired(required = false)
     protected R repostitory;
+
+    private Class<T> clazz;
+
+    public BaseService()
+    {
+        this.clazz = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    }
 
     /**
      * 刷新数据流
@@ -50,11 +61,18 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
         return repostitory.findOne(example).orElse(null);
     }
 
+    @Caching(evict={
+            @CacheEvict(value = "allEnableList",key = "#root.targetClass"),
+            @CacheEvict(value = "allList",key = "#root.targetClass")
+    })
     public void save(T t)
     {
         repostitory.save(t);
     }
-
+    @Caching(evict={
+            @CacheEvict(value = "allEnableList",key = "#root.targetClass"),
+            @CacheEvict(value = "allList",key = "#root.targetClass")
+    })
     public void saveAndFlush(T t)
     {
         repostitory.saveAndFlush(t);
@@ -98,6 +116,7 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
     /**
      * 找到所有实体(包含已删除的)
      */
+    @Cacheable(value = "allList",key = "#root.targetClass")
     public List<T> findAll()
     {
         return repostitory.findAll();
@@ -124,6 +143,7 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
      * 
      * @return
      */
+    @Cacheable(value = "allEnableList",key = "#root.targetClass")
     public List<T> findAllEnable()
     {
         Specification<T> specification = new Specification<T>() {

@@ -67,7 +67,7 @@ public class ShiroConfig
 
     /**
      * 配置DefaultWebSecurityManager
-     * 
+     *
      * @param systemAuthorizingRealm
      * @return
      */

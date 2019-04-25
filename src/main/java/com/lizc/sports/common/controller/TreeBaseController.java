@@ -2,7 +2,7 @@ package com.lizc.sports.common.controller;
 
 
 import com.lizc.sports.common.dto.JsonResult;
-import com.lizc.sports.common.entity.BaseEntity;
+import com.lizc.sports.common.entity.TreeBaseEntity;
 import com.lizc.sports.common.enums.SysResultCode;
 import com.lizc.sports.common.service.TreeBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.List;
  * @date: 2019-04-10 13:30
  **/
 @SuppressWarnings("ALL")
-public abstract class TreeBaseController<T extends BaseEntity, S extends TreeBaseService> extends BaseController<T, S>
+public abstract class TreeBaseController<T extends TreeBaseEntity, S extends TreeBaseService> extends BaseController<T, S>
 {
     @Autowired(required = false)
     protected S service;

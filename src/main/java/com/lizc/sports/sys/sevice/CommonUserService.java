@@ -3,13 +3,11 @@ package com.lizc.sports.sys.sevice;
 
 import com.lizc.sports.common.service.BaseService;
 import com.lizc.sports.sys.entity.CommonUser;
-import com.lizc.sports.sys.entity.Role;
 import com.lizc.sports.sys.repository.CommonUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -30,18 +28,10 @@ public class CommonUserService extends BaseService<CommonUser, String, CommonUse
         this.commonUserRepository = commonUserRepository;
     }
 
-    @Cacheable(value = "commonUser",key = "'userName_'+#userName")
+    @Cacheable(value = "commonUser",key = "#userName")
     @Transactional
     public CommonUser findByUserName(String userName)
     {
-        CommonUser commonUser = commonUserRepository.findByUserName(userName);
-        for (Role role : commonUser.getRoles())
-        {
-            if (role.getPermissions().isEmpty())
-            {
-                role.setPermissions(null);
-            }
-        }
-        return commonUser;
+        return commonUserRepository.findByUserName(userName);
     }
 }

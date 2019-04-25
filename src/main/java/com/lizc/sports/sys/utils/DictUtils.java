@@ -19,6 +19,8 @@ public class DictUtils
 
     private static DictUtils dictUtils;
 
+    private DictUtils(){}
+
     @PostConstruct
     public void init()
     {
