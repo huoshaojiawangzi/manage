@@ -9,6 +9,7 @@ import com.lizc.sports.pc.demo.vo.UserSearchModel;
 import com.lizc.sports.sys.sevice.CommonUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
@@ -30,6 +31,7 @@ public class UserService extends PageableBaseService<User, String, UserSearchMod
 
 
     @Override
+    @Transactional
     public void delete(String id)
     {
         User user = get(id);
@@ -38,16 +40,16 @@ public class UserService extends PageableBaseService<User, String, UserSearchMod
     }
 
     @Override
-    protected void setPredicates(Root<User> root, CriteriaBuilder cb, List<Predicate> predicates, UserSearchModel searchModel)
+    protected void setPredicates(Root<User> root, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, UserSearchModel searchModel)
     {
         if (StringUtils.isNotBlank(searchModel.getName()))
         {
-            predicates.add(cb.like(root.<String> get("commonUser").get("name"),
+            predicates.add(criteriaBuilder.like(root.<String> get("commonUser").get("name"),
                     "%" + searchModel.getName() + "%"));
         }
         if (StringUtils.isNotBlank(searchModel.getUserName()))
         {
-            predicates.add(cb.like(root.<String> get("commonUser").get("userName"),
+            predicates.add(criteriaBuilder.like(root.<String> get("commonUser").get("userName"),
                     "%" + searchModel.getUserName() + "%"));
         }
     }

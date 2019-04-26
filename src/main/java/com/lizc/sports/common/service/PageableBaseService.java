@@ -46,21 +46,21 @@ public abstract class PageableBaseService<T extends BaseEntity, ID extends Seria
      */
     private Specification<T> getSpec(M m)
     {
-        return (Specification<T>) (root, query, cb)->
+        return (Specification<T>) (root, query, criteriaBuilder)->
         {
             List<Predicate> predicates = new ArrayList<>();
             if (StringUtils.isNotBlank(m.getDelFlag()))
             {
-                predicates.add(cb.equal(root.<String> get("delFlag"), m.getDelFlag()));
+                predicates.add(criteriaBuilder.equal(root.<String> get("delFlag"), m.getDelFlag()));
             }
-            setPredicates(root,cb,predicates,m);
+            setPredicates(root,criteriaBuilder,predicates,m);
             Predicate[] p = new Predicate[predicates.size()];
-            return cb.and(predicates.toArray(p));
+            return criteriaBuilder.and(predicates.toArray(p));
         };
     }
 
     /**
      * 给搜索增加筛选条件
      */
-    protected abstract void setPredicates(Root<T> root, CriteriaBuilder cb,List<Predicate> predicates, M m);
+    protected abstract void setPredicates(Root<T> root, CriteriaBuilder criteriaBuilder,List<Predicate> predicates, M m);
 }

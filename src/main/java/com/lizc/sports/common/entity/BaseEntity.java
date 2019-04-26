@@ -3,7 +3,8 @@ package com.lizc.sports.common.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.lizc.sports.sys.entity.CommonUser;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
@@ -18,7 +19,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 
-@Data
+@Getter
+@Setter
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable

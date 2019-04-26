@@ -31,7 +31,7 @@ public class RedisTest
     @Test
     public void saveOne()
     {
-        RedisUtils.setOne("jedisTest2","88888",1);
+        RedisUtils.setOne("test:jedisTest1","15555",1);
     }
     @Test
     public void delOne()

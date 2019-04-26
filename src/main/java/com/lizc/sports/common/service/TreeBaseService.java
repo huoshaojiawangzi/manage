@@ -4,7 +4,8 @@ package com.lizc.sports.common.service;
 import com.lizc.sports.common.entity.BaseEntity;
 import com.lizc.sports.common.entity.TreeBaseEntity;
 import com.lizc.sports.common.repository.BaseRepository;
-import org.springframework.cache.annotation.Cacheable;
+import com.lizc.sports.common.utils.RedisUtils;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
@@ -18,108 +19,149 @@ import java.util.List;
  * @author: lizc@sdhuijin.cn
  * @date: 2019-04-22 16:32
  **/
+@SuppressWarnings("ALL")
 public abstract class TreeBaseService<T extends TreeBaseEntity, ID extends Serializable, R extends BaseRepository<T, ID>> extends BaseService<T, ID, R>
 {
     /**
-     * 获取所有根节点
+     * 获取所有根节点，不包含已删除的节点
      * 
-     * @return 实体类集合List
+     * @return List-根节点集合
      */
-    @Cacheable(value = "treeList",key = "#root.targetClass")
-    public abstract List<T> findRoots();
+    public List<T> findRoots()
+    {
+        List<T> roots = RedisUtils.getList("treeList:"+clazz.toString(),clazz);
+        if(roots == null)
+        {
+            roots = findAllRoots();
+            filterTree(roots, findAllEnable());
+            RedisUtils.setList("treeList:"+clazz.toString(),roots);
+        }
+        return roots;
+    }
+
+    /**
+     * 得到根节点集合，包括已删除的
+     * 
+     * @return List-根节点集合
+     */
+    private List<T> findAllRoots()
+    {
+        Specification<T> specification = (Specification<T>)(root, query, criteriaBuilder) -> {
+             query.where(criteriaBuilder.isNull(root.get("parent")));
+             query.orderBy(criteriaBuilder.asc(root.get("sort")));
+             return query.getRestriction();
+        };
+        return repostitory.findAll(specification);
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void save(T t)
     {
         super.save(t);
-        if(t.getParent()!=null)
+        if (t.getParent() != null)
         {
-            T parentOriginal =(T)t.getParent();
-            T parent = super.get((ID) parentOriginal.getId());
-            if(!parent.isLeaf())
+            T parentOriginal = (T)t.getParent();
+            T parent = super.get((ID)parentOriginal.getId());
+            if (!parent.isLeaf())
             {
                 parent.setLeaf(true);
                 super.save(parent);
             }
         }
+        RedisUtils.del("treeList:"+clazz.toString());
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveAndFlush(T t)
     {
         super.saveAndFlush(t);
-        if(t.getParent()!=null)
+        if (t.getParent() != null)
         {
-            T parentOriginal =(T)t.getParent();
-            T parent = super.get((ID) parentOriginal.getId());
-            if(!parent.isLeaf())
+            T parentOriginal = (T)t.getParent();
+            T parent = super.get((ID)parentOriginal.getId());
+            if (!parent.isLeaf())
             {
                 parent.setLeaf(true);
                 super.saveAndFlush(parent);
             }
         }
+        RedisUtils.del("treeList:"+clazz.toString());
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void delete(T t)
     {
         super.delete(t);
-        if(t.getParent()!=null)
+        if (t.getParent() != null)
         {
             boolean leaf = false;
-            T parentOriginal =(T)t.getParent();
-            T parent = super.get((ID) parentOriginal.getId());
+            T parentOriginal = (T)t.getParent();
+            T parent = super.get((ID)parentOriginal.getId());
             List<T> children = parent.getChildren();
-            for(T child:children)
+            for (T child : children)
             {
-                if(child.getDelFlag().equals(BaseEntity.DEL_FLAG_NORMAL))
+                if (child.getDelFlag().equals(BaseEntity.DEL_FLAG_NORMAL))
                 {
                     leaf = true;
                     break;
                 }
             }
-            if(!leaf)
+            if (!leaf)
             {
                 parent.setLeaf(true);
                 super.save(parent);
             }
         }
+        RedisUtils.del("treeList:"+clazz.toString());
     }
 
     /**
-     * 获取所有根节点，并根据参数过滤掉不需要的节点
-     * @param compareList 过滤list，包含所有需要的节点
+     * 获取所有根节点，并根据比对节点集合过滤掉不需要的节点
+     * 
+     * @param compareList
+     *            比对节点集合
      * @return 过滤后的根节点
      */
-    public List<T> getfilterRoots(List<T> compareList)
+    public List<T> findFilterRoots(List<T> compareList)
     {
         List<T> roots = findRoots();
-        filterRoots(roots,compareList);
+        filterTree(roots, compareList);
         return roots;
     }
 
-    private void filterRoots(List<T> filterList,List<T> compareList)
+    /**
+     * 在原节点集合中，过滤掉比对节点集合中不存在的节点
+     * 
+     * @param filterList
+     *            原节点集合
+     * @param compareList
+     *            比对节点集合
+     */
+    private void filterTree(List<T> filterList, List<T> compareList)
     {
         Iterator<T> iterator = filterList.iterator();
-        while(iterator.hasNext())
+        while (iterator.hasNext())
         {
             boolean isRemove = true;
-            for(T comparePer:compareList)
+            T t = iterator.next();
+            for (T comparePer : compareList)
             {
-                if(iterator.next().getId().equals(comparePer.getId()))
+                if (t.getId().equals(comparePer.getId()))
                 {
                     isRemove = false;
                     break;
                 }
             }
-            if(isRemove)
+            if (isRemove)
             {
                 iterator.remove();
             }
             else
             {
-                filterRoots(iterator.next().getChildren(),compareList);
+                filterTree(t.getChildren(), compareList);
             }
         }
     }

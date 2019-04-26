@@ -21,7 +21,7 @@ import java.util.List;
 public class DictionaryService extends PageableBaseService<Dictionary, String, DictionarySearchModel, DictionaryRepository>
 {
     @Override
-    protected void setPredicates(Root<Dictionary> root, CriteriaBuilder cb, List<Predicate> predicates, DictionarySearchModel searchModel)
+    protected void setPredicates(Root<Dictionary> root, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, DictionarySearchModel searchModel)
     {
     }
 }

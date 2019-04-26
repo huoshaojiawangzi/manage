@@ -5,6 +5,7 @@ import com.lizc.sports.common.service.PageableBaseService;
 import com.lizc.sports.sys.entity.Role;
 import com.lizc.sports.sys.repository.RoleRepository;
 import com.lizc.sports.sys.vo.RoleSearchModel;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,7 @@ import java.util.List;
 public class RoleService extends PageableBaseService<Role, String, RoleSearchModel, RoleRepository>
 {
     @Override
-    protected void setPredicates(Root<Role> root, CriteriaBuilder cb, List<Predicate> predicates, RoleSearchModel searchModel) {
+    protected void setPredicates(Root<Role> root, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, RoleSearchModel searchModel) {
 
     }
 
@@ -39,8 +40,29 @@ public class RoleService extends PageableBaseService<Role, String, RoleSearchMod
     public Role getComplete(String id)
     {
         Role role = get(id);
-        role.getPermissions();
-        role.getMenus();
+        //后面这两行为了读取懒加载的数据
+        role.getPermissions().size();
+        role.getMenus().size();
         return role;
+    }
+    @Override
+    @CacheEvict(value = "role", key = "#role.id")
+    public void save(Role role)
+    {
+        super.save(role);
+    }
+
+    @Override
+    @CacheEvict(value = "role", key = "#role.id")
+    public void saveAndFlush(Role role)
+    {
+        super.saveAndFlush(role);
+    }
+
+    @Override
+    @CacheEvict(value = "role", key = "#id")
+    public void delete(String id)
+    {
+        super.delete(id);
     }
 }

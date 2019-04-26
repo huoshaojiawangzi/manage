@@ -4,10 +4,7 @@ package com.lizc.sports.sys.sevice;
 import com.lizc.sports.common.service.TreeBaseService;
 import com.lizc.sports.sys.entity.Menu;
 import com.lizc.sports.sys.repository.MenuRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 /**
@@ -19,18 +16,4 @@ import java.util.List;
 @Service
 public class MenuService extends TreeBaseService<Menu, String, MenuRepository>
 {
-
-    private final MenuRepository menuRepository;
-
-    @Autowired
-    public MenuService(MenuRepository menuRepository)
-    {
-        this.menuRepository = menuRepository;
-    }
-
-    @Override
-    public List<Menu> findRoots()
-    {
-        return menuRepository.findRoots();
-    }
 }

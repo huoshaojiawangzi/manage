@@ -11,6 +11,7 @@ import com.lizc.sports.sys.sevice.RoleService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
  * @author: lizc@sdhuijin.cn
  * @date: 2019-04-15 16:49
  **/
+@Component
 public class UserUtils
 {
 
@@ -46,6 +48,10 @@ public class UserUtils
         userUtils.menuService = this.menuService;
     }
 
+    /**
+     * 获取当前登录用户
+     * @return CommonUser-登录用户
+     */
     public static CommonUser getCurrentUser()
     {
         Subject subject = SecurityUtils.getSubject();
@@ -53,18 +59,30 @@ public class UserUtils
         return (CommonUser)subject.getPrincipal();
     }
 
+    /**
+     * 获取当前登录用户角色
+     * @return Role-用户角色
+     */
     public static Role getCurrentRole()
     {
         return userUtils.roleService.getComplete(getCurrentUser().getRoles().get(0).getId());
     }
 
-    public static List<Permission> getPermissions()
+    /**
+     * 获取当前登录用户的权限集合
+     * @return List-权限集合
+     */
+    public static List<Permission> getCurrentPermissions()
     {
-        return userUtils.permissionService.getfilterRoots(getCurrentRole().getPermissions());
+        return userUtils.permissionService.findFilterRoots(getCurrentRole().getPermissions());
     }
 
-    public static List<Menu> getMenus()
+    /**
+     * 获取当前登录用户的菜单集合
+     * @return Menu-菜单集合
+     */
+    public static List<Menu> getCurrentMenus()
     {
-        return userUtils.menuService.getfilterRoots(getCurrentRole().getMenus());
+        return userUtils.menuService.findFilterRoots(getCurrentRole().getMenus());
     }
 }

@@ -5,9 +5,7 @@ import com.lizc.sports.common.service.BaseService;
 import com.lizc.sports.sys.entity.CommonUser;
 import com.lizc.sports.sys.repository.CommonUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 /**
@@ -28,8 +26,6 @@ public class CommonUserService extends BaseService<CommonUser, String, CommonUse
         this.commonUserRepository = commonUserRepository;
     }
 
-    @Cacheable(value = "commonUser",key = "#userName")
-    @Transactional
     public CommonUser findByUserName(String userName)
     {
         return commonUserRepository.findByUserName(userName);

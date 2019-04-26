@@ -3,22 +3,15 @@ package com.lizc.sports.common.service;
 
 import com.lizc.sports.common.entity.BaseEntity;
 import com.lizc.sports.common.repository.BaseRepository;
+import com.lizc.sports.common.utils.RedisUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,11 +29,20 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
     @Autowired(required = false)
     protected R repostitory;
 
-    private Class<T> clazz;
+    protected Class<T> clazz;
 
     public BaseService()
     {
         this.clazz = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    }
+
+    /**
+     * 删除allEnableList以及allList缓存
+     */
+    private void delRedis()
+    {
+        RedisUtils.del("allEnableList:"+clazz.toString());
+        RedisUtils.del("allList:"+clazz.toString());
     }
 
     /**
@@ -61,21 +63,16 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
         return repostitory.findOne(example).orElse(null);
     }
 
-    @Caching(evict={
-            @CacheEvict(value = "allEnableList",key = "#root.targetClass"),
-            @CacheEvict(value = "allList",key = "#root.targetClass")
-    })
     public void save(T t)
     {
         repostitory.save(t);
+        delRedis();
     }
-    @Caching(evict={
-            @CacheEvict(value = "allEnableList",key = "#root.targetClass"),
-            @CacheEvict(value = "allList",key = "#root.targetClass")
-    })
+
     public void saveAndFlush(T t)
     {
         repostitory.saveAndFlush(t);
+        delRedis();
     }
 
     /**
@@ -87,7 +84,7 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
     public void delete(T t)
     {
         t.setDelFlag(BaseEntity.DEL_FLAG_DELETE);
-        repostitory.saveAndFlush(t);
+        save(t);
     }
 
     /**
@@ -104,22 +101,26 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
 
     /**
      * 物理删除
-     * 
      * @param t
-     *            实体类
      */
     public void forceDelete(T t)
     {
         repostitory.delete(t);
+        delRedis();
     }
 
     /**
      * 找到所有实体(包含已删除的)
      */
-    @Cacheable(value = "allList",key = "#root.targetClass")
     public List<T> findAll()
     {
-        return repostitory.findAll();
+        List<T> all = RedisUtils.getList("allList:"+clazz.toString(),clazz);
+        if(all == null)
+        {
+            all = repostitory.findAll();
+            RedisUtils.setList("allList:"+clazz.toString(),all);
+        }
+        return all;
     }
 
     /**
@@ -143,19 +144,19 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
      * 
      * @return
      */
-    @Cacheable(value = "allEnableList",key = "#root.targetClass")
     public List<T> findAllEnable()
     {
-        Specification<T> specification = new Specification<T>() {
-            @Override
-            public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                List<Predicate> predicates = new ArrayList<>();
-                predicates.add(cb.equal(root.<String>get("delFlag"),BaseEntity.DEL_FLAG_NORMAL));
-                Predicate[] p = new Predicate[predicates.size()];
-                return cb.and(predicates.toArray(p));
-            }
-        };
-        return repostitory.findAll(specification);
+        List<T> allEnable = RedisUtils.getList("allEnableList:"+clazz.toString(),clazz);
+        if(allEnable == null)
+        {
+            Specification<T> specification = (Specification<T>)(root, query,
+                                                                criteriaBuilder) -> criteriaBuilder.equal(
+                    root.<String> get("delFlag"),
+                    BaseEntity.DEL_FLAG_NORMAL);
+            allEnable = repostitory.findAll(specification);
+            RedisUtils.setList("allEnableList:"+clazz.toString(),allEnable);
+        }
+        return allEnable;
     }
 
     /**

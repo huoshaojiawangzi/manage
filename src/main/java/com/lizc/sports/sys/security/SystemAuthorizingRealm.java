@@ -3,7 +3,6 @@ package com.lizc.sports.sys.security;
 
 import com.lizc.sports.sys.entity.CommonUser;
 import com.lizc.sports.sys.entity.Permission;
-import com.lizc.sports.sys.entity.Role;
 import com.lizc.sports.sys.sevice.CommonUserService;
 import com.lizc.sports.sys.utils.UserUtils;
 import org.apache.shiro.authc.*;
@@ -13,6 +12,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 
 public class SystemAuthorizingRealm extends AuthorizingRealm
 {
@@ -20,6 +21,22 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
     @Autowired
     private CommonUserService commonUserService;
 
+    /**
+     * 给授权信息增加权限
+     * @param authorizationInfo 授权信息
+     * @param permissions 权限集合
+     */
+    private void setSimpleAuthorizationInfo(SimpleAuthorizationInfo authorizationInfo, List<Permission> permissions)
+    {
+        for(Permission permission:permissions)
+        {
+            authorizationInfo.addStringPermission(permission.getName());
+            if(permission.isLeaf())
+            {
+                setSimpleAuthorizationInfo(authorizationInfo,permission.getChildren());
+            }
+        }
+    }
     /*
      * 执行授权逻辑
      */
@@ -27,14 +44,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals)
     {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        Role currRole = UserUtils.getCurrentRole();
-        if(currRole != null&&currRole.getPermissions()!=null)
-        {
-            for (Permission permission : UserUtils.getCurrentRole().getPermissions())
-            {
-                authorizationInfo.addStringPermission(permission.getName());
-            }
-        }
+        setSimpleAuthorizationInfo(authorizationInfo,UserUtils.getCurrentPermissions());
         // 给当前用户赋予权限
         return authorizationInfo;
     }
