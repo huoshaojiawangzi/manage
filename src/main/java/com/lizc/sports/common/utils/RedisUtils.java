@@ -86,6 +86,10 @@ public class RedisUtils
      */
     public static String getOne(final String key, int index)
     {
+        if(jedisUtils == null)
+        {
+            return null;
+        }
         try (Jedis jedis = getJedis())
         {
             jedis.select(index);
