@@ -17,15 +17,14 @@ import java.nio.charset.Charset;
  * @date: 2019-04-24 10:52
  **/
 @Configuration
-public class HttpMessageConvertersConfig
+public class JsonConfig
 {
     @Bean
     public HttpMessageConverters fastJsonHttpMessageConverters()
     {
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat,
-            SerializerFeature.WriteClassName, SerializerFeature.DisableCircularReferenceDetect);
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat, SerializerFeature.DisableCircularReferenceDetect);
         fastJsonConfig.setCharset(Charset.forName("UTF-8"));
         fastConverter.setFastJsonConfig(fastJsonConfig);
         HttpMessageConverter<?> converter = fastConverter;

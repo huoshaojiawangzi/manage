@@ -45,18 +45,10 @@ public class CacheConfig extends CachingConfigurerSupport
 
         // 设置一个初始化的缓存空间set集合
         Set<String> cacheNames = new HashSet<>();
-        cacheNames.add("commonUser");
         cacheNames.add("role");
-        cacheNames.add("allEnableList");
-        cacheNames.add("allList");
-        cacheNames.add("treeList");
         // 对每个缓存空间应用不同的配置
         Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
-        configMap.put("commonUser", config);
         configMap.put("role", config);
-        configMap.put("allEnableList", config);
-        configMap.put("allList", config);
-        configMap.put("treeList", config);
         RedisCacheManager cacheManager = RedisCacheManager.builder(redisConnectionFactory) // 使用自定义的缓存配置初始化一个cacheManager
             .initialCacheNames(cacheNames) // 注意这两句的调用顺序，一定要先调用该方法设置初始化的缓存名，再初始化相关的配置
             .withInitialCacheConfigurations(configMap).build();

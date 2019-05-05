@@ -3,6 +3,7 @@ package com.lizc.sports;
 import com.lizc.sports.common.utils.RedisUtils;
 import com.lizc.sports.pc.demo.entity.User;
 import com.lizc.sports.pc.demo.service.UserService;
+import com.lizc.sports.sys.entity.Permission;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,5 +96,12 @@ public class RedisTest
         LocalTime loaclTimeEnd = LocalTime.now();
         Duration d = Duration.between(loaclTimeBegan,loaclTimeEnd);
         System.out.println(d.toMillis());
+    }
+
+    @Test
+    public void getRedisList()
+    {
+        List pers = RedisUtils.getList("allEnableList:"+Permission.class.toString(), Permission.class);
+        System.out.println(pers);
     }
 }

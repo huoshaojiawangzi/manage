@@ -2,6 +2,7 @@ package com.lizc.sports.common.utils;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SimplePropertyPreFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,6 +116,22 @@ public class RedisUtils
     }
 
     /**
+     * 读取stirng缓存(默认读取一个库)
+     *
+     * @param key
+     *            缓存标识
+     * @param clazz
+     *
+     * @return 返回value，如果不存在该key则返回null
+     */
+    public static Object getObj(final String key,Class clazz)
+    {
+        String objString = getOne(key, 0);
+        return JSON.parseObject(objString,clazz);
+    }
+
+
+    /**
      * 增加缓存
      * 
      * @param key
@@ -152,6 +169,38 @@ public class RedisUtils
     public static boolean setOne(final String key, String value)
     {
         return setOne(key, value, 0);
+    }
+
+    /**
+     * 增加缓存(默认缓存到标识为0的库中)
+     *
+     * @param key
+     *            缓存标识
+     * @param Object
+     *            缓存对象
+     * @return 成功返回true；失败返回false
+     */
+    public static boolean setObj(final String key, Object Object)
+    {
+        String objString = JSON.toJSONString(Object);
+        return setOne(key, objString, 0);
+    }
+
+    /**
+     * 增加缓存(默认缓存到标识为0的库中)
+     *
+     * @param key
+     *            缓存标识
+     * @param Object
+     *            缓存对象
+     * @param filter
+     *            过滤掉不需要转换的字段
+     * @return 成功返回true；失败返回false
+     */
+    public static boolean setObj(final String key, Object Object, SimplePropertyPreFilter filter)
+    {
+        String objString = JSON.toJSONString(Object,filter);
+        return setOne(key, objString, 0);
     }
 
     /**
