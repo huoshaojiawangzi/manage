@@ -23,9 +23,6 @@ import java.util.List;
 public class CommonUser extends BaseEntity
 {
 
-    /**
-     * 登录名
-     */
     @Column(nullable = false, updatable = false, unique = true)
     private String userName;
 
@@ -34,6 +31,11 @@ public class CommonUser extends BaseEntity
 
     @Column(nullable = false)
     private String name;
+
+    /**
+     * 该用户当前角色的位置
+     */
+    private int roleIndex = 0;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "c_user_role", joinColumns = {

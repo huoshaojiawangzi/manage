@@ -111,7 +111,7 @@ public abstract class TreeBaseService<T extends TreeBaseEntity, ID extends Seria
             }
             if (!leaf)
             {
-                parent.setLeaf(true);
+                parent.setLeaf(leaf);
                 super.save(parent);
             }
         }

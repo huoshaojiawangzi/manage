@@ -65,7 +65,7 @@ public class UserUtils
      */
     public static Role getCurrentRole()
     {
-        return userUtils.roleService.getComplete(getCurrentUser().getRoles().get(0).getId());
+        return userUtils.roleService.getComplete(getCurrentUser().getRoles().get(getCurrentUser().getRoleIndex()).getId());
     }
 
     /**

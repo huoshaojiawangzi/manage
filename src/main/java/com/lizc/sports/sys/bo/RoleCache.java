@@ -1,6 +1,5 @@
 package com.lizc.sports.sys.bo;
 
-import com.lizc.sports.common.bo.BaseBo;
 import com.lizc.sports.sys.entity.Menu;
 import com.lizc.sports.sys.entity.Permission;
 import com.lizc.sports.sys.entity.Role;
@@ -14,7 +13,7 @@ import java.util.List;
  * @date: 2019-05-05 11:04
  **/
 @Data
-public class RoleCache implements BaseBo<Role>
+public class RoleCache
 {
     private String id;
     private String name;
@@ -23,7 +22,6 @@ public class RoleCache implements BaseBo<Role>
 
     private List<Menu> menus = new ArrayList<>();
 
-    @Override
     public RoleCache generate(Role role) {
         this.id = role.getId();
         this.name = role.getName();
@@ -32,7 +30,6 @@ public class RoleCache implements BaseBo<Role>
         return this;
     }
 
-    @Override
     public Role transform() {
         Role role = new Role();
         role.setId(this.id);

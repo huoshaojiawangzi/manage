@@ -54,7 +54,7 @@ public class RoleService extends PageableBaseService<Role, String, RoleSearchMod
             // 后面这两行为了读取懒加载的数据
             role.getPermissions().size();
             role.getMenus().size();
-            RedisUtils.setObj("role:"+id,new RoleCache().generate(role));
+            RedisUtils.setObj("role:" + id,new RoleCache().generate(role));
         }
         return role;
     }

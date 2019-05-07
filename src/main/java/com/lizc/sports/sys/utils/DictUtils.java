@@ -71,6 +71,11 @@ public class DictUtils
         return defaultLabel;
     }
 
+    public static String getDictLabel(String type, String value)
+    {
+        return getDictLabel(type, value,null);
+    }
+
     /**
      * 通过type以及vlabel来获取字典的value值
      * 
@@ -93,6 +98,11 @@ public class DictUtils
             }
         }
         return defaultValue;
+    }
+
+    public static String getDictValue(String type, String label)
+    {
+        return getDictValue(type, label,null);
     }
 
 }
