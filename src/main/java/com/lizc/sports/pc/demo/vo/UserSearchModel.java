@@ -18,4 +18,6 @@ public class UserSearchModel extends BaseSearchModel
     private String name;
 
     private String userName;
+
+    private String officeName;
 }

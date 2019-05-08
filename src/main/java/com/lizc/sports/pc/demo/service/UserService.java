@@ -52,5 +52,10 @@ public class UserService extends PageableBaseService<User, String, UserSearchMod
             predicates.add(criteriaBuilder.like(root.<String> get("commonUser").get("userName"),
                     "%" + searchModel.getUserName() + "%"));
         }
+        if (StringUtils.isNotBlank(searchModel.getOfficeName()))
+        {
+            predicates.add(criteriaBuilder.like(root.<String> get("office").get("name"),
+                    "%" + searchModel.getOfficeName() + "%"));
+        }
     }
 }
