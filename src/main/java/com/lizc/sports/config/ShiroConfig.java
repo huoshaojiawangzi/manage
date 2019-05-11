@@ -1,7 +1,7 @@
 package com.lizc.sports.config;
 
 
-import com.lizc.sports.common.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import com.lizc.sports.sys.entity.Permission;
 import com.lizc.sports.sys.security.SystemAuthorizingRealm;
 import com.lizc.sports.sys.sevice.PermissionService;
