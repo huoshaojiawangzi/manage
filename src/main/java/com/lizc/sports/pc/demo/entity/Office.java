@@ -4,6 +4,8 @@ package com.lizc.sports.pc.demo.entity;
 import com.lizc.sports.common.entity.TreeBaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -27,5 +29,6 @@ public class Office extends TreeBaseEntity<Office>
     private String phone;
 
     @OneToOne
+    @NotFound(action= NotFoundAction.IGNORE)
     private User manager;
 }
