@@ -14,6 +14,6 @@ import java.util.List;
 @Data
 public class CurrentUserInfo
 {
-    List<Menu> menus;
-    List<Permission> permissions;
+    List<Menu> menuTree;
+    List<Permission> permissionTree;
 }

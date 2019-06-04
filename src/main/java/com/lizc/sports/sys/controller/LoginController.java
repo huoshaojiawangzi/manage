@@ -2,6 +2,7 @@ package com.lizc.sports.sys.controller;
 
 
 import com.lizc.sports.common.dto.CurrentUserInfo;
+import com.lizc.sports.common.exception.UserOverdueException;
 import com.lizc.sports.pc.demo.entity.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -114,10 +115,14 @@ public class LoginController
     @RequestMapping("getMenusAndPermissions")
     public JsonResult<CurrentUserInfo> getMenusAndPermissions()
     {
+        if(UserUtils.getCurrentUser()==null)
+        {
+            throw new UserOverdueException();
+        }
         JsonResult<CurrentUserInfo> jsonResult = new JsonResult<>();
         CurrentUserInfo currentUserInfo = new CurrentUserInfo();
-        currentUserInfo.setPermissions(UserUtils.getCurrentPermissions());
-        currentUserInfo.setMenus(UserUtils.getCurrentMenus());
+        currentUserInfo.setPermissionTree(UserUtils.getCurrentPermissions());
+        currentUserInfo.setMenuTree(UserUtils.getCurrentMenus());
         jsonResult.setResultCode(SysResultCode.SUCCESS);
         jsonResult.setResult(currentUserInfo);
         return jsonResult;

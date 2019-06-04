@@ -5,6 +5,8 @@ import com.lizc.sports.common.entity.BaseEntity;
 import com.lizc.sports.sys.entity.CommonUser;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 
@@ -20,6 +22,7 @@ public class User extends BaseEntity
     private CommonUser commonUser;
 
     @ManyToOne
+    @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(nullable = false)
     private Office office;
 

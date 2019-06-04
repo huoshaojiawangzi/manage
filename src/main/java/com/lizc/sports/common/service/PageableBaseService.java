@@ -8,6 +8,7 @@ import com.lizc.sports.common.vo.BaseSearchModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
@@ -32,6 +33,7 @@ public abstract class PageableBaseService<T extends BaseEntity, ID extends Seria
      *            查询模型
      * @return Page
      */
+    @Transactional
     public Page<T> findPage(M m)
     {
         return repostitory.findAll(getSpec(m),

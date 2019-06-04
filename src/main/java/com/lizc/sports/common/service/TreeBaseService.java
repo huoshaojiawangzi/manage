@@ -122,7 +122,7 @@ public abstract class TreeBaseService<T extends TreeBaseEntity, ID extends Seria
      * 获取所有根节点，并根据比对节点集合过滤掉不需要的节点
      * 
      * @param compareList
-     *            比对节点集合
+     *            比对节点集合，包含重复数据
      * @return 过滤后的根节点
      */
     public List<T> findFilterRoots(List<T> compareList)
@@ -138,7 +138,7 @@ public abstract class TreeBaseService<T extends TreeBaseEntity, ID extends Seria
      * @param filterList
      *            原节点集合
      * @param compareList
-     *            比对节点集合
+     *            比对节点集合，包含重复数据
      */
     private void filterTree(List<T> filterList, List<T> compareList)
     {

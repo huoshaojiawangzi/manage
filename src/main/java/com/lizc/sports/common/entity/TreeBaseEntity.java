@@ -1,6 +1,7 @@
 package com.lizc.sports.common.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -19,6 +20,7 @@ import java.util.List;
 @Data
 @MappedSuperclass
 @ToString(exclude = "parent")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public abstract class TreeBaseEntity<T> extends  BaseEntity
 {
 
@@ -35,7 +37,7 @@ public abstract class TreeBaseEntity<T> extends  BaseEntity
     /**
      * 父节点
      */
-    @JSONField(serialize = false)
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private T parent;
 
