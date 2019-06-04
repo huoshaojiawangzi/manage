@@ -3,7 +3,6 @@ package com.lizc.sports.common.vo;
 
 import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
@@ -25,10 +24,10 @@ public class BaseSearchModel
 
     private String delFlag = BaseEntity.DEL_FLAG_NORMAL;
 
-    private ArrayList<PageSort> pageSorts;
+    private ArrayList<LoalSort> loalSorts;
 
     @Data
-    private static class PageSort
+    private static class LoalSort
     {
         private String property;
 
@@ -43,20 +42,17 @@ public class BaseSearchModel
     {
         List<Sort.Order> orders = new ArrayList<>();
 
-        if(pageSorts != null&&!pageSorts.isEmpty())
+        if(loalSorts != null&&!loalSorts.isEmpty())
         {
-            for(PageSort pageSort: pageSorts)
+            for(LoalSort loalSort:loalSorts)
             {
-                if(StringUtils.isNotBlank(pageSort.getProperty()))
+                if(LoalSort.DESC.equals(loalSort.getOrder()))
                 {
-                    if(PageSort.DESC.equals(pageSort.getOrder()))
-                    {
-                        orders.add(new Sort.Order(Sort.Direction.DESC, pageSort.getProperty()));
-                    }
-                    else if (PageSort.ASC.equals(pageSort.getOrder()))
-                    {
-                        orders.add(new Sort.Order(Sort.Direction.ASC, pageSort.getProperty()));
-                    }
+                    orders.add(new Sort.Order(Sort.Direction.DESC, loalSort.getProperty()));
+                }
+                else if (LoalSort.ASC.equals(loalSort.getOrder()))
+                {
+                    orders.add(new Sort.Order(Sort.Direction.ASC, loalSort.getProperty()));
                 }
             }
             return Sort.by(orders);

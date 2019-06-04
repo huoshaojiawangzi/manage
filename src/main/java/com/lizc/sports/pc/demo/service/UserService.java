@@ -2,7 +2,7 @@ package com.lizc.sports.pc.demo.service;
 
 
 import com.lizc.sports.common.service.PageableBaseService;
-import org.apache.commons.lang3.StringUtils;
+import com.lizc.sports.common.utils.StringUtils;
 import com.lizc.sports.pc.demo.entity.User;
 import com.lizc.sports.pc.demo.repository.UserRepository;
 import com.lizc.sports.pc.demo.vo.UserSearchModel;

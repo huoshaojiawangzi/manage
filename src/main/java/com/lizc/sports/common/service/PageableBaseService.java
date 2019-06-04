@@ -3,7 +3,7 @@ package com.lizc.sports.common.service;
 
 import com.lizc.sports.common.entity.BaseEntity;
 import com.lizc.sports.common.repository.BaseRepository;
-import org.apache.commons.lang3.StringUtils;
+import com.lizc.sports.common.utils.StringUtils;
 import com.lizc.sports.common.vo.BaseSearchModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
