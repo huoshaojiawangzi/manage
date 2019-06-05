@@ -2,6 +2,7 @@ package com.lizc.sports.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -35,11 +36,10 @@ public abstract class TreeBaseEntity<T> extends  BaseEntity
     private boolean leaf = false;
 
     /**
-     * 父节点
-     */
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    private T parent;
+ * 父节点
+ */
+@ManyToOne(fetch = FetchType.LAZY)
+private T parent;
 
     /**
      * 子节点
@@ -48,5 +48,18 @@ public abstract class TreeBaseEntity<T> extends  BaseEntity
     @OrderBy("sort ASC ")
     @Fetch(FetchMode.SUBSELECT)
     private List<T> children = new ArrayList<>();
+
+    @JsonIgnore
+    public T getParent()
+    {
+        return this.parent;
+    }
+
+    @JsonProperty
+    public void setParent(T t)
+    {
+        this.parent = t;
+    }
+
 
 }
