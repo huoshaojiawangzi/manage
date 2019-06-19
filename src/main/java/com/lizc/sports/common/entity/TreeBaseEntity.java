@@ -35,16 +35,16 @@ public abstract class TreeBaseEntity<T> extends  BaseEntity
      */
     private boolean leaf = false;
 
-    /**
- * 父节点
- */
-@ManyToOne(fetch = FetchType.LAZY)
-private T parent;
+        /**
+     * 父节点
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    private T parent;
 
     /**
      * 子节点
      */
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "parent", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
     @OrderBy("sort ASC ")
     @Fetch(FetchMode.SUBSELECT)
     private List<T> children = new ArrayList<>();
