@@ -26,19 +26,19 @@ public class Permission extends TreeBaseEntity<Permission>
     /**
      * 权限名称
      */
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     /**
      * 权限标签
      */
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String tag;
 
     /**
      * url地址
      */
-    @Column(unique = true)
+    @Column()
     private String url;
 
 }

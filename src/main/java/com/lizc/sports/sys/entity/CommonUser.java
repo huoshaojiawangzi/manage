@@ -23,7 +23,7 @@ import java.util.List;
 public class CommonUser extends BaseEntity
 {
 
-    @Column(nullable = false, updatable = false, unique = true)
+    @Column(nullable = false, updatable = false)
     private String userName;
 
     @Column(nullable = false)

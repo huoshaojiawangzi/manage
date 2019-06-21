@@ -26,18 +26,23 @@ public class Menu extends TreeBaseEntity<Menu>
     /**
      * 菜单名称
      */
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     /**
      * 前端路由地址
      */
-    @Column(unique = true)
+    @Column()
     private String path;
 
     /**
      * 是否隐藏
      */
     private boolean hidden = false;
+
+    /**
+     * 图标
+     */
+    private String iconCls;
 
 }

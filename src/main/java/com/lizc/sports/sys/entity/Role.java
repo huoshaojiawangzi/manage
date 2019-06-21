@@ -31,7 +31,7 @@ import java.util.List;
 public class Role extends BaseEntity
 {
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
     @JsonIgnore
