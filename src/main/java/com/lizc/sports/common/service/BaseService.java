@@ -53,6 +53,11 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
         repostitory.flush();
     }
 
+    /**
+     * 包含懒加载的对象
+     * @param id
+     * @return
+     */
     public T get(ID id)
     {
         return repostitory.findById(id).orElse(null);
@@ -124,7 +129,7 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
     }
 
     /**
-     * 根据example找到所有实体
+     * 根据example找到所有实体,通过对象作为查询条件不建议使用该方法
      */
     public List<T> findAll(Example<T> example)
     {
