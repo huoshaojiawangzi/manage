@@ -4,6 +4,7 @@
 package com.lizc.sports.sys.entity;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
@@ -35,12 +36,14 @@ public class Role extends BaseEntity
     private String name;
 
     @JsonIgnore
+    @JSONField(serialize=false)
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "c_role_permission", joinColumns = {
         @JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "permission_id")})
     private List<Permission> permissions = new ArrayList<>();
 
     @JsonIgnore
+    @JSONField(serialize=false)
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     @OrderBy("sort ASC ")
