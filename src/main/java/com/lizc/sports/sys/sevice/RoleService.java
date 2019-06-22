@@ -29,7 +29,10 @@ public class RoleService extends PageableBaseService<Role, String, RoleSearchMod
     protected void setPredicates(Root<Role> root, CriteriaBuilder criteriaBuilder,
                                  List<Predicate> predicates, RoleSearchModel searchModel)
     {
-
+    }
+    public Role findByName(String name)
+    {
+        return repostitory.findByName(name);
     }
 
     /**

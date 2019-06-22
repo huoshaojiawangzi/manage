@@ -3,6 +3,8 @@ package com.lizc.sports.sys.repository;
 
 import com.lizc.sports.common.repository.BaseRepository;
 import com.lizc.sports.sys.entity.Role;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 
@@ -13,5 +15,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RoleRepository extends BaseRepository<Role, String>
 {
-
+    @Query(value = "select r from Role r where r.name = :name and r.delFlag = 0")
+    Role findByName(@Param("name") String name);
 }

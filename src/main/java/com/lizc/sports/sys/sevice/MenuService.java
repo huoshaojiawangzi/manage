@@ -16,4 +16,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class MenuService extends TreeBaseService<Menu, String, MenuRepository>
 {
+    public Menu findByName(String name)
+    {
+        return repostitory.findByName(name);
+    }
+    public Menu findByPath(String path)
+    {
+        return repostitory.findByPath(path);
+    }
 }

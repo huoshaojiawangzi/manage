@@ -34,7 +34,7 @@ public abstract class TreeBaseService<T extends TreeBaseEntity, ID extends Seria
         {
             roots = findAllRoots();
             filterTree(roots, findAllEnable());
-            RedisUtils.setList("treeList:"+clazz.toString(),roots);
+            //RedisUtils.setList("treeList:"+clazz.toString(),roots);
         }
         return roots;
     }

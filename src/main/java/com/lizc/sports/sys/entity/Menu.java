@@ -32,7 +32,6 @@ public class Menu extends TreeBaseEntity<Menu>
     /**
      * 前端路由地址
      */
-    @Column()
     private String path;
 
     /**

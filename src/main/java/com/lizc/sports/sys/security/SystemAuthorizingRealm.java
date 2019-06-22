@@ -30,8 +30,11 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
     {
         for(Permission permission:permissions)
         {
-            authorizationInfo.addStringPermission(permission.getName());
-            if(permission.isLeaf())
+            if(permission.getTag()!=null)
+            {
+                authorizationInfo.addStringPermission(permission.getTag());
+            }
+            if(permission.getChildren()!=null&&!permission.getChildren().isEmpty())
             {
                 setSimpleAuthorizationInfo(authorizationInfo,permission.getChildren());
             }

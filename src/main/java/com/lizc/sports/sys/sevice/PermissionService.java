@@ -16,4 +16,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class PermissionService extends TreeBaseService<Permission, String, PermissionRepository>
 {
+    public Permission findByName(String name)
+    {
+        return repostitory.findByName(name);
+    }
+    public Permission findByUrl(String url)
+    {
+        return repostitory.findByUrl(url);
+    }
+    public Permission findByTag(String tag)
+    {
+        return repostitory.findByTag(tag);
+    }
 }

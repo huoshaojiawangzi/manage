@@ -32,7 +32,6 @@ public class Permission extends TreeBaseEntity<Permission>
     /**
      * 权限标签
      */
-    @Column(nullable = false)
     private String tag;
 
     /**

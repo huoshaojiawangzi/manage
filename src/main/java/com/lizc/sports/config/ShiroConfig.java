@@ -34,7 +34,7 @@ public class ShiroConfig
         {
             if (StringUtils.isNotBlank(permission.getUrl()))
             {
-                filterMap.put(permission.getUrl(), "perms[" + permission.getName() + "]");
+                filterMap.put(permission.getUrl(), "perms[" + permission.getTag() + "]");
             }
             if (!permission.getChildren().isEmpty())
             {
