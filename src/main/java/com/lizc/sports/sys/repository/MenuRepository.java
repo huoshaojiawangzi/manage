@@ -14,10 +14,4 @@ import org.springframework.stereotype.Repository;
  **/
 @Repository
 public interface MenuRepository extends BaseRepository<Menu, String>
-{
-    @Query(value = "select m from Menu m where m.name = :name and m.delFlag = 0")
-    Menu findByName(@Param("name") String name);
-
-    @Query(value = "select m from Menu m where m.path = :path and m.delFlag = 0")
-    Menu findByPath(@Param("path") String path);
-}
+{}

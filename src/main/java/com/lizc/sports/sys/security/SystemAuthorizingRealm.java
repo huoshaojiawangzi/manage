@@ -60,15 +60,15 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
         throws AuthenticationException
     {
         UsernamePasswordToken userToken = (UsernamePasswordToken)token;
-        CommonUser commonUser = commonUserService.findByUserName(userToken.getUsername());
+        List<CommonUser> commonUserList = commonUserService.findByFiled("userName",userToken.getUsername());
         // 账号验证
-        if (commonUser == null)
+        if (commonUserList.isEmpty())
         {
             // 底层抛出UnknownAccountException
             return null;
         }
         // 使密码对比password，成功返回SimpleAuthenticationInfo失败抛出IncorrectCredentialsException
-        return new SimpleAuthenticationInfo(commonUser, commonUser.getPassword(), "");
+        return new SimpleAuthenticationInfo(commonUserList.get(0), commonUserList.get(0).getPassword(), "");
     }
 
 }

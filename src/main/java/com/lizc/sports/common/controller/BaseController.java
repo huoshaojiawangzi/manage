@@ -6,6 +6,7 @@ import com.lizc.sports.common.entity.BaseEntity;
 import com.lizc.sports.common.enums.SysResultCode;
 import com.lizc.sports.common.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -46,6 +47,16 @@ public abstract class BaseController<T extends BaseEntity, S extends BaseService
     {
         JsonResult jsonResult = new JsonResult();
         service.delete(id);
+        jsonResult.setResultCode(SysResultCode.SUCCESS);
+        return jsonResult;
+    }
+
+    @GetMapping("/find-by-filed")
+    public JsonResult<List<T>> findByUserName(String filed,String value)
+    {
+        JsonResult<List<T>> jsonResult = new JsonResult<>();
+        List<T> list = service.findByFiled(filed,value);
+        jsonResult.setResult(list);
         jsonResult.setResultCode(SysResultCode.SUCCESS);
         return jsonResult;
     }

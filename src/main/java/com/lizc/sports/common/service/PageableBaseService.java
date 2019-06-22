@@ -50,14 +50,14 @@ public abstract class PageableBaseService<T extends BaseEntity, ID extends Seria
     {
         return (Specification<T>) (root, query, criteriaBuilder)->
         {
-            List<Predicate> predicates = new ArrayList<>();
+            List<Predicate> predicateList = new ArrayList<>();
             if (StringUtils.isNotBlank(m.getDelFlag()))
             {
-                predicates.add(criteriaBuilder.equal(root.<String> get("delFlag"), m.getDelFlag()));
+                predicateList.add(criteriaBuilder.equal(root.<String> get("delFlag"), m.getDelFlag()));
             }
-            setPredicates(root,criteriaBuilder,predicates,m);
-            Predicate[] p = new Predicate[predicates.size()];
-            return criteriaBuilder.and(predicates.toArray(p));
+            setPredicates(root,criteriaBuilder,predicateList,m);
+            Predicate[] predicates = new Predicate[predicateList.size()];
+            return criteriaBuilder.and(predicateList.toArray(predicates));
         };
     }
 

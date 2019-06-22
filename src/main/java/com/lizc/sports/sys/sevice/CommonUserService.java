@@ -15,10 +15,4 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public class CommonUserService extends BaseService<CommonUser, String, CommonUserRepository>
-{
-
-    public CommonUser findByUserName(String userName)
-    {
-        return repostitory.findByUserName(userName);
-    }
-}
+{}

@@ -14,7 +14,4 @@ import org.springframework.stereotype.Repository;
  **/
 @Repository
 public interface RoleRepository extends BaseRepository<Role, String>
-{
-    @Query(value = "select r from Role r where r.name = :name and r.delFlag = 0")
-    Role findByName(@Param("name") String name);
-}
+{}

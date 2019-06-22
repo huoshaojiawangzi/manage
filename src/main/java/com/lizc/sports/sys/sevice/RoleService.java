@@ -30,11 +30,6 @@ public class RoleService extends PageableBaseService<Role, String, RoleSearchMod
                                  List<Predicate> predicates, RoleSearchModel searchModel)
     {
     }
-    public Role findByName(String name)
-    {
-        return repostitory.findByName(name);
-    }
-
     /**
      * 获取完整的role，包含role中的permissions以及menus
      * 
