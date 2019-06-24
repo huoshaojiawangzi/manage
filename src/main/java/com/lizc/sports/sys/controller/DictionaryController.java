@@ -17,7 +17,7 @@ import java.util.List;
  * @date: 2019-04-23 11:55
  **/
 @RestController
-@RequestMapping("home/dictionary")
+@RequestMapping("/home/dictionary")
 public class DictionaryController extends PageableBaseController<Dictionary, DictionarySearchModel, DictionaryService>
 {
     @Override

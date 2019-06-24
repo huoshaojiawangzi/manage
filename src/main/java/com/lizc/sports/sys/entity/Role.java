@@ -6,6 +6,7 @@ package com.lizc.sports.sys.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.lizc.sports.common.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,19 +36,41 @@ public class Role extends BaseEntity
     @Column(nullable = false)
     private String name;
 
-    @JsonIgnore
-    @JSONField(serialize=false)
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "c_role_permission", joinColumns = {
         @JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "permission_id")})
     private List<Permission> permissions = new ArrayList<>();
 
-    @JsonIgnore
-    @JSONField(serialize=false)
     @ManyToMany(fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT)
     @OrderBy("sort ASC ")
     @JoinTable(name = "c_role_menu", joinColumns = {
         @JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "menu_id")})
     private List<Menu> menus = new ArrayList<>();
+
+    @JsonIgnore
+    @JSONField(serialize=false)
+    public List<Permission> getPermissions()
+    {
+        return this.permissions;
+    }
+
+    @JsonProperty
+    public void setPermissions(List<Permission> permissions)
+    {
+        this.permissions = permissions;
+    }
+
+    @JsonIgnore
+    @JSONField(serialize=false)
+    public List<Menu> getMenus()
+    {
+        return this.menus;
+    }
+
+    @JsonProperty
+    public void setMenus(List<Menu> menus)
+    {
+        this.menus = menus;
+    }
 }

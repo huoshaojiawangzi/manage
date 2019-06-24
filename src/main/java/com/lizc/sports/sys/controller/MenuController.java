@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2019-04-16 10:30
  **/
 @RestController
-@RequestMapping("home/menu")
+@RequestMapping("/home/menu")
 public class MenuController extends TreeBaseController<Menu, MenuService>
 {}

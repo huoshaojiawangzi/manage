@@ -28,7 +28,7 @@ import com.lizc.sports.sys.utils.UserUtils;
  * @date 2019/03/06
  */
 @RestController
-@RequestMapping("home")
+@RequestMapping("/home")
 public class LoginController
 {
     private final CommonUserService commonUserService;

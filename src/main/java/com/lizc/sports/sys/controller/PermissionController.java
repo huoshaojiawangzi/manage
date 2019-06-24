@@ -15,6 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @date: 2019-04-16 10:30
  **/
 @RestController
-@RequestMapping("home/permission")
+@RequestMapping("/home/permission")
 public class PermissionController extends TreeBaseController<Permission, PermissionService>
 {}
