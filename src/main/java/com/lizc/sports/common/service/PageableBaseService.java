@@ -62,7 +62,14 @@ public abstract class PageableBaseService<T extends BaseEntity, ID extends Seria
     }
 
     /**
-     * 给搜索增加筛选条件
+     * 给搜索增加查询条件
+     * @param root 元模型
+     * @param criteriaBuilder 查询条件构建器
+     * @param predicates predicate的list稽核
+     * @param m 查询模型
+     * <p>举例：<p>
+     * predicates.add(criteriaBuilder.equal(root.get("type"),searchModel.getType()))<p>
+     * 给predicates集合增加元素来添加查询条件
      */
     protected abstract void setPredicates(Root<T> root, CriteriaBuilder criteriaBuilder,List<Predicate> predicates, M m);
 }

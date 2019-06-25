@@ -35,7 +35,7 @@ public class Dictionary extends BaseEntity
     private String type;// 比如贷款类型
 
     /**
-     * 名称
+     * 标签
      */
     @Column(nullable = false)
     private String label;// 比如分为表内/表外

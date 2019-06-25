@@ -12,7 +12,9 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class SystemAuthorizingRealm extends AuthorizingRealm
@@ -60,7 +62,9 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
         throws AuthenticationException
     {
         UsernamePasswordToken userToken = (UsernamePasswordToken)token;
-        List<CommonUser> commonUserList = commonUserService.findByFiled("userName",userToken.getUsername());
+        Map<String,String> map = new HashMap<>();
+        map.put("userName",userToken.getUsername());
+        List<CommonUser> commonUserList = commonUserService.findByFileds(map);
         // 账号验证
         if (commonUserList.isEmpty())
         {

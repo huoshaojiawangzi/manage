@@ -10,14 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -121,17 +119,19 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
 
     /**
      * 根据字段实体属性名称(string类型)，以及属性值获取实体列表
-     * @param filed 属性名称
-     * @param value 属性值
+     * @param map 储存实体属性以及值的键值对
      * @return list:实体列表
      */
-    public List<T> findByFiled(String filed,String value)
+    public List<T> findByFileds(Map<String,String> map)
     {
         Specification specification = (root, query, criteriaBuilder)->
         {
                 List<Predicate> predicateList = new ArrayList<>();
                 predicateList.add(criteriaBuilder.equal(root.get("delFlag"),BaseEntity.DEL_FLAG_NORMAL));
-                predicateList.add(criteriaBuilder.equal(root.get(filed),value));
+                for(String key : map.keySet())
+                {
+                    predicateList.add(criteriaBuilder.equal(root.get(key),map.get(key)));
+                }
                 Predicate[] predicates = new Predicate[predicateList.size()];
                 return criteriaBuilder.and(predicateList.toArray(predicates));
         };

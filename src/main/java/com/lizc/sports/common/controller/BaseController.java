@@ -6,11 +6,12 @@ import com.lizc.sports.common.entity.BaseEntity;
 import com.lizc.sports.common.enums.SysResultCode;
 import com.lizc.sports.common.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -51,11 +52,11 @@ public abstract class BaseController<T extends BaseEntity, S extends BaseService
         return jsonResult;
     }
 
-    @GetMapping("/find-by-filed")
-    public JsonResult<List<T>> findByUserName(String filed,String value)
+    @PostMapping("/find-by-filed")
+    public JsonResult<List<T>> findByFileds(@RequestBody Map<String,String> map)
     {
         JsonResult<List<T>> jsonResult = new JsonResult<>();
-        List<T> list = service.findByFiled(filed,value);
+        List<T> list = service.findByFileds(map);
         jsonResult.setResult(list);
         jsonResult.setResultCode(SysResultCode.SUCCESS);
         return jsonResult;
