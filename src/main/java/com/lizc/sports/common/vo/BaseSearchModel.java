@@ -24,10 +24,10 @@ public class BaseSearchModel
 
     private String delFlag = BaseEntity.DEL_FLAG_NORMAL;
 
-    private ArrayList<LoalSort> loalSorts;
+    private ArrayList<PageSort> pageSorts;
 
     @Data
-    private static class LoalSort
+    private static class PageSort
     {
         private String property;
 
@@ -42,17 +42,17 @@ public class BaseSearchModel
     {
         List<Sort.Order> orders = new ArrayList<>();
 
-        if(loalSorts != null&&!loalSorts.isEmpty())
+        if(pageSorts != null&&!pageSorts.isEmpty())
         {
-            for(LoalSort loalSort:loalSorts)
+            for(PageSort pageSort:pageSorts)
             {
-                if(LoalSort.DESC.equals(loalSort.getOrder()))
+                if(PageSort.DESC.equals(pageSort.getOrder()))
                 {
-                    orders.add(new Sort.Order(Sort.Direction.DESC, loalSort.getProperty()));
+                    orders.add(new Sort.Order(Sort.Direction.DESC, pageSort.getProperty()));
                 }
-                else if (LoalSort.ASC.equals(loalSort.getOrder()))
+                else if (PageSort.ASC.equals(pageSort.getOrder()))
                 {
-                    orders.add(new Sort.Order(Sort.Direction.ASC, loalSort.getProperty()));
+                    orders.add(new Sort.Order(Sort.Direction.ASC, pageSort.getProperty()));
                 }
             }
             return Sort.by(orders);
