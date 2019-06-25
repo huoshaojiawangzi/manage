@@ -54,11 +54,10 @@ public class ShiroConfig
         // 设置访问权限
         List<Permission> permissions = permissionService.findRoots();
         setPermissions(filterMap, permissions);
-        filterMap.put("/home/permission/test", "perms[sys:test]");
         // 将所有的路径进行登录认证权限过滤
         filterMap.put("/**", "authc");
         // 登录认证失败跳转页面
-        //shiroFilterFactoryBean.setLoginUrl("/home/loginView");
+        shiroFilterFactoryBean.setLoginUrl("/home/unLogin");
         // 访问权限认证失败跳转页面
         shiroFilterFactoryBean.setUnauthorizedUrl("/home/unAuth");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);

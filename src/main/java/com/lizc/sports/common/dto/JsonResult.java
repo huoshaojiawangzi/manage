@@ -20,6 +20,13 @@ public class JsonResult<T>
 
     private T result;
 
+    public JsonResult(){}
+    public JsonResult(SysResultCode rc)
+    {
+        this.code = rc.getCode();
+        this.msg = rc.getMsg();
+    }
+
     public void setResultCode(SysResultCode rc)
     {
         this.code = rc.getCode();
