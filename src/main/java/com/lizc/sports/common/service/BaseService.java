@@ -130,7 +130,7 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
                 predicateList.add(criteriaBuilder.equal(root.get("delFlag"),BaseEntity.DEL_FLAG_NORMAL));
                 for(String key : map.keySet())
                 {
-                    predicateList.add(criteriaBuilder.equal(root.get(key),map.get(key)));
+                    predicateList.add(criteriaBuilder.equal(root.get(key),"".equals(map.get(key))?null:map.get(key)));
                 }
                 Predicate[] predicates = new Predicate[predicateList.size()];
                 return criteriaBuilder.and(predicateList.toArray(predicates));

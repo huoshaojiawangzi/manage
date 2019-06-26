@@ -1,6 +1,17 @@
 package com.lizc.sports.sys.controller;
 
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.lizc.sports.common.dto.CurrentUserInfo;
 import com.lizc.sports.common.dto.JsonResult;
 import com.lizc.sports.common.enums.SysResultCode;
@@ -8,14 +19,6 @@ import com.lizc.sports.common.exception.UserOverdueException;
 import com.lizc.sports.sys.entity.CommonUser;
 import com.lizc.sports.sys.sevice.CommonUserService;
 import com.lizc.sports.sys.utils.UserUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 
 /**
@@ -47,6 +50,12 @@ public class LoginController
         {
             currentUser.setRoleIndex(roleIndex);
             commonUserService.save(currentUser);
+            Subject subject = SecurityUtils.getSubject();
+            PrincipalCollection principalCollection = subject.getPrincipals();
+            String realmName = principalCollection.getRealmNames().iterator().next();
+            PrincipalCollection newPrincipalCollection =
+                    new SimplePrincipalCollection(currentUser, realmName);
+            subject.runAs(newPrincipalCollection);
             jsonResult.setResultCode(SysResultCode.SUCCESS);
         }
         else
@@ -84,6 +93,19 @@ public class LoginController
             jsonResult.setCode(1);
             jsonResult.setMsg("密码错误");
         }
+        return jsonResult;
+    }
+
+    /**
+     * 退出登录
+     */
+    @RequestMapping("/logout")
+    public JsonResult logout()
+    {
+        JsonResult jsonResult = new JsonResult<>();
+        // 得到subject
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
         return jsonResult;
     }
 

@@ -57,9 +57,9 @@ public class ShiroConfig
         // 将所有的路径进行登录认证权限过滤
         filterMap.put("/**", "authc");
         // 登录认证失败跳转页面
-        shiroFilterFactoryBean.setLoginUrl("/home/unLogin");
+        //shiroFilterFactoryBean.setLoginUrl("/home/unLogin");
         // 访问权限认证失败跳转页面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/home/unAuth");
+        //shiroFilterFactoryBean.setUnauthorizedUrl("/home/unAuth");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         return shiroFilterFactoryBean;
     }
