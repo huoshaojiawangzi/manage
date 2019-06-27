@@ -42,20 +42,21 @@ public abstract class PageableBaseService<T extends BaseEntity, ID extends Seria
 
     /**
      * 根据model中的查询条件获取spec
+     * 
      * @param m
      *            查询模型
      * @return Specification
      */
     private Specification<T> getSpec(M m)
     {
-        return (Specification<T>) (root, query, criteriaBuilder)->
-        {
+        return (Specification<T>)(root, query, criteriaBuilder) -> {
             List<Predicate> predicateList = new ArrayList<>();
             if (StringUtils.isNotBlank(m.getDelFlag()))
             {
-                predicateList.add(criteriaBuilder.equal(root.<String> get("delFlag"), m.getDelFlag()));
+                predicateList.add(
+                    criteriaBuilder.equal(root.<String> get("delFlag"), m.getDelFlag()));
             }
-            setPredicates(root,criteriaBuilder,predicateList,m);
+            setPredicates(root, criteriaBuilder, predicateList, m);
             Predicate[] predicates = new Predicate[predicateList.size()];
             return criteriaBuilder.and(predicateList.toArray(predicates));
         };
@@ -63,13 +64,18 @@ public abstract class PageableBaseService<T extends BaseEntity, ID extends Seria
 
     /**
      * 给搜索增加查询条件
-     * @param root 元模型
-     * @param criteriaBuilder 查询条件构建器
-     * @param predicates predicate的list稽核
-     * @param m 查询模型
-     * <p>举例：<p>
-     * predicates.add(criteriaBuilder.equal(root.get("type"),searchModel.getType()))<p>
-     * 给predicates集合增加元素来添加查询条件
+     * 
+     * @param root
+     *            元模型
+     * @param criteriaBuilder
+     *            查询条件构建器
+     * @param predicates
+     *            predicate的list稽核
+     * @param m
+     *            查询模型 <p>举例：<p>
+     *            predicates.add(criteriaBuilder.equal(root.get("type"),searchModel.getType()))<p>
+     *            给predicates集合增加元素来添加查询条件
      */
-    protected abstract void setPredicates(Root<T> root, CriteriaBuilder criteriaBuilder,List<Predicate> predicates, M m);
+    protected abstract void setPredicates(Root<T> root, CriteriaBuilder criteriaBuilder,
+                                          List<Predicate> predicates, M m);
 }

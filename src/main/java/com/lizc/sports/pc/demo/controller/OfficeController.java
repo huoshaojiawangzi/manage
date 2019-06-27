@@ -21,9 +21,12 @@ public class OfficeController extends TreeBaseController<Office, OfficeService>
     {
         JsonResult jsonResult = new JsonResult();
         jsonResult.setResultCode(SysResultCode.SUCCESS);
-        try {
+        try
+        {
             service.deleteOffice(id);
-        } catch (MsgException e) {
+        }
+        catch (MsgException e)
+        {
             jsonResult.setCode(1);
             jsonResult.setMsg(e.getMsg());
         }

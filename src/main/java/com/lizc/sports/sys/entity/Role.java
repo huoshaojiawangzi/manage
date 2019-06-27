@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@ToString(exclude = {"menus","permissions"})
+@ToString(exclude = {"menus", "permissions"})
 @Entity
 @Table(name = "c_role")
 public class Role extends BaseEntity
@@ -49,7 +49,7 @@ public class Role extends BaseEntity
     private List<Menu> menus = new ArrayList<>();
 
     @JsonIgnore
-    @JSONField(serialize=false)
+    @JSONField(serialize = false)
     public List<Permission> getPermissions()
     {
         return this.permissions;
@@ -62,7 +62,7 @@ public class Role extends BaseEntity
     }
 
     @JsonIgnore
-    @JSONField(serialize=false)
+    @JSONField(serialize = false)
     public List<Menu> getMenus()
     {
         return this.menus;

@@ -22,19 +22,23 @@ import java.util.List;
 public class DictionaryService extends PageableBaseService<Dictionary, String, DictionarySearchModel, DictionaryRepository>
 {
     @Override
-    protected void setPredicates(Root<Dictionary> root, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, DictionarySearchModel searchModel)
+    protected void setPredicates(Root<Dictionary> root, CriteriaBuilder criteriaBuilder,
+                                 List<Predicate> predicates, DictionarySearchModel searchModel)
     {
-        if(StringUtils.isNotBlank(searchModel.getType()))
+        if (StringUtils.isNotBlank(searchModel.getType()))
         {
-            predicates.add(criteriaBuilder.like(root.get("type"),"%"+searchModel.getType()+"%"));
+            predicates.add(
+                criteriaBuilder.like(root.get("type"), "%" + searchModel.getType() + "%"));
         }
-        if(StringUtils.isNotBlank(searchModel.getLabel()))
+        if (StringUtils.isNotBlank(searchModel.getLabel()))
         {
-            predicates.add(criteriaBuilder.like(root.get("label"),"%"+searchModel.getLabel()+"%"));
+            predicates.add(
+                criteriaBuilder.like(root.get("label"), "%" + searchModel.getLabel() + "%"));
         }
-        if(StringUtils.isNotBlank(searchModel.getRemarks()))
+        if (StringUtils.isNotBlank(searchModel.getRemarks()))
         {
-            predicates.add(criteriaBuilder.like(root.get("remarks"),"%"+searchModel.getRemarks()+"%"));
+            predicates.add(
+                criteriaBuilder.like(root.get("remarks"), "%" + searchModel.getRemarks() + "%"));
         }
     }
 }

@@ -29,12 +29,12 @@ public abstract class TreeBaseService<T extends TreeBaseEntity, ID extends Seria
      */
     public List<T> findRoots()
     {
-        List<T> roots = RedisUtils.getList("treeList:"+clazz.toString(),clazz);
-        if(roots == null)
+        List<T> roots = RedisUtils.getList("treeList:" + clazz.toString(), clazz);
+        if (roots == null)
         {
             roots = findAllRoots();
             filterTree(roots, findAllEnable());
-            //RedisUtils.setList("treeList:"+clazz.toString(),roots);
+            // RedisUtils.setList("treeList:"+clazz.toString(),roots);
         }
         return roots;
     }
@@ -47,9 +47,9 @@ public abstract class TreeBaseService<T extends TreeBaseEntity, ID extends Seria
     private List<T> findAllRoots()
     {
         Specification<T> specification = (Specification<T>)(root, query, criteriaBuilder) -> {
-             query.where(criteriaBuilder.isNull(root.get("parent")));
-             query.orderBy(criteriaBuilder.asc(root.get("sort")));
-             return query.getRestriction();
+            query.where(criteriaBuilder.isNull(root.get("parent")));
+            query.orderBy(criteriaBuilder.asc(root.get("sort")));
+            return query.getRestriction();
         };
         return repostitory.findAll(specification);
     }
@@ -69,7 +69,7 @@ public abstract class TreeBaseService<T extends TreeBaseEntity, ID extends Seria
                 super.save(parent);
             }
         }
-        RedisUtils.del("treeList:"+clazz.toString());
+        RedisUtils.del("treeList:" + clazz.toString());
     }
 
     @Override
@@ -87,7 +87,7 @@ public abstract class TreeBaseService<T extends TreeBaseEntity, ID extends Seria
                 super.saveAndFlush(parent);
             }
         }
-        RedisUtils.del("treeList:"+clazz.toString());
+        RedisUtils.del("treeList:" + clazz.toString());
     }
 
     @Override
@@ -115,7 +115,7 @@ public abstract class TreeBaseService<T extends TreeBaseEntity, ID extends Seria
                 super.save(parent);
             }
         }
-        RedisUtils.del("treeList:"+clazz.toString());
+        RedisUtils.del("treeList:" + clazz.toString());
     }
 
     /**

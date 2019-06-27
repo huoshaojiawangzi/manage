@@ -29,7 +29,6 @@ public class UserService extends PageableBaseService<User, String, UserSearchMod
         this.commonUserService = commonUserService;
     }
 
-
     @Override
     @Transactional
     public void delete(String id)
@@ -40,22 +39,23 @@ public class UserService extends PageableBaseService<User, String, UserSearchMod
     }
 
     @Override
-    protected void setPredicates(Root<User> root, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, UserSearchModel searchModel)
+    protected void setPredicates(Root<User> root, CriteriaBuilder criteriaBuilder,
+                                 List<Predicate> predicates, UserSearchModel searchModel)
     {
         if (StringUtils.isNotBlank(searchModel.getName()))
         {
             predicates.add(criteriaBuilder.like(root.<String> get("commonUser").get("name"),
-                    "%" + searchModel.getName() + "%"));
+                "%" + searchModel.getName() + "%"));
         }
         if (StringUtils.isNotBlank(searchModel.getUserName()))
         {
             predicates.add(criteriaBuilder.like(root.<String> get("commonUser").get("userName"),
-                    "%" + searchModel.getUserName() + "%"));
+                "%" + searchModel.getUserName() + "%"));
         }
         if (StringUtils.isNotBlank(searchModel.getOfficeName()))
         {
             predicates.add(criteriaBuilder.like(root.<String> get("office").get("name"),
-                    "%" + searchModel.getOfficeName() + "%"));
+                "%" + searchModel.getOfficeName() + "%"));
         }
     }
 }

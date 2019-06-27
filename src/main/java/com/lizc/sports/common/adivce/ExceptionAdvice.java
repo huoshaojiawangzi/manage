@@ -61,7 +61,7 @@ public class ExceptionAdvice
     @ExceptionHandler(Exception.class)
     public JsonResult<String> exceptionHandler(Exception e)
     {
-        return getErrorResult(UNKNOWN_EXCEPTION, e,SysResultCode.FAILURE);
+        return getErrorResult(UNKNOWN_EXCEPTION, e, SysResultCode.FAILURE);
     }
 
     /**
@@ -74,17 +74,19 @@ public class ExceptionAdvice
     @ExceptionHandler(UserOverdueException.class)
     public JsonResult<String> userOverdueExceptionHandler(UserOverdueException e)
     {
-        return getInfoResult(USER_OVERDUE, e,SysResultCode.FAILURE);
+        return getInfoResult(USER_OVERDUE, e, SysResultCode.FAILURE);
     }
 
     /**
      * 用户访问权限不足异常
+     * 
      * @param e
      * @return
      */
     @ExceptionHandler(value = UnauthorizedException.class)
-    public JsonResult AuthcErrorHandler(UnauthorizedException e) {
+    public JsonResult AuthcErrorHandler(UnauthorizedException e)
+    {
         System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        return getInfoResult(USER_UNAUTH,e,SysResultCode.UNAUTH);
+        return getInfoResult(USER_UNAUTH, e, SysResultCode.UNAUTH);
     }
 }

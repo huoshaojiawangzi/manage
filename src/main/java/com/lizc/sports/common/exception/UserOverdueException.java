@@ -1,6 +1,8 @@
 package com.lizc.sports.common.exception;
 
-/**用户信息过期异常
+/**
+ * 用户信息过期异常
+ * 
  * @author: lizc@sdhuijin.cn
  * @date: 2019-05-20 13:53
  **/

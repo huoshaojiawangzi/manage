@@ -19,7 +19,8 @@ public class DictUtils
 
     private static DictUtils dictUtils;
 
-    private DictUtils(){}
+    private DictUtils()
+    {}
 
     @PostConstruct
     public void init()
@@ -33,7 +34,7 @@ public class DictUtils
         return dictUtils.dictionaryService.findAllEnable();
     }
 
-    public  static List<Dictionary> findByType(String type)
+    public static List<Dictionary> findByType(String type)
     {
         List<Dictionary> resultList = new ArrayList<Dictionary>();
         List<Dictionary> dictionaries = findAll();
@@ -73,7 +74,7 @@ public class DictUtils
 
     public static String getDictLabel(String type, String value)
     {
-        return getDictLabel(type, value,null);
+        return getDictLabel(type, value, null);
     }
 
     /**
@@ -102,7 +103,7 @@ public class DictUtils
 
     public static String getDictValue(String type, String label)
     {
-        return getDictValue(type, label,null);
+        return getDictValue(type, label, null);
     }
 
 }

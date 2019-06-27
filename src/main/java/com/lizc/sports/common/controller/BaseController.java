@@ -53,7 +53,7 @@ public abstract class BaseController<T extends BaseEntity, S extends BaseService
     }
 
     @PostMapping("/find-by-filed")
-    public JsonResult<List<T>> findByFileds(@RequestBody Map<String,String> map)
+    public JsonResult<List<T>> findByFileds(@RequestBody Map<String, String> map)
     {
         JsonResult<List<T>> jsonResult = new JsonResult<>();
         List<T> list = service.findByFileds(map);

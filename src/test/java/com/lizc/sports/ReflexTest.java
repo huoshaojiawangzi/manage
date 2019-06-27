@@ -1,8 +1,10 @@
 package com.lizc.sports;
 
+
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 
 /**
  * @author: lizc@sdhuijin.cn
@@ -10,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  **/
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class ReflexTest {
+public class ReflexTest
+{
 
 }

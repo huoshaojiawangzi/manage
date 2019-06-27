@@ -87,7 +87,7 @@ public class RedisUtils
      */
     public static String getOne(final String key, int index)
     {
-        if(jedisUtils == null)
+        if (jedisUtils == null)
         {
             return null;
         }
@@ -121,15 +121,13 @@ public class RedisUtils
      * @param key
      *            缓存标识
      * @param clazz
-     *
      * @return 返回value，如果不存在该key则返回null
      */
-    public static Object getObj(final String key,Class clazz)
+    public static Object getObj(final String key, Class clazz)
     {
         String objString = getOne(key, 0);
-        return JSON.parseObject(objString,clazz);
+        return JSON.parseObject(objString, clazz);
     }
-
 
     /**
      * 增加缓存
@@ -199,7 +197,7 @@ public class RedisUtils
      */
     public static boolean setObj(final String key, Object Object, SimplePropertyPreFilter filter)
     {
-        String objString = JSON.toJSONString(Object,filter);
+        String objString = JSON.toJSONString(Object, filter);
         return setOne(key, objString, 0);
     }
 

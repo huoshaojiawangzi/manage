@@ -23,23 +23,27 @@ public class OfficeService extends TreeBaseService<Office, String, OfficeReposit
     private final UserService userService;
 
     @Autowired
-    public OfficeService(UserService userService) {
+    public OfficeService(UserService userService)
+    {
         this.userService = userService;
     }
 
-    public void deleteOffice(String id) throws MsgException
+    public void deleteOffice(String id)
+        throws MsgException
     {
         Specification<User> specification = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            predicates.add(criteriaBuilder.equal(root.get("office").get("id"),id));
+            predicates.add(criteriaBuilder.equal(root.get("office").get("id"), id));
             predicates.add(criteriaBuilder.equal(root.get("delFlag"), BaseEntity.DEL_FLAG_NORMAL));
             Predicate[] p = new Predicate[predicates.size()];
             return criteriaBuilder.and(predicates.toArray(p));
         };
         List<User> users = userService.findAll(specification);
-        if(!users.isEmpty()){
+        if (!users.isEmpty())
+        {
             throw new MsgException("该机构下存在用户，无法删除");
-        }else
+        }
+        else
         {
             super.delete(id);
         }

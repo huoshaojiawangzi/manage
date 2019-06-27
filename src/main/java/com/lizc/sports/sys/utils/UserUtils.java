@@ -50,6 +50,7 @@ public class UserUtils
 
     /**
      * 获取当前登录用户
+     * 
      * @return CommonUser-登录用户
      */
     public static CommonUser getCurrentUser()
@@ -61,15 +62,18 @@ public class UserUtils
 
     /**
      * 获取当前登录用户角色
+     * 
      * @return Role-用户角色
      */
     public static Role getCurrentRole()
     {
-        return userUtils.roleService.getComplete(getCurrentUser().getRoles().get(getCurrentUser().getRoleIndex()).getId());
+        return userUtils.roleService.getComplete(
+            getCurrentUser().getRoles().get(getCurrentUser().getRoleIndex()).getId());
     }
 
     /**
      * 获取当前登录用户的权限集合
+     * 
      * @return List-权限集合
      */
     public static List<Permission> getCurrentPermissions()
@@ -79,6 +83,7 @@ public class UserUtils
 
     /**
      * 获取当前登录用户的菜单集合
+     * 
      * @return Menu-菜单集合
      */
     public static List<Menu> getCurrentMenus()

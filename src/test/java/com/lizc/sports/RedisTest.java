@@ -1,5 +1,6 @@
 package com.lizc.sports;
 
+
 import com.lizc.sports.common.utils.RedisUtils;
 import com.lizc.sports.pc.demo.entity.User;
 import com.lizc.sports.pc.demo.service.UserService;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
+
 
 /**
  * @author: lizc@sdhuijin.cn
@@ -32,24 +34,26 @@ public class RedisTest
     @Test
     public void saveOne()
     {
-        RedisUtils.setOne("test:jedisTest1","15555",1);
+        RedisUtils.setOne("test:jedisTest1", "15555", 1);
     }
+
     @Test
     public void delOne()
     {
         RedisUtils.del("users2");
     }
+
     @Test
     public void getOne()
     {
         String one = RedisUtils.getOne("jedisTest");
-        if(one == null)
+        if (one == null)
         {
             System.out.println("为空");
         }
         else
         {
-            System.out.println("值="+one);
+            System.out.println("值=" + one);
         }
     }
 
@@ -57,13 +61,14 @@ public class RedisTest
     public void testSaveList()
     {
         List<User> users = userService.findAll();
-        RedisUtils.setList("users2",users);
+        RedisUtils.setList("users2", users);
     }
+
     @Test
     public void getList()
     {
-        List<User> users = RedisUtils.getList("users2",User.class);
-        if(users == null)
+        List<User> users = RedisUtils.getList("users2", User.class);
+        if (users == null)
         {
             System.out.println("列表为空");
         }
@@ -72,16 +77,17 @@ public class RedisTest
             System.out.println(users.get(0).getPhone());
         }
     }
+
     @Test
     public void testMysql()
     {
         LocalTime loaclTimeBegan = LocalTime.now();
-        for(int i = 0;i<5000;i++)
+        for (int i = 0; i < 5000; i++ )
         {
             userService.findAll();
         }
         LocalTime loaclTimeEnd = LocalTime.now();
-        Duration d = Duration.between(loaclTimeBegan,loaclTimeEnd);
+        Duration d = Duration.between(loaclTimeBegan, loaclTimeEnd);
         System.out.println(d.toMillis());
     }
 
@@ -89,19 +95,20 @@ public class RedisTest
     public void testRedis()
     {
         LocalTime loaclTimeBegan = LocalTime.now();
-        for(int i = 0;i<5000;i++)
+        for (int i = 0; i < 5000; i++ )
         {
-            RedisUtils.getList("users2",User.class);
+            RedisUtils.getList("users2", User.class);
         }
         LocalTime loaclTimeEnd = LocalTime.now();
-        Duration d = Duration.between(loaclTimeBegan,loaclTimeEnd);
+        Duration d = Duration.between(loaclTimeBegan, loaclTimeEnd);
         System.out.println(d.toMillis());
     }
 
     @Test
     public void getRedisList()
     {
-        List pers = RedisUtils.getList("allEnableList:"+Permission.class.toString(), Permission.class);
+        List pers = RedisUtils.getList("allEnableList:" + Permission.class.toString(),
+            Permission.class);
         System.out.println(pers);
     }
 }

@@ -34,7 +34,8 @@ public class LoginController
     private final CommonUserService commonUserService;
 
     @Autowired
-    public LoginController(CommonUserService commonUserService) {
+    public LoginController(CommonUserService commonUserService)
+    {
         this.commonUserService = commonUserService;
     }
 
@@ -46,15 +47,15 @@ public class LoginController
     {
         JsonResult jsonResult = new JsonResult();
         CommonUser currentUser = UserUtils.getCurrentUser();
-        if(roleIndex >= 0 && roleIndex < currentUser.getRoles().size())
+        if (roleIndex >= 0 && roleIndex < currentUser.getRoles().size())
         {
             currentUser.setRoleIndex(roleIndex);
             commonUserService.save(currentUser);
             Subject subject = SecurityUtils.getSubject();
             PrincipalCollection principalCollection = subject.getPrincipals();
             String realmName = principalCollection.getRealmNames().iterator().next();
-            PrincipalCollection newPrincipalCollection =
-                    new SimplePrincipalCollection(currentUser, realmName);
+            PrincipalCollection newPrincipalCollection = new SimplePrincipalCollection(currentUser,
+                realmName);
             subject.runAs(newPrincipalCollection);
             jsonResult.setResultCode(SysResultCode.SUCCESS);
         }
@@ -115,7 +116,7 @@ public class LoginController
     @RequestMapping("/getMenusAndPermissions")
     public JsonResult<CurrentUserInfo> getMenusAndPermissions()
     {
-        if(UserUtils.getCurrentUser()==null)
+        if (UserUtils.getCurrentUser() == null)
         {
             throw new UserOverdueException();
         }

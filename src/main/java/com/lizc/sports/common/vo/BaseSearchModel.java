@@ -42,11 +42,11 @@ public class BaseSearchModel
     {
         List<Sort.Order> orders = new ArrayList<>();
 
-        if(pageSorts != null&&!pageSorts.isEmpty())
+        if (pageSorts != null && !pageSorts.isEmpty())
         {
-            for(PageSort pageSort:pageSorts)
+            for (PageSort pageSort : pageSorts)
             {
-                if(PageSort.DESC.equals(pageSort.getOrder()))
+                if (PageSort.DESC.equals(pageSort.getOrder()))
                 {
                     orders.add(new Sort.Order(Sort.Direction.DESC, pageSort.getProperty()));
                 }

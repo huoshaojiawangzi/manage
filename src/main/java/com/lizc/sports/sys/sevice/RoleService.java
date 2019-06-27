@@ -28,8 +28,8 @@ public class RoleService extends PageableBaseService<Role, String, RoleSearchMod
     @Override
     protected void setPredicates(Root<Role> root, CriteriaBuilder criteriaBuilder,
                                  List<Predicate> predicates, RoleSearchModel searchModel)
-    {
-    }
+    {}
+
     /**
      * 获取完整的role，包含role中的permissions以及menus
      * 
@@ -40,9 +40,9 @@ public class RoleService extends PageableBaseService<Role, String, RoleSearchMod
     @Transactional
     public Role getComplete(String id)
     {
-        RoleCache roleCache = (RoleCache) RedisUtils.getObj("role:"+id,RoleCache.class);
+        RoleCache roleCache = (RoleCache)RedisUtils.getObj("role:" + id, RoleCache.class);
         Role role;
-        if(roleCache!=null)
+        if (roleCache != null)
         {
             role = roleCache.transform();
         }
@@ -52,7 +52,7 @@ public class RoleService extends PageableBaseService<Role, String, RoleSearchMod
             // 后面这两行为了读取懒加载的数据
             role.getPermissions().size();
             role.getMenus().size();
-            RedisUtils.setObj("role:" + id,new RoleCache().generate(role));
+            RedisUtils.setObj("role:" + id, new RoleCache().generate(role));
         }
         return role;
     }
@@ -61,14 +61,14 @@ public class RoleService extends PageableBaseService<Role, String, RoleSearchMod
     public void save(Role role)
     {
         super.save(role);
-        RedisUtils.del("role:"+role.getId());
+        RedisUtils.del("role:" + role.getId());
     }
 
     @Override
     public void saveAndFlush(Role role)
     {
         super.saveAndFlush(role);
-        RedisUtils.del("role:"+role.getId());
+        RedisUtils.del("role:" + role.getId());
     }
 
     @Override

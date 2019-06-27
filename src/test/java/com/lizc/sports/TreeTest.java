@@ -38,7 +38,7 @@ public class TreeTest
     {
         CommonUser commonUser = commonUserService.get("1");
         Role role = roleService.getComplete(commonUser.getRoles().get(0).getId());
-        List<Permission> permissionList = permissionService.findFilterRoots(role.getPermissions()) ;
+        List<Permission> permissionList = permissionService.findFilterRoots(role.getPermissions());
         System.out.println(permissionList.size());
     }
 }

@@ -1,5 +1,6 @@
 package com.lizc.sports.common.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,6 +14,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * @author: lizc@sdhuijin.cn
  * @date: 2019-04-25 14:11
@@ -22,7 +24,7 @@ import java.util.List;
 @MappedSuperclass
 @ToString(exclude = "parent")
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
-public abstract class TreeBaseEntity<T> extends  BaseEntity
+public abstract class TreeBaseEntity<T> extends BaseEntity
 {
 
     /**
@@ -35,7 +37,7 @@ public abstract class TreeBaseEntity<T> extends  BaseEntity
      */
     private boolean leaf = false;
 
-        /**
+    /**
      * 父节点
      */
     @ManyToOne(fetch = FetchType.LAZY)
@@ -60,6 +62,5 @@ public abstract class TreeBaseEntity<T> extends  BaseEntity
     {
         this.parent = t;
     }
-
 
 }

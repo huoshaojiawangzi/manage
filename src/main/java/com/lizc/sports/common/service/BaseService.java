@@ -44,8 +44,8 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
      */
     private void delRedis()
     {
-        RedisUtils.del("allEnableList:"+clazz.toString());
-        RedisUtils.del("allList:"+clazz.toString());
+        RedisUtils.del("allEnableList:" + clazz.toString());
+        RedisUtils.del("allList:" + clazz.toString());
     }
 
     /**
@@ -58,6 +58,7 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
 
     /**
      * 包含懒加载的对象
+     * 
      * @param id
      * @return
      */
@@ -109,6 +110,7 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
 
     /**
      * 物理删除
+     * 
      * @param t
      */
     public void forceDelete(T t)
@@ -119,34 +121,38 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
 
     /**
      * 根据字段实体属性名称(string类型)，以及属性值获取实体列表
-     * @param map 储存实体属性以及值的键值对
+     * 
+     * @param map
+     *            储存实体属性以及值的键值对
      * @return list:实体列表
      */
-    public List<T> findByFileds(Map<String,String> map)
+    public List<T> findByFileds(Map<String, String> map)
     {
-        Specification specification = (root, query, criteriaBuilder)->
-        {
-                List<Predicate> predicateList = new ArrayList<>();
-                predicateList.add(criteriaBuilder.equal(root.get("delFlag"),BaseEntity.DEL_FLAG_NORMAL));
-                for(String key : map.keySet())
-                {
-                    predicateList.add(criteriaBuilder.equal(root.get(key),"".equals(map.get(key))?null:map.get(key)));
-                }
-                Predicate[] predicates = new Predicate[predicateList.size()];
-                return criteriaBuilder.and(predicateList.toArray(predicates));
+        Specification specification = (root, query, criteriaBuilder) -> {
+            List<Predicate> predicateList = new ArrayList<>();
+            predicateList.add(
+                criteriaBuilder.equal(root.get("delFlag"), BaseEntity.DEL_FLAG_NORMAL));
+            for (String key : map.keySet())
+            {
+                predicateList.add(criteriaBuilder.equal(root.get(key),
+                    "".equals(map.get(key)) ? null : map.get(key)));
+            }
+            Predicate[] predicates = new Predicate[predicateList.size()];
+            return criteriaBuilder.and(predicateList.toArray(predicates));
         };
         return repostitory.findAll(specification);
     }
+
     /**
      * 找到所有实体(包含已删除的)
      */
     public List<T> findAll()
     {
-        List<T> all = RedisUtils.getList("allList:"+clazz.toString(),clazz);
-        if(all == null)
+        List<T> all = RedisUtils.getList("allList:" + clazz.toString(), clazz);
+        if (all == null)
         {
             all = repostitory.findAll();
-            RedisUtils.setList("allList:"+clazz.toString(),all);
+            RedisUtils.setList("allList:" + clazz.toString(), all);
         }
         return all;
     }
@@ -174,15 +180,15 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
      */
     public List<T> findAllEnable()
     {
-        List<T> allEnable = RedisUtils.getList("allEnableList:"+clazz.toString(),clazz);
-        if(allEnable == null)
+        List<T> allEnable = RedisUtils.getList("allEnableList:" + clazz.toString(), clazz);
+        if (allEnable == null)
         {
             Specification<T> specification = (Specification<T>)(root, query,
                                                                 criteriaBuilder) -> criteriaBuilder.equal(
-                    root.<String> get("delFlag"),
-                    BaseEntity.DEL_FLAG_NORMAL);
+                                                                    root.<String> get("delFlag"),
+                                                                    BaseEntity.DEL_FLAG_NORMAL);
             allEnable = repostitory.findAll(specification);
-            RedisUtils.setList("allEnableList:"+clazz.toString(),allEnable);
+            RedisUtils.setList("allEnableList:" + clazz.toString(), allEnable);
         }
         return allEnable;
     }
