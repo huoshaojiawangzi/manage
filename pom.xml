@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lizc</groupId>
-    <artifactId>sports</artifactId>
+    <artifactId>manage</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>sports</name>
+    <name>manage</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
