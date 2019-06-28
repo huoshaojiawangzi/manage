@@ -33,7 +33,7 @@ public class CommonUser extends BaseEntity
     private String name;
 
     /**
-     * 该用户当前角色的位置,切换角色时改变
+     * 该用户当前角色的位置,切换角色时会改变
      */
     private int roleIndex = 0;
 
