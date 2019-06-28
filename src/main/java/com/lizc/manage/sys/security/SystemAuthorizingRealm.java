@@ -1,6 +1,7 @@
 package com.lizc.manage.sys.security;
 
 
+import com.lizc.manage.common.utils.StringUtils;
 import com.lizc.manage.sys.entity.CommonUser;
 import com.lizc.manage.sys.entity.Permission;
 import com.lizc.manage.sys.sevice.CommonUserService;
@@ -36,7 +37,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
     {
         for (Permission permission : permissions)
         {
-            if (permission.getTag() != null)
+            if (StringUtils.isNotBlank(permission.getUrl()))
             {
                 authorizationInfo.addStringPermission(permission.getTag());
             }

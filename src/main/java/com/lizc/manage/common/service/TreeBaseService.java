@@ -1,7 +1,6 @@
 package com.lizc.manage.common.service;
 
 
-import com.lizc.manage.common.entity.BaseEntity;
 import com.lizc.manage.common.entity.TreeBaseEntity;
 import com.lizc.manage.common.repository.BaseRepository;
 import com.lizc.manage.common.utils.RedisUtils;
@@ -59,16 +58,6 @@ public abstract class TreeBaseService<T extends TreeBaseEntity, ID extends Seria
     public void save(T t)
     {
         super.save(t);
-        if (t.getParent() != null)
-        {
-            T parentOriginal = (T)t.getParent();
-            T parent = super.get((ID)parentOriginal.getId());
-            if (!parent.isLeaf())
-            {
-                parent.setLeaf(true);
-                super.save(parent);
-            }
-        }
         RedisUtils.del("treeList:" + clazz.toString());
     }
 
@@ -77,16 +66,6 @@ public abstract class TreeBaseService<T extends TreeBaseEntity, ID extends Seria
     public void saveAndFlush(T t)
     {
         super.saveAndFlush(t);
-        if (t.getParent() != null)
-        {
-            T parentOriginal = (T)t.getParent();
-            T parent = super.get((ID)parentOriginal.getId());
-            if (!parent.isLeaf())
-            {
-                parent.setLeaf(true);
-                super.saveAndFlush(parent);
-            }
-        }
         RedisUtils.del("treeList:" + clazz.toString());
     }
 
@@ -95,26 +74,6 @@ public abstract class TreeBaseService<T extends TreeBaseEntity, ID extends Seria
     public void delete(T t)
     {
         super.delete(t);
-        if (t.getParent() != null)
-        {
-            boolean leaf = false;
-            T parentOriginal = (T)t.getParent();
-            T parent = super.get((ID)parentOriginal.getId());
-            List<T> children = parent.getChildren();
-            for (T child : children)
-            {
-                if (child.getDelFlag().equals(BaseEntity.DEL_FLAG_NORMAL))
-                {
-                    leaf = true;
-                    break;
-                }
-            }
-            if (!leaf)
-            {
-                parent.setLeaf(leaf);
-                super.save(parent);
-            }
-        }
         RedisUtils.del("treeList:" + clazz.toString());
     }
 

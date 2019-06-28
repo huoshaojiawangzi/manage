@@ -33,11 +33,6 @@ public abstract class TreeBaseEntity<T> extends BaseEntity
     private int sort;
 
     /**
-     * 是否还有子节点
-     */
-    private boolean leaf = false;
-
-    /**
      * 父节点
      */
     @ManyToOne(fetch = FetchType.LAZY)
