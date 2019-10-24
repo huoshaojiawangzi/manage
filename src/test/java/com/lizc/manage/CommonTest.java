@@ -19,6 +19,6 @@ public class CommonTest
     @Test
     public void testTree()
     {
-        System.out.println(MD5.md5("123456"));
+        System.out.println(MD5.md5("1234561"));
     }
 }

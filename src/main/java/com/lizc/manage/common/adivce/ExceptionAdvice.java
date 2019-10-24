@@ -86,7 +86,6 @@ public class ExceptionAdvice
     @ExceptionHandler(value = UnauthorizedException.class)
     public JsonResult AuthcErrorHandler(UnauthorizedException e)
     {
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         return getInfoResult(USER_UNAUTH, e, SysResultCode.UNAUTH);
     }
 }
