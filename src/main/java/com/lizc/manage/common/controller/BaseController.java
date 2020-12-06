@@ -1,11 +1,13 @@
 package com.lizc.manage.common.controller;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.lizc.manage.common.dto.JsonResult;
 import com.lizc.manage.common.entity.BaseEntity;
 import com.lizc.manage.common.enums.SysResultCode;
 import com.lizc.manage.common.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,13 +54,22 @@ public abstract class BaseController<T extends BaseEntity, S extends BaseService
         return jsonResult;
     }
 
-    @PostMapping("/find-by-filed")
+    @PostMapping("/find-by-fileds")
     public JsonResult<List<T>> findByFileds(@RequestBody Map<String, String> map)
     {
         JsonResult<List<T>> jsonResult = new JsonResult<>();
         List<T> list = service.findByFileds(map);
         jsonResult.setResult(list);
         jsonResult.setResultCode(SysResultCode.SUCCESS);
+        return jsonResult;
+    }
+    @RequestMapping("/find-page")
+    public JsonResult<Page<T>> findPgae(@RequestBody JSONObject searchModel)
+    {
+        JsonResult<Page<T>> jsonResult = new JsonResult<>();
+        Page<T> page = service.findPage(searchModel);
+        jsonResult.setResultCode(SysResultCode.SUCCESS);
+        jsonResult.setResult(page);
         return jsonResult;
     }
 }

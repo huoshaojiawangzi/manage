@@ -1,6 +1,7 @@
 package com.lizc.manage.common.service;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.lizc.manage.common.entity.BaseEntity;
 import com.lizc.manage.common.repository.BaseRepository;
 import com.lizc.manage.common.utils.RedisUtils;
@@ -8,9 +9,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
@@ -119,23 +126,34 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
         delRedis();
     }
 
+    public T findOne(JSONObject searchModel)
+    {
+        return repostitory.findOne(getSpec(searchModel)).orElse(null);
+    }
+
     /**
-     * 根据字段实体属性名称(string类型)，以及属性值获取实体列表
-     * 
-     * @param map
-     *            储存实体属性以及值的键值对
+     * 根据字段实体属性名称，以及属性值获取实体列表<p>
+     * 目前最多支持两级查询，即最多支持实体的属性以及其包含对象的属性查询
+     *
+     * @param map key表示属性名，value表示属性值
      * @return list:实体列表
      */
-    public List<T> findByFileds(Map<String, String> map)
-    {
-        Specification specification = (root, query, criteriaBuilder) -> {
+    public List<T> findByFileds(Map<String, Object> map) {
+        Specification specification = (Specification<T>) (root, query, criteriaBuilder) -> {
             List<Predicate> predicateList = new ArrayList<>();
             predicateList.add(
-                criteriaBuilder.equal(root.get("delFlag"), BaseEntity.DEL_FLAG_NORMAL));
-            for (String key : map.keySet())
-            {
-                predicateList.add(criteriaBuilder.equal(root.get(key),
-                    "".equals(map.get(key)) ? null : map.get(key)));
+                    criteriaBuilder.equal(root.get("delFlag"), T.DEL_FLAG_NORMAL));
+            for (String key : map.keySet()) {
+                if (map.get(key) instanceof Map) {
+                    Map<String, Object> itemMap = (Map<String, Object>) map.get(key);
+                    for (String itemKey : itemMap.keySet()) {
+                        predicateList.add(criteriaBuilder.equal(root.get(key).get(itemKey),
+                                "".equals(itemMap.get(itemKey)) ? null : itemMap.get(itemKey)));
+                    }
+                } else {
+                    predicateList.add(criteriaBuilder.equal(root.get(key),
+                            "".equals(map.get(key)) ? null : map.get(key)));
+                }
             }
             Predicate[] predicates = new Predicate[predicateList.size()];
             return criteriaBuilder.and(predicateList.toArray(predicates));
@@ -168,9 +186,9 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
     /**
      * 根据specification找到所有实体
      */
-    public List<T> findAll(Specification<T> specification)
+    public List<T> findAll(JSONObject searchModel)
     {
-        return repostitory.findAll(specification);
+        return repostitory.findAll(getSpec(searchModel));
     };
 
     /**
@@ -199,5 +217,77 @@ public abstract class BaseService<T extends BaseEntity, ID extends Serializable,
     public boolean exists(ID id)
     {
         return repostitory.existsById(id);
+    }
+
+    /**
+     * 获取分页
+     *
+     * @param searchModel
+     *            查询模型
+     * @return Page
+     */
+    @Transactional
+    public Page<T> findPage(JSONObject searchModel)
+    {
+        Integer page = searchModel.getInteger("page");
+        Integer limit = searchModel.getInteger("limit");
+        if (page == null) {
+            page = 0;
+        } else {
+            page--;
+        }
+        if (limit == null) {
+            limit = 20;
+        }
+        return repostitory.findAll(getSpec(searchModel),
+                PageRequest.of(page, limit, getSort(searchModel)));
+    }
+
+    /**
+     * 根据model中的查询条件获取spec
+     *
+     * @param searchModel
+     *            查询模型
+     * @return Specification
+     */
+    protected Specification<T> getSpec(JSONObject searchModel)
+    {
+        return (Specification<T>)(root, query, criteriaBuilder) -> {
+            List<Predicate> predicateList = new ArrayList<>();
+            setPredicates(root, criteriaBuilder, predicateList, searchModel);
+            Predicate[] predicates = new Predicate[predicateList.size()];
+            return criteriaBuilder.and(predicateList.toArray(predicates));
+        };
+    }
+
+    protected Sort getSort(JSONObject searchModel) {
+        List<Sort.Order> orders = new ArrayList<>();
+        String order = searchModel.getString("order");
+        String column = searchModel.getString("column");
+        if (order != null && order.equals("ascending")) {
+            orders.add(new Sort.Order(Sort.Direction.ASC, column));
+        } else if (order != null && order.equals("descending")) {
+            orders.add(new Sort.Order(Sort.Direction.DESC, column));
+        }
+        orders.add(new Sort.Order(Sort.Direction.DESC, "updateDate"));
+        return Sort.by(orders);
+    }
+
+    /**
+     * 给搜索增加查询条件
+     *
+     * @param root
+     *            元模型
+     * @param criteriaBuilder
+     *            查询条件构建器
+     * @param predicates
+     *            predicate的list稽核
+     * @param searchModel
+     *            查询模型
+     */
+    protected void setPredicates(Root<T> root, CriteriaBuilder criteriaBuilder,
+                                          List<Predicate> predicates, JSONObject searchModel) {
+        predicates.add(
+                criteriaBuilder.equal(root.<String> get("delFlag"),BaseEntity.DEL_FLAG_NORMAL));
     }
 }

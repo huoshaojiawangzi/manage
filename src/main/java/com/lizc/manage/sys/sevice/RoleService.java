@@ -1,12 +1,14 @@
 package com.lizc.manage.sys.sevice;
 
 
-import com.lizc.manage.common.service.PageableBaseService;
+import com.alibaba.fastjson.JSONObject;
+import com.lizc.manage.common.entity.BaseEntity;
+import com.lizc.manage.common.service.BaseService;
 import com.lizc.manage.common.utils.RedisUtils;
+import com.lizc.manage.common.utils.StringUtils;
 import com.lizc.manage.sys.bo.RoleCache;
 import com.lizc.manage.sys.entity.Role;
 import com.lizc.manage.sys.repository.RoleRepository;
-import com.lizc.manage.sys.vo.RoleSearchModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +25,8 @@ import java.util.List;
  * @date: 2019-03-06 15:07
  **/
 @Service
-public class RoleService extends PageableBaseService<Role, String, RoleSearchModel, RoleRepository>
+public class RoleService extends BaseService<Role, String, RoleRepository>
 {
-    @Override
-    protected void setPredicates(Root<Role> root, CriteriaBuilder criteriaBuilder,
-                                 List<Predicate> predicates, RoleSearchModel searchModel)
-    {}
 
     /**
      * 获取完整的role，包含role中的permissions以及menus
@@ -75,5 +73,30 @@ public class RoleService extends PageableBaseService<Role, String, RoleSearchMod
     public void delete(String id)
     {
         super.delete(id);
+    }
+
+    /**
+     * 给搜索增加查询条件
+     *
+     * @param root            元模型
+     * @param criteriaBuilder 查询条件构建器
+     * @param predicates      predicate的list稽核
+     * @param searchModel     查询模型
+     */
+    @Override
+    protected void setPredicates(Root<Role> root, CriteriaBuilder criteriaBuilder, List<Predicate> predicates, JSONObject searchModel) {
+        predicates.add(
+                criteriaBuilder.equal(root.<String> get("delFlag"), BaseEntity.DEL_FLAG_NORMAL));
+        if (StringUtils.isNotBlank(searchModel.getString("name")))
+        {
+            predicates.add(criteriaBuilder.equal(root.<String> get("name"),
+                      searchModel.getString("name")));
+        }
+    }
+
+    public Role findByName(String name){
+        JSONObject searchModel = new JSONObject();
+        searchModel.put("name",name);
+        return findOne(searchModel);
     }
 }

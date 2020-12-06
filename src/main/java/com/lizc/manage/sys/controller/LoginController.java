@@ -1,6 +1,7 @@
 package com.lizc.manage.sys.controller;
 
 
+import com.lizc.manage.common.utils.MD5;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -18,7 +19,6 @@ import com.lizc.manage.common.enums.SysResultCode;
 import com.lizc.manage.common.exception.UserOverdueException;
 import com.lizc.manage.sys.entity.CommonUser;
 import com.lizc.manage.sys.sevice.CommonUserService;
-import com.lizc.manage.sys.utils.MD5;
 import com.lizc.manage.sys.utils.UserUtils;
 
 

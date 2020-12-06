@@ -25,5 +25,13 @@ public class Office extends TreeBaseEntity<Office>
 
     private String phone;
 
-    private String manager;
+    /**
+     * 机构负责人姓名
+     */
+    private String managerName;
+
+    /**
+     * 机构编号
+     */
+    private String code;
 }

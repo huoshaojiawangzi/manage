@@ -1,7 +1,7 @@
 package com.lizc.manage;
 
 
-import com.lizc.manage.sys.utils.MD5;
+import com.lizc.manage.common.utils.MD5;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
