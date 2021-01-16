@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 权限控制
  * 
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-16 10:30
  **/
 @RestController

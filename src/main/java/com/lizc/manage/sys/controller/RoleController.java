@@ -15,7 +15,7 @@ import com.lizc.manage.sys.vo.RoleSearchModel;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-16 13:55
  **/
 @RestController

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Role缓存数据，由于Role中的@JSONField注解导致某些字段无法进行json转换，使用此类来保存缓存数据
  * 
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-05-05 11:04
  **/
 @Data

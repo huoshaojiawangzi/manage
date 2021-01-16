@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 需要分页查询的BaseService
  * 
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-22 16:32
  **/
 @SuppressWarnings("ALL")

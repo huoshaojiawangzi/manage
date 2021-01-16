@@ -2,12 +2,12 @@ package com.lizc.manage.pc.user.service;
 
 
 import com.lizc.manage.common.service.PageableBaseService;
-import com.lizc.manage.common.utils.StringUtils;
 import com.lizc.manage.pc.user.entity.User;
 import com.lizc.manage.pc.user.repository.UserRepository;
 import com.lizc.manage.pc.user.vo.UserSearchModel;
 import com.lizc.manage.sys.sevice.CommonUserService;
 import com.lizc.manage.sys.utils.MD5;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * 需要分页查询的BaseController
  * 
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-22 16:38
  **/
 @SuppressWarnings("ALL")

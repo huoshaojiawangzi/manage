@@ -2,10 +2,10 @@ package com.lizc.manage.sys.sevice;
 
 
 import com.lizc.manage.common.service.PageableBaseService;
-import com.lizc.manage.common.utils.StringUtils;
 import com.lizc.manage.sys.entity.Dictionary;
 import com.lizc.manage.sys.repository.DictionaryRepository;
 import com.lizc.manage.sys.vo.DictionarySearchModel;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -15,7 +15,7 @@ import java.util.List;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-17 13:47
  **/
 @Service

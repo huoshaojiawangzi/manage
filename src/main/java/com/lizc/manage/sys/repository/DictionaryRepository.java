@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-17 13:49
  **/
 @Repository

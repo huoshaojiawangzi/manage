@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-11 14:46
  **/
 @Data

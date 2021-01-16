@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * 角色
  * 
- * @author lizc@sdhuijin.cn
+ * @author lizc
  * @date 2019/03/06
  */
 @Data

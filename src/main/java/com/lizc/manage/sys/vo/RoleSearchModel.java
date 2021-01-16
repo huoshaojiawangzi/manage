@@ -5,7 +5,7 @@ import com.lizc.manage.common.vo.BaseSearchModel;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-18 11:17
  **/
 public class RoleSearchModel extends BaseSearchModel

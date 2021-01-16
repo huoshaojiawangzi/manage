@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 /**
  * 系统用户业务逻辑
  * 
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-03-06 14:53
  **/
 @Service

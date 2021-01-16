@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 系统用户
  *
- * @author lizc@sdhuijin.cn
+ * @author lizc
  * @date 2019/03/06
  */
 @EqualsAndHashCode(callSuper = true)

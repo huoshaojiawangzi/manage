@@ -3,7 +3,7 @@ package com.lizc.manage.common.exception;
 /**
  * 用户信息过期异常
  * 
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-05-20 13:53
  **/
 public class UserOverdueException extends RuntimeException
