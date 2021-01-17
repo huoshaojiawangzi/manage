@@ -5,10 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.lizc.manage.common.entity.BaseEntity;
 import com.lizc.manage.common.service.BaseService;
 import com.lizc.manage.common.utils.RedisUtils;
-import com.lizc.manage.common.utils.StringUtils;
 import com.lizc.manage.sys.bo.RoleCache;
 import com.lizc.manage.sys.entity.Role;
 import com.lizc.manage.sys.repository.RoleRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

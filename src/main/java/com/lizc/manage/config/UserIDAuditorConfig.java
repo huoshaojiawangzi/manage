@@ -1,8 +1,8 @@
 package com.lizc.manage.config;
 
 
-import com.lizc.manage.sys.utils.UserUtils;
 import com.lizc.manage.sys.entity.CommonUser;
+import com.lizc.manage.sys.utils.UserUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 

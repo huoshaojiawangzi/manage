@@ -8,6 +8,7 @@ import com.lizc.manage.common.enums.SysResultCode;
 import com.lizc.manage.common.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ public abstract class BaseController<T extends BaseEntity, S extends BaseService
     @Autowired(required = false)
     protected S service;
 
-    @RequestMapping("/save")
+    @PostMapping("/save")
     public JsonResult save(@RequestBody T t)
     {
         JsonResult jsonResult = new JsonResult();
@@ -35,7 +36,7 @@ public abstract class BaseController<T extends BaseEntity, S extends BaseService
         return jsonResult;
     }
 
-    @RequestMapping("/find-all")
+    @PostMapping("/find-all")
     public JsonResult<List<T>> findAll()
     {
         JsonResult<List<T>> jsonResult = new JsonResult<>();
@@ -45,7 +46,7 @@ public abstract class BaseController<T extends BaseEntity, S extends BaseService
         return jsonResult;
     }
 
-    @RequestMapping("/delete")
+    @GetMapping("/delete")
     public JsonResult delete(String id)
     {
         JsonResult jsonResult = new JsonResult();
@@ -63,6 +64,7 @@ public abstract class BaseController<T extends BaseEntity, S extends BaseService
         jsonResult.setResultCode(SysResultCode.SUCCESS);
         return jsonResult;
     }
+
     @RequestMapping("/find-page")
     public JsonResult<Page<T>> findPgae(@RequestBody JSONObject searchModel)
     {

@@ -1,7 +1,14 @@
 package com.lizc.manage.sys.controller;
 
 
+import com.lizc.manage.common.dto.CurrentUserInfo;
+import com.lizc.manage.common.dto.JsonResult;
+import com.lizc.manage.common.enums.SysResultCode;
+import com.lizc.manage.common.exception.UserOverdueException;
 import com.lizc.manage.common.utils.MD5;
+import com.lizc.manage.sys.entity.CommonUser;
+import com.lizc.manage.sys.sevice.CommonUserService;
+import com.lizc.manage.sys.utils.UserUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -12,14 +19,6 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.lizc.manage.common.dto.CurrentUserInfo;
-import com.lizc.manage.common.dto.JsonResult;
-import com.lizc.manage.common.enums.SysResultCode;
-import com.lizc.manage.common.exception.UserOverdueException;
-import com.lizc.manage.sys.entity.CommonUser;
-import com.lizc.manage.sys.sevice.CommonUserService;
-import com.lizc.manage.sys.utils.UserUtils;
 
 
 /**

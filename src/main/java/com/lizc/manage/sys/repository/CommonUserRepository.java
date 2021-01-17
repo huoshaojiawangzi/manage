@@ -1,10 +1,9 @@
 package com.lizc.manage.sys.repository;
 
 
-import org.springframework.stereotype.Repository;
-
 import com.lizc.manage.common.repository.BaseRepository;
 import com.lizc.manage.sys.entity.CommonUser;
+import org.springframework.stereotype.Repository;
 
 
 /**

@@ -1,10 +1,10 @@
 package com.lizc.manage.pc.user.service;
 
 
-import com.lizc.manage.common.service.PageableBaseService;
+import com.alibaba.fastjson.JSONObject;
+import com.lizc.manage.common.service.BaseService;
 import com.lizc.manage.pc.user.entity.User;
 import com.lizc.manage.pc.user.repository.UserRepository;
-import com.lizc.manage.pc.user.vo.UserSearchModel;
 import com.lizc.manage.sys.sevice.CommonUserService;
 import com.lizc.manage.sys.utils.MD5;
 import org.apache.commons.lang3.StringUtils;
@@ -19,7 +19,7 @@ import java.util.List;
 
 
 @Service
-public class UserService extends PageableBaseService<User, String, UserSearchModel, UserRepository>
+public class UserService extends BaseService<User, String, UserRepository>
 {
 
     private final CommonUserService commonUserService;
@@ -59,22 +59,22 @@ public class UserService extends PageableBaseService<User, String, UserSearchMod
 
     @Override
     protected void setPredicates(Root<User> root, CriteriaBuilder criteriaBuilder,
-                                 List<Predicate> predicates, UserSearchModel searchModel)
+                                 List<Predicate> predicates, JSONObject searchModel)
     {
-        if (StringUtils.isNotBlank(searchModel.getName()))
+        if (StringUtils.isNotBlank(searchModel.getString("name")))
         {
             predicates.add(criteriaBuilder.like(root.<String> get("commonUser").get("name"),
-                "%" + searchModel.getName() + "%"));
+                "%" + searchModel.getString("name") + "%"));
         }
-        if (StringUtils.isNotBlank(searchModel.getUserName()))
+        if (StringUtils.isNotBlank(searchModel.getString("userName")))
         {
             predicates.add(criteriaBuilder.like(root.<String> get("commonUser").get("userName"),
-                "%" + searchModel.getUserName() + "%"));
+                "%" + searchModel.getString("userName") + "%"));
         }
-        if (StringUtils.isNotBlank(searchModel.getOfficeName()))
+        if (StringUtils.isNotBlank(searchModel.getString("officeName")))
         {
             predicates.add(criteriaBuilder.like(root.<String> get("office").get("name"),
-                "%" + searchModel.getOfficeName() + "%"));
+                "%" + searchModel.getString("officeName") + "%"));
         }
     }
 }

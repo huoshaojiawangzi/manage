@@ -68,7 +68,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm
         throws AuthenticationException
     {
         UsernamePasswordToken userToken = (UsernamePasswordToken)token;
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("userName", userToken.getUsername());
         List<CommonUser> commonUserList = commonUserService.findByFileds(map);
         // 账号验证

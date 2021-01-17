@@ -2,7 +2,6 @@ package com.lizc.manage.pc.user.vo;
 
 
 import com.lizc.manage.common.vo.BaseSearchModel;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

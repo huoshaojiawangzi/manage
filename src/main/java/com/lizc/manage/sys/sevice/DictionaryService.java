@@ -1,10 +1,10 @@
 package com.lizc.manage.sys.sevice;
 
 
-import com.lizc.manage.common.service.PageableBaseService;
+import com.alibaba.fastjson.JSONObject;
+import com.lizc.manage.common.service.BaseService;
 import com.lizc.manage.sys.entity.Dictionary;
 import com.lizc.manage.sys.repository.DictionaryRepository;
-import com.lizc.manage.sys.vo.DictionarySearchModel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -19,26 +19,26 @@ import java.util.List;
  * @date: 2019-04-17 13:47
  **/
 @Service
-public class DictionaryService extends PageableBaseService<Dictionary, String, DictionarySearchModel, DictionaryRepository>
+public class DictionaryService extends BaseService<Dictionary, String , DictionaryRepository>
 {
     @Override
     protected void setPredicates(Root<Dictionary> root, CriteriaBuilder criteriaBuilder,
-                                 List<Predicate> predicates, DictionarySearchModel searchModel)
+                                 List<Predicate> predicates, JSONObject searchModel)
     {
-        if (StringUtils.isNotBlank(searchModel.getType()))
+        if (StringUtils.isNotBlank(searchModel.getString("type")))
         {
             predicates.add(
-                criteriaBuilder.like(root.get("type"), "%" + searchModel.getType() + "%"));
+                criteriaBuilder.like(root.get("type"), "%" + searchModel.getString("type") + "%"));
         }
-        if (StringUtils.isNotBlank(searchModel.getLabel()))
+        if (StringUtils.isNotBlank(searchModel.getString("label")))
         {
             predicates.add(
-                criteriaBuilder.like(root.get("label"), "%" + searchModel.getLabel() + "%"));
+                criteriaBuilder.like(root.get("label"), "%" + searchModel.getString("label") + "%"));
         }
-        if (StringUtils.isNotBlank(searchModel.getRemarks()))
+        if (StringUtils.isNotBlank(searchModel.getString("remarks")))
         {
             predicates.add(
-                criteriaBuilder.like(root.get("remarks"), "%" + searchModel.getRemarks() + "%"));
+                criteriaBuilder.like(root.get("remarks"), "%" + searchModel.getString("remarks") + "%"));
         }
     }
 }

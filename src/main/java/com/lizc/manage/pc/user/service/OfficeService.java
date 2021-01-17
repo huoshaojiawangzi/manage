@@ -2,23 +2,19 @@ package com.lizc.manage.pc.user.service;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.gson.JsonObject;
 import com.lizc.manage.common.entity.BaseEntity;
 import com.lizc.manage.common.exception.MsgException;
 import com.lizc.manage.common.service.TreeBaseService;
-import com.lizc.manage.common.utils.StringUtils;
 import com.lizc.manage.pc.user.entity.Office;
 import com.lizc.manage.pc.user.entity.User;
 import com.lizc.manage.pc.user.repository.OfficeRepository;
-import com.lizc.manage.sys.entity.Role;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
 
 

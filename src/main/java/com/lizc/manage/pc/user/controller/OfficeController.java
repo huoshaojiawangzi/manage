@@ -1,15 +1,14 @@
 package com.lizc.manage.pc.user.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.lizc.manage.common.controller.TreeBaseController;
 import com.lizc.manage.common.dto.JsonResult;
 import com.lizc.manage.common.enums.SysResultCode;
 import com.lizc.manage.common.exception.MsgException;
 import com.lizc.manage.pc.user.entity.Office;
 import com.lizc.manage.pc.user.service.OfficeService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController

@@ -6,7 +6,7 @@ import com.lizc.manage.common.entity.TreeBaseEntity;
 import com.lizc.manage.common.enums.SysResultCode;
 import com.lizc.manage.common.service.TreeBaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public abstract class TreeBaseController<T extends TreeBaseEntity, S extends Tre
     @Autowired(required = false)
     protected S service;
 
-    @RequestMapping("/find-roots")
+    @PostMapping("/find-roots")
     public JsonResult<List<T>> findRoots()
     {
         JsonResult jsonResult = new JsonResult();

@@ -1,13 +1,12 @@
 package com.lizc.manage.sys.controller;
 
 
-import com.lizc.manage.common.controller.PageableBaseController;
+import com.lizc.manage.common.controller.BaseController;
 import com.lizc.manage.common.dto.JsonResult;
 import com.lizc.manage.common.enums.SysResultCode;
 import com.lizc.manage.sys.entity.Dictionary;
 import com.lizc.manage.sys.sevice.DictionaryService;
 import com.lizc.manage.sys.utils.DictUtils;
-import com.lizc.manage.sys.vo.DictionarySearchModel;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +19,7 @@ import java.util.List;
  **/
 @RestController
 @RequestMapping("/home/dictionary")
-public class DictionaryController extends PageableBaseController<Dictionary, DictionarySearchModel, DictionaryService>
+public class DictionaryController extends BaseController<Dictionary, DictionaryService>
 {
     @Override
     public JsonResult<List<Dictionary>> findAll()
