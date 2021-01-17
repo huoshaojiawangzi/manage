@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-24 10:52
  **/
 @Configuration

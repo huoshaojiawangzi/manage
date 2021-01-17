@@ -24,7 +24,7 @@ import java.util.Set;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-24 17:11
  **/
 @Configuration

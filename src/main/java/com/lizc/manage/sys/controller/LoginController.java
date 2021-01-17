@@ -25,7 +25,7 @@ import com.lizc.manage.sys.utils.UserUtils;
 /**
  * 访问的公共资源
  * 
- * @author lizc@sdhuijin.cn
+ * @author lizc
  * @date 2019/03/06
  */
 @RestController

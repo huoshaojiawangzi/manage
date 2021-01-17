@@ -1,15 +1,13 @@
 package com.lizc.manage.pc.user.service;
 
 
-import com.alibaba.fastjson.JSONObject;
-import com.google.gson.JsonObject;
-import com.lizc.manage.common.entity.BaseEntity;
-import com.lizc.manage.common.service.BaseService;
-import com.lizc.manage.common.utils.MD5;
-import com.lizc.manage.common.utils.StringUtils;
+import com.lizc.manage.common.service.PageableBaseService;
 import com.lizc.manage.pc.user.entity.User;
 import com.lizc.manage.pc.user.repository.UserRepository;
+import com.lizc.manage.pc.user.vo.UserSearchModel;
 import com.lizc.manage.sys.sevice.CommonUserService;
+import com.lizc.manage.sys.utils.MD5;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +19,7 @@ import java.util.List;
 
 
 @Service
-public class UserService extends BaseService<User, String, UserRepository>
+public class UserService extends PageableBaseService<User, String, UserSearchModel, UserRepository>
 {
 
     private final CommonUserService commonUserService;
@@ -61,28 +59,22 @@ public class UserService extends BaseService<User, String, UserRepository>
 
     @Override
     protected void setPredicates(Root<User> root, CriteriaBuilder criteriaBuilder,
-                                 List<Predicate> predicates, JSONObject searchModel)
+                                 List<Predicate> predicates, UserSearchModel searchModel)
     {
-        predicates.add(
-                criteriaBuilder.equal(root.<String> get("delFlag"), BaseEntity.DEL_FLAG_NORMAL));
-        if (StringUtils.isNotBlank(searchModel.getString("name")))
+        if (StringUtils.isNotBlank(searchModel.getName()))
         {
             predicates.add(criteriaBuilder.like(root.<String> get("commonUser").get("name"),
-                "%" + searchModel.getString("name") + "%"));
+                "%" + searchModel.getName() + "%"));
         }
-        if (StringUtils.isNotBlank(searchModel.getString("userName")))
+        if (StringUtils.isNotBlank(searchModel.getUserName()))
         {
             predicates.add(criteriaBuilder.like(root.<String> get("commonUser").get("userName"),
-                "%" + searchModel.getString("userName") + "%"));
+                "%" + searchModel.getUserName() + "%"));
         }
-        if (StringUtils.isNotBlank(searchModel.getString("officeId")))
-        {
-            predicates.add(criteriaBuilder.equal(root.get("office").get("id"), searchModel.getString("officeId")));
-        }
-        if (StringUtils.isNotBlank(searchModel.getString("officeName")))
+        if (StringUtils.isNotBlank(searchModel.getOfficeName()))
         {
             predicates.add(criteriaBuilder.like(root.<String> get("office").get("name"),
-                "%" + searchModel.getString("officeName") + "%"));
+                "%" + searchModel.getOfficeName() + "%"));
         }
     }
 }

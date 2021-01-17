@@ -8,7 +8,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-10 12:42
  **/
 @NoRepositoryBean

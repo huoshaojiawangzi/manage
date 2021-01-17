@@ -9,7 +9,7 @@ import redis.clients.jedis.JedisPoolConfig;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-24 14:25
  **/
 @Configuration

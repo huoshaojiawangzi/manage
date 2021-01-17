@@ -16,7 +16,7 @@ import java.util.List;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-25 14:11
  **/
 @EqualsAndHashCode(callSuper = true)

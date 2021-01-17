@@ -1,10 +1,10 @@
 package com.lizc.manage.config;
 
 
-import com.lizc.manage.common.utils.StringUtils;
 import com.lizc.manage.sys.entity.Permission;
 import com.lizc.manage.sys.security.SystemAuthorizingRealm;
 import com.lizc.manage.sys.sevice.PermissionService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;

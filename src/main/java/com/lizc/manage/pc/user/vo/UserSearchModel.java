@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-17 14:47
  **/
 @EqualsAndHashCode(callSuper = true)

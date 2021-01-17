@@ -3,7 +3,7 @@ package com.lizc.manage.common.exception;
 /**
  * 用来保存操作失败信息的异常
  * 
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-06-20 13:53
  **/
 public class MsgException extends Exception

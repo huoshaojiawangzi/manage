@@ -1,11 +1,11 @@
 package com.lizc.manage.sys.security;
 
 
-import com.lizc.manage.common.utils.StringUtils;
 import com.lizc.manage.sys.entity.CommonUser;
 import com.lizc.manage.sys.entity.Permission;
 import com.lizc.manage.sys.sevice.CommonUserService;
 import com.lizc.manage.sys.utils.UserUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;

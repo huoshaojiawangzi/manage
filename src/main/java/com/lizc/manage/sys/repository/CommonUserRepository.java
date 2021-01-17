@@ -8,7 +8,7 @@ import com.lizc.manage.sys.entity.CommonUser;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-03-06 11:15
  **/
 @Repository

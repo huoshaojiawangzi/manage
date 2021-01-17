@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * redis缓存工具类
  * 
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2009-04-23 06:02
  **/
 @Component

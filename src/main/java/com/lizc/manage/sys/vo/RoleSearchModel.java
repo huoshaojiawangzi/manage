@@ -6,7 +6,7 @@ import lombok.Data;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-18 11:17
  **/
 @Data

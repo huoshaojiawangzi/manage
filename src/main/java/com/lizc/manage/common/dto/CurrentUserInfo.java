@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 包含当前用户的菜单以及权限
  * 
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-05-08 14:54
  **/
 @Data

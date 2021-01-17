@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 页面查询基础模型
  * 
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-17 14:53
  **/
 @Data

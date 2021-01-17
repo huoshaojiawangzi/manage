@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 
 /**
- * @author: lizc@sdhuijin.cn
+ * @author: lizc
  * @date: 2019-04-11 14:54
  **/
 @RunWith(SpringRunner.class)

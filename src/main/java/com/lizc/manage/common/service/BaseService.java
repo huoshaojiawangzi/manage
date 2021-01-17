@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * T:实体类类型<p> ID:实体类主键的类型<p> R:实现了JpaRepository的实体类Repository<p>
  * 
- * @author lizc@sdhuijin.cn
+ * @author lizc
  * @date 2019/04/10
  */
 @SuppressWarnings("ALL")
