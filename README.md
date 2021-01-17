@@ -25,8 +25,9 @@
 
 ``` bash
 # mysql数据库
-建立manage数据库，执行resource目录下的sql文件
-密码：poiuyt，可自行在yml更改
+建立manage数据库
+执行resource目录下的sql文件
+数据库密码：poiuyt，可自行在yml更改
 
 #redis
 默认端口：6379
